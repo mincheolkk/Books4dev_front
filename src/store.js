@@ -7,11 +7,16 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         // resultLists: [],
+        searchList: [],
     },
 
     getters: {
         getResultList: (state) => {
             return state.resultList;
+        }
+        ,
+        getSearchList: (state) => {
+            return state.searchList;
         }
     },
 
@@ -19,7 +24,12 @@ export const store = new Vuex.Store({
         setResultList(state, resultList) {
             console.log("muta start")
             state.resultList = resultList;
-        } 
+        },
+        setSearchList(state, searchList) {
+            console.log("muta setSearch");
+            console.log(searchList);
+            state.searchList = searchList;
+        }
     },
 
     actions: {
@@ -32,15 +42,17 @@ export const store = new Vuex.Store({
             console.log("22"+resultList);
             return resultList;
         },
-        async searchBook(payload) {
+        async searchBook ({commit}, param) {
             console.log("search book 시작");
-            
-            const res = await ApiService.get('http://localhost:8080/todo?query='+payload)
-            const searchList = res.data.documents
-            
-
-            console.log(searchList)            
-
+            console.log(param);
+            console.log("222222");
+            // const res = await ApiService.get('http://localhost:8080/todo?query='+payload)
+            const res = await ApiService.get(`http://localhost:8080/todo?query=${param}`);
+            console.log(res);
+            const searchBook = res.data.documents;
+            commit("setSearchList",searchBook);
+            return searchBook;
+            // return searchList;
         }
     }
 

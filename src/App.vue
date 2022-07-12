@@ -1,5 +1,9 @@
 <template>
   <v-app id="app">
+    <nav>
+      <router-link to="/">Home2</router-link>
+      <router-link to="/search">searh</router-link>
+    </nav>
     <home-header />
     <book-list />
   </v-app>

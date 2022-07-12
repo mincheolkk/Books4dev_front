@@ -1,37 +1,65 @@
 <template>
     <div class="inputBox shadow">
-        <input type="text" v-model="newTodoItem" @keyup.enter="getSearch" class="shadow">
-
+        <input type="text" v-model="searchTitle" @keyup.enter="vuexSearch()" class="shadow">
+        <li 
+            v-for="item in getSearchList"
+            v-bind:key="item.isbn"
+            >
+            <p>{{item}}</p>
+        </li>
+        
     </div>
 </template>
 <script>
 import axios from "axios";
+import { mapGetters } from 'vuex';
+
 
 export default {
+    components: {
+
+
+    },
+
+    computed: {
+        ...mapGetters([
+            "getSearchList"
+        ])
+    },
+
     data() {
         return {
-            newTodoItem: "",
-            searchList:"",
+            searchTitle: "",
+            res:""
         }
     },
     methods: {
 
         clearInput() {
         // input 박스 초기화 방법
-            this.newTodoItem = '';
+            this.searchTitle = '';
         }
         ,
-        getSearch() {
-            if (this.newTodoItem.length > 0) {
-                this.searchList = axios.get('http://localhost:8080/todo?query='+this.newTodoItem)
-                    .then(res => {
-                        console.log("ii")
-                        console.log(res)
-                    })
-                    .catch(e => {
-                        console.log(e)
-                    })
+        async getSearch() {
+            if (this.searchTitle.length > 0) {
+            
+            this.res = await axios.get('http://localhost:8080/todo?query='+this.searchTitle);        
+            console.log("end2");
+            console.log(this.res);
+            // this.$router.push('search')
+            this.clearInput();
+            return this.res;
             }
+        },
+        async vuexSearch() {
+
+
+            this.res = await this.$store.dispatch("searchBook", this.searchTitle );
+            console.log("vuexSearch !!")
+            console.log(this.res);
+            console.log("oohh data!")
+            // this.clearInput();
+
         }
     },
 }
