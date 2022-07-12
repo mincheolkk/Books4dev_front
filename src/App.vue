@@ -1,9 +1,9 @@
 <template>
   <v-app id="app">
-    <nav>
+    <!-- <nav>
       <router-link to="/">Home2</router-link>
       <router-link to="/search">searh</router-link>
-    </nav>
+    </nav> -->
     <home-header />
     <book-list />
   </v-app>

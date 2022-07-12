@@ -43,12 +43,11 @@ export const store = new Vuex.Store({
             return resultList;
         },
         async searchBook ({commit}, param) {
-            console.log("search book 시작");
+
             console.log(param);
-            console.log("222222");
             // const res = await ApiService.get('http://localhost:8080/todo?query='+payload)
             const res = await ApiService.get(`http://localhost:8080/todo?query=${param}`);
-            console.log(res);
+
             const searchBook = res.data.documents;
             commit("setSearchList",searchBook);
             return searchBook;

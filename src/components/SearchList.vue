@@ -1,6 +1,6 @@
 <template>
   <section > 
-        <P>searchBo o k List!</P>
+        <P>search Book List</P>
     <!-- <div v-for="(result) in propsdata" v-bind:key="result.documents" class="shadow">
         <img :src="result.detailData.thumbnail" alt="image" class="shadow"/>
         <p>{{result}}</p>
@@ -8,15 +8,26 @@
     
 
     </div> -->
+    <li 
+            v-for="item in getSearchList"
+            v-bind:key="item.isbn"
+            >
+            <p>{{item}}</p>
+        </li>
     </section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 
 export default {
-    props: ['propsdata'],
-
+    name:"SearchList",
+    computed: {
+        ...mapGetters([
+            "getSearchList"
+        ])
+    },
     methods: {
         // findBook(payload) {
         //     this.$store.dispatch("")

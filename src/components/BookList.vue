@@ -1,16 +1,15 @@
 <template>
     <section > 
-        <P> S</P>
+
+    
     <div v-for="(result) in this.books" v-bind:key="result.detailData.isbn" class="shadow">
         <img :src="result.detailData.thumbnail" alt="image" class="shadow"/>
         <p>{{result.detailData.title}}</p>
-        <!-- <button v-on:click="pleaseTime(result)">button</button> -->
         <button v-on:click="pleaseChart(result)">chart</button>
         <div>{{result.readTimeMap}}</div>
         <p>추천시기</p>
         <canvas :id="result.detailData.isbn" />
         <!-- <canvas v-html="pleaseChart(result)" :id="result.detailData.isbn" /> -->
-
     </div>
     </section>
 </template>
@@ -72,18 +71,19 @@ export default {
             this.$emit('testTime',result.readTimeMap)
         },
         async pleaseChart(result) {
+            console.log("pll",result);
             // this.$emit('makeChart',result.readTimeMap, result.detailData.isbn)
-            this.drawChart(result.readTimeMap, result.detailData.isbn);
+            await this.drawChart(result.readTimeMap, result.detailData.isbn);
 
         },
 
          async goVuex() {
           // let books;
           this.books =  await this.$store.dispatch("fetchAllBooks")
-          console.log(this.books);
+        //   console.log(this.books);
 
-          console.log("2222");
-          console.log(this.books);
+        //   console.log("2222");
+        //   console.log(this.books);
         },
 
 
@@ -106,13 +106,8 @@ export default {
        }
     },
     drawChart(timeData, isbn) {
-      console.log("draw?");
-      console.log(isbn);
-
-        //   if (newChart !== undefined) {
-        //       newChart.destroy();
-        //   }
-      
+    //   console.log("draw?");
+    //   console.log(isbn);
 
      var chartData =  {
                 labels:['a'],
@@ -144,18 +139,21 @@ export default {
                     },
                 ]
             };
-    console.log(chartData)
-
+    // console.log(chartData)
+    let start = null;
     var ctx = document.getElementById(isbn)
-    console.log("ctx :" + ctx);
-
-    new Chart(ctx, {
+    // console.log("ctx :" + ctx);
+    if(start != null) {
+        start.destory();
+    }
+    start = new Chart(ctx, {
         type: 'bar',
         data: chartData,
         options: this.options
       })
-      console.log("end")
-    //   return newChart 
+    //   star.destroy();
+    //   console.log("end")
+
     }
     },
 

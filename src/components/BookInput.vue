@@ -8,6 +8,7 @@
             <p>{{item}}</p>
         </li>
         
+        
     </div>
 </template>
 <script>
@@ -44,8 +45,6 @@ export default {
             if (this.searchTitle.length > 0) {
             
             this.res = await axios.get('http://localhost:8080/todo?query='+this.searchTitle);        
-            console.log("end2");
-            console.log(this.res);
             // this.$router.push('search')
             this.clearInput();
             return this.res;
@@ -53,13 +52,8 @@ export default {
         },
         async vuexSearch() {
 
-
             this.res = await this.$store.dispatch("searchBook", this.searchTitle );
-            console.log("vuexSearch !!")
-            console.log(this.res);
-            console.log("oohh data!")
-            // this.clearInput();
-
+            this.$router.push('search').catch(()=>{});
         }
     },
 }

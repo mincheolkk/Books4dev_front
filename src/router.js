@@ -3,18 +3,20 @@ import VueRouter from "vue-router";
 import HomeHeader from "./components/HomeHeader";
 import BookInput from "./components/BookInput";
 import BookList from "./components/BookList";
-import SearchList from "./components/SearchList";
+import SearchList from './components/SearchList';
+import App from './App.vue'
 
 
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
-
+    mode:'history',
     routes:[
-        { path: '/', component: HomeHeader},
-        { path: '/', component: BookInput},
-        { path: '/', component: BookList},
-        { path: '/search', component: SearchList}
+        { path: '/', component: App},
+        { path: '/home', component: HomeHeader},
+        { path: '/home', component: BookInput},
+        { path: '/home', component: BookList},
+        { path: "/search", component: SearchList}
 
     ]
 
