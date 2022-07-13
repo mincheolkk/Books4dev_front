@@ -1,12 +1,12 @@
 <template>
     <div class="inputBox shadow">
         <input type="text" v-model="searchTitle" @keyup.enter="vuexSearch()" class="shadow">
-        <li 
+        <!-- <li 
             v-for="item in getSearchList"
             v-bind:key="item.isbn"
             >
             <p>{{item}}</p>
-        </li>
+        </li> -->
         
         
     </div>
@@ -18,7 +18,6 @@ import { mapGetters } from 'vuex';
 
 export default {
     components: {
-
 
     },
 

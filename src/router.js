@@ -14,8 +14,8 @@ export const router = new VueRouter({
     routes:[
         { path: '/', component: App},
         { path: '/home', component: HomeHeader},
-        { path: '/home', component: BookInput},
-        { path: '/home', component: BookList},
+        { path: '/ho', component: BookInput},
+        { path: '/hom', component: BookList},
         { path: "/search", component: SearchList}
 
     ]

@@ -8,12 +8,12 @@
     
 
     </div> -->
-    <li 
-            v-for="item in getSearchList"
-            v-bind:key="item.isbn"
-            >
+    <div v-for="item in getSearchList" v-bind:key="item.isbn" class="shadow">
+            
+        <img :src="item.thumbnail" alt="image" class="shadow"/>
+
             <p>{{item}}</p>
-        </li>
+        </div>
     </section>
 </template>
 

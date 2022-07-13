@@ -1,6 +1,9 @@
 <template>
     <!-- <div v-html="pleaseChart(propsdata)"> -->
-        <canvas :id={isbn} />
+    <div>
+        <canvas :id={isbn} height="0" />
+        <p>개발자들이 추천 하는 시기</p>
+    </div>
     <!-- </div> -->
 </template>
 
@@ -80,25 +83,25 @@ export default {
                             {
                                 label:"취업 전",
                                 data:[timeData["before"]],
-                                backgroundColor:"#4169e1"
+                                backgroundColor:"#d0ecea"
                             },
                             {
-                                label:"개발자 취업 후 ~ 2년차",
+                                label:"취업 후 ~ 2년",
                                 data:[timeData["after"]],
-                                backgroundColor:"#87ceeb"
+                                backgroundColor:"#6ec6cc"
                             },
                             {
-                                label:'2년차 ~ 5년차',
+                                label:'2년 ~ 5년',
                                 data:[timeData["twoYear"]],
-                                backgroundColor:"#b0e0e6"
+                                backgroundColor:"#4a90e2"
                             },
                             {
-                                label:'5년차 ~ 10년차',
+                                label:'5년 ~ 10년',
                                 data:[timeData["fiveYear"]],
-                                backgroundColor:"#b33e22"
+                                backgroundColor:"#4061ce"
                             },
                             {
-                                label:'10년차 ~',
+                                label:'10년 ~',
                                 data:[timeData["sevenYear"]],
                                 backgroundColor:"#b82e12"
                             },
@@ -110,7 +113,6 @@ export default {
             var ctx = this.isbn;
             console.log("ctx :" + ctx);
             if(start != null) {
-                console.log("start" +start);
                 start.destory();
                 
             }
@@ -125,7 +127,7 @@ export default {
         }
     },
     
-    async mounted() {
+    mounted() {
         // console.log("this is created")
         console.log(this.isbn);
         this.$nextTick(function () {this.pleaseChart(this.time);

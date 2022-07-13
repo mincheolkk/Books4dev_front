@@ -5,19 +5,20 @@
       <router-link to="/search">searh</router-link>
     </nav> -->
     <home-header />
-    <book-list />
+    <!-- <book-list /> -->
+    <router-view />
   </v-app>
 </template>
 
 <script>
-import BookList from './components/BookList.vue'
+// import BookList from './components/BookList.vue'
 import HomeHeader from './components/HomeHeader.vue'
 
 export default {
   name: 'App',
   components: {
     HomeHeader,
-    BookList,
+    // BookList,
 
 
 

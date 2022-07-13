@@ -1,15 +1,14 @@
 <template>
     <section > 
-
-    
+        
     <div v-for="(result) in this.books" v-bind:key="result.detailData.isbn" class="shadow">
         <img :src="result.detailData.thumbnail" alt="image" class="shadow"/>
         <p>{{result.detailData.title}}</p>
-        <button v-on:scroll="pleaseChart(result)">chart</button>
+        <!-- <p v-on:scroll="pleaseChart(result)">chart</p> -->
         <div>{{result.readTimeMap}}</div>
         <p>추천시기2</p>
         <list-chart v-bind:key="result.detailData.isbn" :isbn="result.detailData.isbn" :time="result.readTimeMap" />
-        <canvas :id="result.detailData.isbn" />
+        <canvas :id="result.detailData.isbn" height="100"/>
         <!-- <canvas  v-on="pleaseChart(result)" :id="result.detailData.isbn" /> -->
     </div>
 
@@ -69,6 +68,7 @@ export default {
           },
           layout: {
               padding: {
+                //   top: 10,
                   left: 50,
                   right:50,
               }
@@ -127,22 +127,22 @@ export default {
                         backgroundColor:"#4169e1"
                     },
                     {
-                        label:"개발자 취업 후 ~ 2년차",
+                        label:"개발자 취업 후 ~ 2년",
                         data:[timeData["after"]],
                         backgroundColor:"#87ceeb"
                     },
                     {
-                        label:'2년차 ~ 5년차',
+                        label:'2년 ~ 5년',
                         data:[timeData["twoYear"]],
                         backgroundColor:"#b0e0e6"
                     },
                     {
-                        label:'5년차 ~ 10년차',
+                        label:'5년 ~ 10년',
                         data:[timeData["fiveYear"]],
                         backgroundColor:"#b33e22"
                     },
                     {
-                        label:'10년차 ~',
+                        label:'10년 ~',
                         data:[timeData["sevenYear"]],
                         backgroundColor:"#b82e12"
                     },
