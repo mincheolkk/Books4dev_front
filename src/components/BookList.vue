@@ -5,20 +5,33 @@
     <div v-for="(result) in this.books" v-bind:key="result.detailData.isbn" class="shadow">
         <img :src="result.detailData.thumbnail" alt="image" class="shadow"/>
         <p>{{result.detailData.title}}</p>
-        <button v-on:click="pleaseChart(result)">chart</button>
+        <button v-on:scroll="pleaseChart(result)">chart</button>
+        <div>{{result.readTimeMap}}</div>
+        <p>추천시기2</p>
+        <list-chart v-bind:key="result.detailData.isbn" :isbn="result.detailData.isbn" :time="result.readTimeMap" />
+        <canvas :id="result.detailData.isbn" />
+        <!-- <canvas  v-on="pleaseChart(result)" :id="result.detailData.isbn" /> -->
+    </div>
+
+
+    <!-- <div v-for="(result) in this.books" v-bind:key="result.detailData.isbn" class="shadow">
+        <img :src="result.detailData.thumbnail" alt="image" class="shadow"/>
+        <p>{{result.detailData.title}}</p>
+        <button v-on:loading="pleaseChart(result)">chart</button>
         <div>{{result.readTimeMap}}</div>
         <p>추천시기</p>
         <canvas :id="result.detailData.isbn" />
-        <!-- <canvas v-html="pleaseChart(result)" :id="result.detailData.isbn" /> -->
-    </div>
+        <canvas  v-on="pleaseChart(result)" :id="result.detailData.isbn" /> -->
+
     </section>
 </template>
 
 <script>
 import { Chart, registerables } from 'chart.js'
+import ListChart from './ListChart.vue'
 Chart.register(...registerables)
-import {  mapGetters } from 'vuex'
-// let newChart;
+
+
 export default {   
  
 //   async mounted(){
@@ -26,7 +39,9 @@ export default {
 //       this.pleaseChart()
 //     })
 //   },
-
+  components:{
+      ListChart
+  },
   data() {
     return {
       books: [],
@@ -80,34 +95,28 @@ export default {
          async goVuex() {
           // let books;
           this.books =  await this.$store.dispatch("fetchAllBooks")
-        //   console.log(this.books);
-
-        //   console.log("2222");
-        //   console.log(this.books);
         },
 
 
 
          makeData(timeData) {
-     this.beforeChart = {
-        "before":this.timeDivide(timeData["before"]),
-        "after":this.timeDivide(timeData["after"]),
-        "twoYear":this.timeDivide(timeData["twoYear"]),
-        "fiveYear":this.timeDivide(timeData["fiveYear"]),       
-        "sevenYear":this.timeDivide(timeData["sevenYear"])}     
-        console.log(this.beforeChart);
-        return this.beforeChart;
-    },
-    timeDivide(time) {
-      if (time > 0) {
-        return time
-       } else if (time === undefined){
-         return 0
-       }
-    },
+            this.beforeChart = {
+                "before":this.timeDivide(timeData["before"]),
+                "after":this.timeDivide(timeData["after"]),
+                "twoYear":this.timeDivide(timeData["twoYear"]),
+                "fiveYear":this.timeDivide(timeData["fiveYear"]),       
+                "sevenYear":this.timeDivide(timeData["sevenYear"])}     
+                console.log(this.beforeChart);
+                return this.beforeChart;
+            },
+        timeDivide(time) {
+            if (time > 0) {
+                return time
+            } else if (time === undefined){
+                return 0
+            }
+        },
     drawChart(timeData, isbn) {
-    //   console.log("draw?");
-    //   console.log(isbn);
 
      var chartData =  {
                 labels:['a'],
@@ -140,13 +149,13 @@ export default {
                 ]
             };
     // console.log(chartData)
-    let start = null;
+    // let start = null;
     var ctx = document.getElementById(isbn)
     // console.log("ctx :" + ctx);
-    if(start != null) {
-        start.destory();
-    }
-    start = new Chart(ctx, {
+    // if(start != null) {
+    //     start.destory();
+    // }
+    new Chart(ctx, {
         type: 'bar',
         data: chartData,
         options: this.options
@@ -156,12 +165,6 @@ export default {
 
     }
     },
-
-    computed: {
-      ...mapGetters({
-        cheolItems: 'getCheol'
-      })
-    }
 }
 </script>
 
