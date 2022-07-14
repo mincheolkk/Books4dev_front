@@ -1,6 +1,7 @@
 <template>
 
  <v-row justify="center">
+    <v-form ref="dialogForm" v-model="valid">
     <v-dialog
       v-model="dialog"
       persistent
@@ -43,6 +44,7 @@
                   label="이 책을 읽었거나 읽고 있는 시기를 알려주세요"
                   v-model="request.readTime"
                   required
+                  :rules="rules.selected"
                 ></v-select>
               </v-col>
               <v-col
@@ -53,7 +55,8 @@
                   :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년 ', '5년 ~ 10년','10년 ~ ']"
                   label="이 책을 읽기에 좋은 시기를 추천해주세요"
                   v-model="request.recommendTime"
-                  required
+
+                  :rules="rules.selected"
                 ></v-select>
               </v-col>
             </v-row>
@@ -79,24 +82,33 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    </v-form>
   </v-row>
 </template>
 
 <script>
+import validator from '../utils/validator';
+
   export default {
     props: ['bookData'],
 
-    data: () => ({
-      dialog: false,
-      request: {
-          star: "",
-          readTime: "",
-          recommendTime: "",
-      }
-    }),
+    data() {
+        return {
+            rules: { ...validator.book },
+            dialog: false,
+            request: {
+                star: "",
+                readTime: "",
+                recommendTime: "",
+            }
+       }
+    },
 
     methods:{
         addBook() {
+            if (!this.$refs.dialogForm.validate()) {
+                return;
+            }
             console.log("2")
             // console.log(this.bookData + this.request);
             let min;
