@@ -1,14 +1,6 @@
 <template>
     <div class="inputBox shadow">
-        <input type="text" v-model="searchTitle" @keyup.enter="vuexSearch()" class="shadow">
-        <!-- <li 
-            v-for="item in getSearchList"
-            v-bind:key="item.isbn"
-            >
-            <p>{{item}}</p>
-        </li> -->
-        
-        
+        <input type="text" v-model="searchTitle" placeholder="읽은 책, 보고싶은 책을 검색해주세요" @keyup.enter="vuexSearch()" class="shadow">        
     </div>
 </template>
 <script>

@@ -52,7 +52,7 @@ export default {
     methods:{
           pleaseChart(time) {
             console.log(time);
-            // console.log("pll",isbn);
+            console.log("pll");
             // this.$emit('makeChart',result.readTimeMap, result.detailData.isbn)
              this.drawChart(time);
 

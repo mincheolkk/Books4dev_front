@@ -1,7 +1,7 @@
 <template>
-    <section > 
+    <div>
         
-    <div v-for="(result) in this.books" v-bind:key="result.detailData.isbn" class="shadow">
+    <v-card v-for="(result) in this.books" v-bind:key="result.detailData.isbn" class="shadow">
         <img :src="result.detailData.thumbnail" alt="image" class="shadow"/>
         <p>{{result.detailData.title}}</p>
         <!-- <p v-on:scroll="pleaseChart(result)">chart</p> -->
@@ -10,6 +10,7 @@
         <list-chart v-bind:key="result.detailData.isbn" :isbn="result.detailData.isbn" :time="result.readTimeMap" />
         <canvas :id="result.detailData.isbn" height="100"/>
         <!-- <canvas  v-on="pleaseChart(result)" :id="result.detailData.isbn" /> -->
+    </v-card>
     </div>
 
 
@@ -22,7 +23,6 @@
         <canvas :id="result.detailData.isbn" />
         <canvas  v-on="pleaseChart(result)" :id="result.detailData.isbn" /> -->
 
-    </section>
 </template>
 
 <script>
