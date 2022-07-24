@@ -1,7 +1,7 @@
 <template>
     <!-- <div v-html="pleaseChart(propsdata)"> -->
     <div>
-        <canvas :id={isbn} height="0" />
+        <!-- <canvas :id={isbn} height="0" /> -->
         <p>개발자들이 추천 하는 시기</p>
     </div>
     <!-- </div> -->
@@ -52,7 +52,7 @@ export default {
     methods:{
           pleaseChart(time) {
             console.log(time);
-            console.log("pll");
+            // console.log("pll",isbn);
             // this.$emit('makeChart',result.readTimeMap, result.detailData.isbn)
              this.drawChart(time);
 
@@ -83,27 +83,27 @@ export default {
                             {
                                 label:"취업 전",
                                 data:[timeData["before"]],
-                                backgroundColor:"#d0ecea"
+                                backgroundColor:"#6EC6CC"
                             },
                             {
                                 label:"취업 후 ~ 2년",
                                 data:[timeData["after"]],
-                                backgroundColor:"#6ec6cc"
+                                backgroundColor:"#56B0D1"
                             },
                             {
                                 label:'2년 ~ 5년',
                                 data:[timeData["twoYear"]],
-                                backgroundColor:"#4a90e2"
+                                backgroundColor:"#6297CD"
                             },
                             {
                                 label:'5년 ~ 10년',
                                 data:[timeData["fiveYear"]],
-                                backgroundColor:"#4061ce"
+                                backgroundColor:"#7F7AB9"
                             },
                             {
                                 label:'10년 ~',
                                 data:[timeData["sevenYear"]],
-                                backgroundColor:"#b82e12"
+                                backgroundColor:"#955B93"
                             },
                         ]
                     };

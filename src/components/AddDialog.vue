@@ -1,7 +1,7 @@
 <template>
 
  <v-row justify="center">
-    <v-form ref="dialogForm" v-model="valid">
+    <v-form ref="dialogForm" >
     <v-dialog
       v-model="dialog"
       persistent
@@ -14,7 +14,7 @@
           v-bind="attrs"
           v-on="on"
         >
-         + 읽은/읽는중인 책
+         + 읽은 책
         </v-btn>
       </template>
       <v-card>
@@ -33,6 +33,7 @@
                   v-model="request.star"
                   label="별점"
                   required
+                  :rules="rules.selected"
                 ></v-select>
               </v-col>
               <v-col
@@ -40,7 +41,7 @@
                 sm="6"
               >
                 <v-select
-                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년 ', '5년 ~ 10년','10년 ~ ']"
+                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년 ', '5년 ~ 10년','10년 ~']"
                   label="이 책을 읽었거나 읽고 있는 시기를 알려주세요"
                   v-model="request.readTime"
                   required
@@ -52,10 +53,10 @@
                 sm="6"
               >
                 <v-select
-                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년 ', '5년 ~ 10년','10년 ~ ']"
+                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
                   label="이 책을 읽기에 좋은 시기를 추천해주세요"
                   v-model="request.recommendTime"
-
+                  required
                   :rules="rules.selected"
                 ></v-select>
               </v-col>

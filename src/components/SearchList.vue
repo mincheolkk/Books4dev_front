@@ -1,31 +1,26 @@
 <template>
   <section> 
-        <P></P>
-    <!-- <div v-for="(result) in propsdata" v-bind:key="result.documents" class="shadow">
-        <img :src="result.detailData.thumbnail" alt="image" class="shadow"/>
-        <p>{{result}}</p>
-        <div>{{result.readTimeMap}}</div>
-    
 
-    </div> -->
-    <v-card v-for="item in getSearchList" v-bind:key="item.isbn" style="width: 70%" height="300" class="shadow">
+    <v-card v-for="item in getSearchList" v-bind:key="item.isbn" style="width: 100%" height="350" class="shadow">
         <v-card-title>{{item.title}}</v-card-title>
-
-        <!-- <v-row align="left"> -->
         <img :src="item.thumbnail" alt="image" class="shadow"/>
-        <!-- </v-row> -->
-
+        <p></p>
+        <v-spacer></v-spacer>
         <add-dialog :bookData={item} />
-            
-    </v-card>
+        <v-spacer></v-spacer>
+        <p></p>
+        <add-wish :isbn="item.isbn" :thumbnail="item.thumbnail" :title="item.title" />
+        <v-spacer></v-spacer>
 
+        <p></p>
+    </v-card>
     </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import AddDialog from './AddDialog.vue'
-
+import AddWish from './AddWish.vue'
 
 export default {
     name:"SearchList",
@@ -35,16 +30,17 @@ export default {
         ])
     },
     components: {
-        AddDialog
+        AddDialog,
+        AddWish
     },
     methods: {
-        // findBook(payload) {
-        //     this.$store.dispatch("")
-        // }
+
     }
 }
 </script>
 
 <style>
-
+.shadow {
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.3);
+}
 </style>

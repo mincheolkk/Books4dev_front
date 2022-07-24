@@ -4,7 +4,8 @@ import VueRouter from "vue-router";
 // import BookInput from "./components/BookInput";
 import BookList from "./components/BookList";
 import SearchList from './components/SearchList';
-import App from './App.vue'
+import SelectPosition from './components/SelectPosition'
+// import App from './App.vue'
 
 
 Vue.use(VueRouter);
@@ -12,11 +13,12 @@ Vue.use(VueRouter);
 export const router = new VueRouter({
     mode:'history',
     routes:[
-        { path: '/', component: App},
+        // { path: '/', component: App},
         // { path: '/home', component: HomeHeader},
         // { path: '/home', component: BookInput},
-        { path: '/home', component: BookList},
-        { path: "/search", component: SearchList}
+        { path: '/', component: BookList},
+        { path: "/search", component: SearchList},
+        { path: "/selectPosition", component: SelectPosition}
 
     ]
 
