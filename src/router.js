@@ -5,6 +5,7 @@ import VueRouter from "vue-router";
 import BookList from "./components/BookList";
 import SearchList from './components/SearchList';
 import SelectPosition from './components/SelectPosition'
+import NewLogin from './components/NewLogin'
 // import App from './App.vue'
 
 
@@ -18,7 +19,8 @@ export const router = new VueRouter({
         // { path: '/home', component: BookInput},
         { path: '/', component: BookList},
         { path: "/search", component: SearchList},
-        { path: "/selectPosition", component: SelectPosition}
+        { path: "/selectPosition", component: SelectPosition},
+        { path: "/init", component:NewLogin}
 
     ]
 
