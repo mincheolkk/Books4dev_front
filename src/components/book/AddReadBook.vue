@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import validator from '../utils/validator';
+import validator from '../../utils/validator';
 
   export default {
     props: ['bookData'],

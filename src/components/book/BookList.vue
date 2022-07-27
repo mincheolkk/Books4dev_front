@@ -8,7 +8,7 @@
         <list-chart v-bind:key="result.detailData.isbn" :isbn="result.detailData.isbn" :time="result.readTimeMap" />
         <canvas :id="result.detailData.isbn" height="50"/>
         <p></p>
-        <add-dialog :bookData="result.detailData" />
+        <add-read-book :bookData="result.detailData" />
         <v-spacer></v-spacer>
         <p></p>
         <add-wish v-bind:key="result.detailData.isbn" :isbn="result.detailData.isbn" :title="result.detailData.title" :thumbnail="result.detailData.thumbnail" />
@@ -19,10 +19,11 @@
 </template>
 
 <script>
-import AddDialog from './AddDialog.vue'
+import AddReadBook from './AddReadBook.vue'
 import AddWish from './AddWish.vue'
 import { Chart, registerables } from 'chart.js'
 import ListChart from './ListChart.vue'
+
 Chart.register(...registerables)
 
 
@@ -30,8 +31,8 @@ export default {
  
   components:{
       ListChart,
-      AddDialog,
-      AddWish
+      AddReadBook,
+      AddWish,
       
   },
   data() {

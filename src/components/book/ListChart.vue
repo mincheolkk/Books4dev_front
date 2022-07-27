@@ -1,10 +1,8 @@
 <template>
-    <!-- <div v-html="pleaseChart(propsdata)"> -->
     <div>
-        <!-- <canvas :id={isbn} height="0" /> -->
+        <canvas :id={isbn} />
         <p>개발자들이 추천 하는 시기</p>
     </div>
-    <!-- </div> -->
 </template>
 
 <script>
@@ -51,9 +49,6 @@ export default {
 
     methods:{
           pleaseChart(time) {
-            console.log(time);
-            // console.log("pll",isbn);
-            // this.$emit('makeChart',result.readTimeMap, result.detailData.isbn)
              this.drawChart(time);
 
         },
@@ -122,12 +117,12 @@ export default {
                 options: this.options
             })
             console.log(start);
-            //   star.destroy();
+            //   start.destroy();
               console.log("end")
         }
     },
     
-    mounted() {
+    async mounted() {
         // console.log("this is created")
         console.log(this.isbn);
         this.$nextTick(function () {this.pleaseChart(this.time);

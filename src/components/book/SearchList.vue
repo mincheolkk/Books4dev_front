@@ -6,7 +6,7 @@
         <img :src="item.thumbnail" alt="image" class="shadow"/>
         <p></p>
         <v-spacer></v-spacer>
-        <add-dialog :bookData={item} />
+        <add-read-book :bookData={item} />
         <v-spacer></v-spacer>
         <p></p>
         <add-wish :isbn="item.isbn" :thumbnail="item.thumbnail" :title="item.title" />
@@ -19,7 +19,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import AddDialog from './AddDialog.vue'
+import AddReadBook from './AddReadBook.vue'
 import AddWish from './AddWish.vue'
 
 export default {
@@ -30,7 +30,7 @@ export default {
         ])
     },
     components: {
-        AddDialog,
+        AddReadBook,
         AddWish
     },
     methods: {

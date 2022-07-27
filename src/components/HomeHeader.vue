@@ -8,7 +8,7 @@
 
 <script>
 import BookInput from './BookInput.vue'
-import LoginPage from './LoginPage.vue'
+import LoginPage from './login/LoginPage.vue'
 
 export default {
     components:{

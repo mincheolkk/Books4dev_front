@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ApiService from "../api";
+import ApiService from "../../index";
 
 export default {
     props:['isbn','title','thumbnail'],

@@ -2,10 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 // import HomeHeader from "./components/HomeHeader";
 // import BookInput from "./components/BookInput";
-import BookList from "./components/BookList";
-import SearchList from './components/SearchList';
-import SelectPosition from './components/SelectPosition'
-import NewLogin from './components/NewLogin'
+import BookList from "./components/book/BookList";
+import SearchList from './components/book/SearchList';
+import SelectPosition from './components/login/SelectPosition'
+import NewLogin from './components/login/NewLogin'
 // import App from './App.vue'
 
 

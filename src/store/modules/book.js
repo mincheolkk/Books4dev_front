@@ -1,10 +1,7 @@
-import Vue from "vue"
-import Vuex from "vuex"
-import ApiService from "./index";
 
-Vue.use(Vuex)
 
-export const store = new Vuex.Store({
+
+export default {
     state: {
         // resultLists: [],
         searchList: [],
@@ -46,16 +43,5 @@ export const store = new Vuex.Store({
 
              ApiService.post(`http://localhost:8081/book/wish`, request);
         },
-
-        // async callKakao(){
-        //     const init = fetch("/api/user/me", {headers: {
-        //         'Authorization': 'Bearer ' + accessToken
-        //     }})
-        //     const result = await init
-        //     const data = await result.json()
-        //     console.log(data);
-            
-        // }
-    }
-
-})
+    } 
+}
