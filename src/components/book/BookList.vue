@@ -8,7 +8,7 @@
         <list-chart v-bind:key="result.detailData.isbn" :isbn="result.detailData.isbn" :time="result.readTimeMap" />
         <canvas :id="result.detailData.isbn" height="50"/>
         <p></p>
-        <add-read-book :bookData="result.detailData" />
+        <add-read-book :isbn="result.detailData.isbn" />
         <v-spacer></v-spacer>
         <p></p>
         <add-wish v-bind:key="result.detailData.isbn" :isbn="result.detailData.isbn" :title="result.detailData.title" :thumbnail="result.detailData.thumbnail" />

@@ -41,7 +41,7 @@
                 sm="6"
               >
                 <v-select
-                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년 ', '5년 ~ 10년','10년 ~']"
+                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
                   label="이 책을 읽었거나 읽고 있는 시기를 알려주세요"
                   v-model="request.readTime"
                   required
@@ -88,10 +88,12 @@
 </template>
 
 <script>
+import ApiService from '../../index';
 import validator from '../../utils/validator';
+import { timeConverter } from '../../utils/bookUtil'
 
   export default {
-    props: ['bookData'],
+    props: ['bookData','isbn'],
 
     data() {
         return {
@@ -101,25 +103,49 @@ import validator from '../../utils/validator';
                 star: "",
                 readTime: "",
                 recommendTime: "",
-            }
+            },
+            review: {}
+
        }
     },
+    
 
     methods:{
-        addBook() {
-            if (!this.$refs.dialogForm.validate()) {
+        convertReviewData() {
+          return {
+              readTime: timeConverter(this.request.readTime),
+              recommendTime: timeConverter(this.request.recommendTime),
+              star: this.request.star
+          }
+        },
+
+        async addBook() {
+          if (!this.$refs.dialogForm.validate()) {
                 return;
-            }
+          }
+
+          if (this.isbn === undefined){            
+            console.log(this.bookData)
             console.log("2")
-            // console.log(this.bookData + this.request);
+            let review;
+            review = {review :  this.convertReviewData()};
             let min;
-            min = {
-                book:this.bookData,
-                request:this.request
-            }
-            console.log(min);
-            console.log(min.book.item.isbn);
-            this.dialog = false;
+            min = Object.assign(this.bookData, review);
+            console.log("in unde min" + min);
+            ApiService.postWithToken("http://localhost:8081/bySearch",min)
+
+          } else if (this.isbn !== undefined){
+            console.log(this.isbn);
+            let review;
+            review = {review :  this.convertReviewData()};
+            review.isbn = this.isbn;
+
+            console.log(review);
+            ApiService.postWithToken("http://localhost:8081/bylist",review)
+
+          }
+            
+          this.dialog = false;
         }
     }
   }
