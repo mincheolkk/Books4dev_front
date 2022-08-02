@@ -1,6 +1,5 @@
 
 
-
 export default {
     state: {
         // resultLists: [],
@@ -29,7 +28,8 @@ export default {
 
     actions: {
         async fetchAllBooks(){
-            const res = await ApiService.get('https://438d14e0-58fe-4eb2-8704-c2b65596f942.mock.pstmn.io/test');
+            const res = await ApiService.get('http://localhost:8081/test/all');
+            console.log(res);
             const resultList = res.data.resultList;
             return resultList;
         },
