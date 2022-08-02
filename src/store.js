@@ -6,13 +6,14 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        // resultLists: [],
+        resultList: [],
         searchList: [],
         kakaoData: "",
     },
 
     getters: {
         getResultList: (state) => {
+            console.log("mapGetter = " + state.resultList);
             return state.resultList;
         }
         ,
@@ -31,12 +32,16 @@ export const store = new Vuex.Store({
     },
 
     actions: {
-        async fetchAllBooks(){
-            const res = await ApiService.get('https://438d14e0-58fe-4eb2-8704-c2b65596f942.mock.pstmn.io/test');
-            const resultList = res.data.resultList;
-            return resultList;
+        async fetchAllBooks({commit}){
+
+            const res = await ApiService.get('http://localhost:8081/test/all');
+            console.log(res);
+            const resultBook = res.data.body;
+            commit("setResultList", resultBook)
+            return resultBook;
         },
         async searchBook ({commit}, param) {
+            console.log("searchParam" + param);
             const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
             const searchBook = res.data.documents;
             commit("setSearchList",searchBook);
