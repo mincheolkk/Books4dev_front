@@ -22,7 +22,7 @@ export default {
             };
             console.log(request);
             // this.$store.dispatch("saveWishList",request);
-            ApiService.post(`http://localhost:8080/book/wish`, request);
+            ApiService.postWithToken(`http://localhost:8081/book/wish`, request);
             }
         }
     }
