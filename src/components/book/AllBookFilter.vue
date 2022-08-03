@@ -88,22 +88,20 @@ export default {
   },
 
   methods:{
-        async allBooks() {
-          this.books =  await this.$store.dispatch("fetchAllBooks")
-        },
+
       
         async createFilterUrl () {
-          const filterUrl = "?"+"memberType="+this.memberType+
+           return "?"+"memberType="+this.memberType+
                         "&"+"sortType="+this.sortType+
                         "&"+"recommendType="+this.recommendType;
-          return filterUrl;
+           
         },
        
        async onChange() {
         this.tempUrl = await this.createFilterUrl();
-        // await this.$router.push(filterUrl);
-        console.log("filterurl" + this.tempUrl);
-        this.$store.dispatch("fetchAllBooks" );
+
+
+        this.$store.dispatch("filterAllBooks",this.tempUrl);
     }
   }
 }

@@ -52,6 +52,15 @@ export const store = new Vuex.Store({
              ApiService.post(`http://localhost:8081/book/wish`, request);
         },
 
+        async filterAllBooks({commit}, param){
+
+            const res = await ApiService.get(`http://localhost:8081/test/all${param}`);
+            console.log(res);
+            const resultBook = res.data.body;
+            commit("setResultList", resultBook)
+            return resultBook;
+        },
+
         // async callKakao(){
         //     const init = fetch("/api/user/me", {headers: {
         //         'Authorization': 'Bearer ' + accessToken
