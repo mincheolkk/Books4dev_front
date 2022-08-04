@@ -1,8 +1,6 @@
-
-
 export default {
     state: {
-        // resultLists: [],
+        resultLists: [],
         searchList: [],
         kakaoData: "",
     },
@@ -42,6 +40,12 @@ export default {
         async saveWishList(request) {
 
              ApiService.post(`http://localhost:8081/book/wish`, request);
+        },
+        async filterAllBooks({commit}, param){
+            const res = await ApiService.get(`http://localhost:8081/test/all${param}`);
+            const resultBook = res.data.body;
+            commit("setResultList", resultBook)
+            return resultBook;
         },
     } 
 }
