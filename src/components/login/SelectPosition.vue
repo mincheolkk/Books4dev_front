@@ -64,7 +64,7 @@
 <script>
 import ApiService from '../../index.js'
 import validator from '../../utils/validator';
-// import { positionConverter } from '../../utils/memberUtil'
+import { positionConverter } from '../../utils/bookUtil'
 
 
 export default {
@@ -86,23 +86,23 @@ export default {
 
     methods:{
 
-        // convertPositionData() {
-        //     console.log("this is data = " + this.positionData)
+        convertPositionData() {
+            console.log("this is data = " + this.positionData)
             
-        //     return {
-        //         temp : positionConverter(this.positionData)
-        //     }
-        // },
+            return {
+                temp : positionConverter(this.positionData)
+            }
+        },
 
         async addMemberType() {
             if (!this.$refs.dialogForm.validate()) {
                 return;
             }
             this.temp = {
-                position: this.positionData
+                position: this.convertPositionData()
             }
 
-            await ApiService.postWithToken("http://localhost:8081/selectPosition", this.temp)
+            await ApiService.getWithToken("http://localhost:8081/selectPosition", this.temp)
             this.dialog = false;
             this.$router.push('/');
         },

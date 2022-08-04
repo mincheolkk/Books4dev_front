@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
         resultList: [],
         searchList: [],
         kakaoData: "",
+        loginMember: []
     },
 
     getters: {
@@ -19,6 +20,12 @@ export const store = new Vuex.Store({
         ,
         getSearchList: (state) => {
             return state.searchList;
+        },
+        getLoginMember(state) {
+            return state.loginMember;
+        },
+        isLoggedIn(state) {
+            return state.loginMember.length !== 0;
         }
     },
 
@@ -28,34 +35,34 @@ export const store = new Vuex.Store({
         },
         setSearchList(state, searchList) {
             state.searchList = searchList;
+        },
+        setLoginMember(state, res) {
+            state.loginMember = res;
+        },
+        setLogoutMember(state) {
+            state.loginMember = [];
         }
     },
 
     actions: {
         async fetchAllBooks({commit}){
-
             const res = await ApiService.get('http://localhost:8081/test/all');
-            console.log(res);
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
             return resultBook;
         },
         async searchBook ({commit}, param) {
-            console.log("searchParam" + param);
             const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
             const searchBook = res.data.documents;
             commit("setSearchList",searchBook);
             return searchBook;
         },
         async saveWishList(request) {
-
-             ApiService.post(`http://localhost:8081/book/wish`, request);
+            ApiService.post(`http://localhost:8081/book/wish`, request);
         },
 
         async filterAllBooks({commit}, param){
-
             const res = await ApiService.get(`http://localhost:8081/test/all${param}`);
-            console.log(res);
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
             return resultBook;
@@ -70,6 +77,11 @@ export const store = new Vuex.Store({
         //     console.log(data);
             
         // }
+        async fetchLoginMember({ commit }) {
+            const { res } = await ApiService.getWithToken("http://localhost:8081/me");
+            commit("setLoginMember", res);
+            return res;
+        }
     }
 
 })

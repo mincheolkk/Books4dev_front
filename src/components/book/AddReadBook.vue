@@ -71,14 +71,14 @@
             text
             @click="dialog = false"
           >
-            Close
+            닫기
           </v-btn>
           <v-btn
             color="blue darken-1"
             text
             @click="addBook()"
           >
-            Save
+            저장
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -125,26 +125,21 @@ import { timeConverter } from '../../utils/bookUtil'
           }
 
           if (this.isbn === undefined){            
-            console.log(this.bookData)
-            console.log("2")
             let review;
             review = {review :  this.convertReviewData()};
             let min;
             min = Object.assign(this.bookData, review);
-            console.log("in unde min" + min);
-            ApiService.postWithToken("http://localhost:8081/bySearch",min)
 
-          } else if (this.isbn !== undefined){
-            console.log(this.isbn);
+            ApiService.postWithToken("http://localhost:8081/bySearch",min)
+          } 
+          else if (this.isbn !== undefined){
             let review;
             review = {review :  this.convertReviewData()};
             review.isbn = this.isbn;
 
-            console.log(review);
             ApiService.postWithToken("http://localhost:8081/bylist",review)
-
           }
-            
+          
           this.dialog = false;
         }
     }

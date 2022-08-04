@@ -1,6 +1,6 @@
 <template>
     <div>
-        <canvas :id={isbn} />
+        <!-- <canvas :id={isbn} height="30"/> -->
         <p>개발자들이 추천 하는 시기</p>
     </div>
 </template>
@@ -15,6 +15,8 @@ export default {
 
     data() {
         return {
+            start:null,
+            temp:[],
             options:{
                 scales: {
                     x:{
@@ -55,11 +57,11 @@ export default {
         makeData(timeData) {
             console.log(timeData);
             this.beforeChart = {
-                "before":this.timeDivide(timeData["before"]),
-                "after":this.timeDivide(timeData["after"]),
-                "twoYear":this.timeDivide(timeData["twoYear"]),
-                "fiveYear":this.timeDivide(timeData["fiveYear"]),       
-                "sevenYear":this.timeDivide(timeData["sevenYear"])}     
+                "before":this.timeDivide(timeData["beforeCount"]),
+                "after":this.timeDivide(timeData["afterCount"]),
+                "twoYear":this.timeDivide(timeData["twoYearCount"]),
+                "fiveYear":this.timeDivide(timeData["fiveYearCount"]),       
+                "tenYear":this.timeDivide(timeData["tenYearCount"])}     
                 console.log(this.beforeChart);
                 return this.beforeChart;
             },
@@ -73,61 +75,62 @@ export default {
         async drawChart(timeData) {
 
             var chartData =  {
-                        labels:['a'],
+                        labels:['추천 수'],
                         datasets:[
                             {
                                 label:"취업 전",
-                                data:[timeData["before"]],
+                                data:[timeData["beforeCount"]],
                                 backgroundColor:"#6EC6CC"
                             },
                             {
                                 label:"취업 후 ~ 2년",
-                                data:[timeData["after"]],
+                                data:[timeData["afterCount"]],
                                 backgroundColor:"#56B0D1"
                             },
                             {
                                 label:'2년 ~ 5년',
-                                data:[timeData["twoYear"]],
+                                data:[timeData["twoYearCount"]],
                                 backgroundColor:"#6297CD"
                             },
                             {
                                 label:'5년 ~ 10년',
-                                data:[timeData["fiveYear"]],
+                                data:[timeData["fiveYearCount"]],
                                 backgroundColor:"#7F7AB9"
                             },
                             {
                                 label:'10년 ~',
-                                data:[timeData["sevenYear"]],
+                                data:[timeData["tenYearCount"]],
                                 backgroundColor:"#955B93"
                             },
                         ]
                     };
 
-            // var ctx = document.getElementById(isbn)
+            // var ctx = document.getElementById(this.isbn)
             let start = null;
             var ctx = this.isbn;
-            console.log("ctx :" + ctx);
+
             if(start != null) {
                 start.destory();
                 
             }
-            start = await new Chart(ctx, {
+            start = new Chart(ctx, {
                 type: 'bar',
                 data: chartData,
                 options: this.options
             })
-            console.log(start);
-            //   start.destroy();
-              console.log("end")
+
         }
     },
     
     async mounted() {
         // console.log("this is created")
-        console.log(this.isbn);
+
         this.$nextTick(function () {this.pleaseChart(this.time);
+
+
         })
     },
+    
 
 }
 </script>

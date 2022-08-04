@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import axios from "axios";
+// import axios from "axios";
 import { mapGetters } from 'vuex';
 
 
@@ -32,15 +32,15 @@ export default {
             this.searchTitle = '';
         }
         ,
-        async getSearch() {
-            if (this.searchTitle.length > 0) {
+        // async getSearch() {
+        //     if (this.searchTitle.length > 0) {
             
-            this.res = await axios.get('http://localhost:8080/todo?query='+this.searchTitle);        
-            // this.$router.push('search')
-            this.clearInput();
-            return this.res;
-            }
-        },
+        //     this.res = await axios.get('http://localhost:8081/todo?query='+this.searchTitle);        
+        //     // this.$router.push('search')
+        //     this.clearInput();
+        //     return this.res;
+        //     }
+        // },
         async vuexSearch() {
 
             this.res = await this.$store.dispatch("searchBook", this.searchTitle );

@@ -62,8 +62,8 @@ export default {
     return {
         memberTypeMap: [
             { key: "", text: "모든 개발자" },
-            { key: "BACK", text: "백엔드 개발자" },
-            { key: "FRONT", text: "프론트 개발자" }            
+            { key: "BackEnd", text: "백엔드 개발자" },
+            { key: "FrontEnd", text: "프론트 개발자" }            
         ],
         
         sortTypeMap: [
@@ -88,8 +88,6 @@ export default {
   },
 
   methods:{
-
-      
         async createFilterUrl () {
            return "?"+"memberType="+this.memberType+
                         "&"+"sortType="+this.sortType+
@@ -99,7 +97,6 @@ export default {
        
        async onChange() {
         this.tempUrl = await this.createFilterUrl();
-
 
         this.$store.dispatch("filterAllBooks",this.tempUrl);
     }

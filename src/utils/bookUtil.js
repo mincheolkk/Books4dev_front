@@ -1,4 +1,4 @@
-const timeDict = {
+const timeMap = {
     '개발자 취업 전':"before", 
     '개발자 취업 후 ~ 2년':"after", 
     '2년 ~ 5년':"twoYear", 
@@ -7,5 +7,17 @@ const timeDict = {
 };
 
 export const timeConverter = data => {
-    return timeDict[data]
+    return timeMap[data]
+}
+const PositionMap = {
+    'BackEnd':'BackEnd',
+    'FrontEnd':'FrontEnd',
+    'DevOps':'DevOps',
+    'AI/ML':'AInML',
+    'Data':'DATA',
+    '기타 또는 미정':'ETC'
+};
+
+export const positionConverter = data => {
+    return PositionMap[data]
 }
