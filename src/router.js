@@ -7,7 +7,7 @@ import SearchList from './components/book/SearchList';
 import SelectPosition from './components/login/SelectPosition'
 import NewLogin from './components/login/NewLogin'
 // import App from './App.vue'
-
+import MyPage from './components/mypage/MyPage'
 
 Vue.use(VueRouter);
 
@@ -20,7 +20,8 @@ export const router = new VueRouter({
         { path: '/', component: BookList},
         { path: "/search", component: SearchList},
         { path: "/selectPosition", component: SelectPosition},
-        { path: "/init", component:NewLogin}
+        { path: "/init", component:NewLogin},
+        { path: "/mypage", component:MyPage}
 
     ]
 

@@ -19,7 +19,7 @@ export default {
         setLoginMember(state, res) {
             state.loginMember = res;
         },
-        setLogoutMember(state) {
+        setLogOutMember(state) {
             state.loginMember = [];
         }
     },

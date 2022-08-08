@@ -44,7 +44,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="closeModal()"
           >
             닫기
           </v-btn>
@@ -72,12 +72,6 @@ export default {
         return {
             rules: { ...validator.book },
             dialog: true,
-            request: {
-                star: "",
-                readTime: "",
-                recommendTime: "",
-            },
-            review: {},
             positionData: "",
             temp:{}
 
@@ -87,11 +81,7 @@ export default {
     methods:{
 
         convertPositionData() {
-            console.log("this is data = " + this.positionData)
-            
-            return {
-                temp : positionConverter(this.positionData)
-            }
+            return positionConverter(this.positionData)
         },
 
         async addMemberType() {
@@ -102,18 +92,27 @@ export default {
                 position: this.convertPositionData()
             }
 
-            await ApiService.getWithToken("http://localhost:8081/selectPosition", this.temp)
+            await ApiService.postWithToken("http://localhost:8081/selectPosition", this.temp)
             this.dialog = false;
             this.$router.push('/');
         },
+        async closeModal() {
+            this.dialog = false;
+            this.$router.push('/');
+        }
+    },
+    gohome() {
+      
     },
 
     async beforeCreate() {
-        const dd = await ApiService.getWithToken("http://localhost:8081/checkPosition");
-        console.log(dd);
-        console.log(dd.status)
-        if (dd.status === 200) {
-            this.$router.push('/');
+        const res = await ApiService.getWithToken("http://localhost:8081/checkPosition");
+        await this.$store.dispatch("fetchLoginMember")
+        if (res.status === 200) {
+            this.$router.push('/'); 
+            console.log("go home!");
+
+            // this.$router.push('/');
         }
     }
 }    

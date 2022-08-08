@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
         resultList: [],
         searchList: [],
         kakaoData: "",
-        loginMember: []
+        loginMember: null,
+        readBook: {}
     },
 
     getters: {
@@ -25,7 +26,12 @@ export const store = new Vuex.Store({
             return state.loginMember;
         },
         isLoggedIn(state) {
-            return state.loginMember.length !== 0;
+            console.log("state.loginMember = " + state.loginMember);
+            return state.loginMember !== null;
+        },
+        getReadBook(state) {
+            console.log("reeedd boook = " + state.readBook);
+            return state.readBook;
         }
     },
 
@@ -38,9 +44,13 @@ export const store = new Vuex.Store({
         },
         setLoginMember(state, res) {
             state.loginMember = res;
+            console.log("mu state.login = " + state.loginMember);
         },
-        setLogoutMember(state) {
-            state.loginMember = [];
+        setLogOutMember(state) {
+            state.loginMember = null;
+        },
+        setReadBook(state, res) {
+            state.readBook = res;
         }
     },
 
@@ -61,26 +71,30 @@ export const store = new Vuex.Store({
             ApiService.post(`http://localhost:8081/book/wish`, request);
         },
 
-        async filterAllBooks({commit}, param){
+        async filterAllBooks({commit}, param) {
             const res = await ApiService.get(`http://localhost:8081/test/all${param}`);
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
             return resultBook;
         },
 
-        // async callKakao(){
-        //     const init = fetch("/api/user/me", {headers: {
-        //         'Authorization': 'Bearer ' + accessToken
-        //     }})
-        //     const result = await init
-        //     const data = await result.json()
-        //     console.log(data);
-            
-        // }
+        // 로그인 관련 
         async fetchLoginMember({ commit }) {
-            const { res } = await ApiService.getWithToken("http://localhost:8081/me");
+            const { res } = await ApiService.getWithToken(`http://localhost:8081/me`);
+            console.log(res);
+            console.log("action fetchLogin res = " + res);
             commit("setLoginMember", res);
             return res;
+        },
+
+        async fetchLogOutMember({ commit }) {
+            await ApiService.getWithToken(`http://localhost:8081/out`)
+            commit("setLogOutMember");
+        },
+
+        async fetchReadBook({ commit }) {
+            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/readBook");
+            commit("setReadBook", fetchData.data);
         }
     }
 

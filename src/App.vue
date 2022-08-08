@@ -19,9 +19,9 @@ export default {
   components: {
     HomeHeader,
     // BookList,
-
-
-
+  },
+  created() {
+    // this.$router.push()
   }
 }
 </script>
