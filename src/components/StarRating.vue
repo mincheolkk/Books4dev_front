@@ -18,7 +18,7 @@ export default {
     
     methods:{
         ratingToPercent() {
-            const score = +this.avgStar * 20;
+            const score = this.avgStar * 20;
 
             return score;
         }

@@ -10,15 +10,14 @@ export const store = new Vuex.Store({
         searchList: [],
         kakaoData: "",
         loginMember: null,
-        readBook: {}
+        readBook: {},
+        wishBookList: [],
     },
 
     getters: {
         getResultList: (state) => {
-            console.log("mapGetter = " + state.resultList);
             return state.resultList;
-        }
-        ,
+        },
         getSearchList: (state) => {
             return state.searchList;
         },
@@ -26,13 +25,14 @@ export const store = new Vuex.Store({
             return state.loginMember;
         },
         isLoggedIn(state) {
-            console.log("state.loginMember = " + state.loginMember);
             return state.loginMember !== null;
         },
         getReadBook(state) {
-            console.log("reeedd boook = " + state.readBook);
             return state.readBook;
-        }
+        },
+        getWishBook(state) {
+            return state.wishBookList;
+        },
     },
 
     mutations: {
@@ -51,6 +51,9 @@ export const store = new Vuex.Store({
         },
         setReadBook(state, res) {
             state.readBook = res;
+        },
+        setWishBook(state, res) {
+            state.wishBookList = res;
         }
     },
 
@@ -95,6 +98,11 @@ export const store = new Vuex.Store({
         async fetchReadBook({ commit }) {
             const fetchData = await ApiService.getWithToken("http://localhost:8081/test/readBook");
             commit("setReadBook", fetchData.data);
+        },
+
+        async fetchWishBook({ commit }) {
+            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/readBook");
+            commit("setWishBook", fetchData.data);
         }
     }
 
