@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <canvas :id={isbn} height="30"/> -->
-        <p>개발자들이 추천 하는 시기</p>
+        <h3 class="reco-title">개발자들이 추천 하는 시기</h3>
     </div>
 </template>
 
@@ -123,11 +123,7 @@ export default {
     },
     
     async mounted() {
-        // console.log("this is created")
-
         this.$nextTick(function () {this.pleaseChart(this.time);
-
-
         })
     },
     
@@ -136,5 +132,11 @@ export default {
 </script>
 
 <style>
-
+.reco-title {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    text-align: left;
+    margin: 20px;
+}
 </style>
