@@ -18,14 +18,7 @@
                     </div>
                     <div>
                         <div class="readbook-title">{{result.title}}</div>
-                        <div class="readbook-title">내 별점</div>
-                        <!-- <svg width="12" height="10" viewBox="0 0 12 10" xmlns="http://www.w3.org/2000/svg" fill="#ff0558" class="star">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6 8.02L3.14233 9.91131C2.91094 10.0644 2.61352 9.84836 2.68767 9.58097L3.60334 6.27872L0.921531 4.14536C0.704379 3.97262 0.817982 3.62299 1.0952 3.61087L4.51878 3.46128L5.719 0.251483C5.81619 -0.00842059 6.18381 -0.00842094 6.281 0.251483L7.48122 3.46128L10.9048 3.61087C11.182 3.62299 11.2956 3.97262 11.0785 4.14536L8.39666 6.27872L9.31233 9.58097C9.38648 9.84836 9.08906 10.0644 8.85767 9.91131L6 8.02Z"></path>
-                        </svg> -->
-                        <v-img class="logo-star" :src="require(`@/assets/logo_star.svg`)" />
-
-                        <!-- <div class="readbook-title">{{result.star}}</div> -->
-                        <!-- <star-rating :avgStar="result.star" class="readbook-title" justify-center/> -->
+                        <star-rating :avgStar="result.star" />
                     </div>
                 </li>
             </ui>
@@ -49,8 +42,7 @@
                     </div>
                     <div>
                         <div class="readbook-title">{{result.title}}</div>
-                        <div class="readbook-title">{{result.star}}</div>
-
+                        <star-rating :avgStar="result.star" />
                     </div>
                 </li>
             </ui>
@@ -74,8 +66,7 @@
                     </div>
                     <div>
                         <div class="readbook-title">{{result.title}}</div>
-                        <div class="readbook-title">{{result.star}}</div>
-
+                        <star-rating :avgStar="result.star" />
                     </div>
                 </li>
             </ui>
@@ -99,8 +90,7 @@
                     </div>
                     <div>
                         <div class="readbook-title">{{result.title}}</div>
-                        <div class="readbook-title">{{result.star}}</div>
-
+                        <star-rating :avgStar="result.star" />
                     </div>
                 </li>
             </ui>
@@ -124,8 +114,7 @@
                     </div>
                     <div>
                         <div class="readbook-title">{{result.title}}</div>
-                        <div class="readbook-title">{{result.star}}</div>
-
+                        <star-rating :avgStar="result.star" />
                     </div>
                 </li>
             </ui>
@@ -135,13 +124,15 @@
 </template>
 
 <script>
-// import StarRating from '../StarRating.vue'
+import StarRating from '../StarRating.vue'
+
 
 export default {
     props:["getReadBook"],
 
     components:{
-        // StarRating
+
+        StarRating
     },
 }
 </script>
@@ -158,32 +149,21 @@ export default {
 .shadow {
   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
-.book-item { 
-    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
-    width: 150px !important;
-    justify-content: center;
 
-}
-.book-img {
-    /* height: 0%; */
-
-}
 .timeLine-text {
     text-align: left !important;
     margin-left: 50px !important;
-    margin-bottom: 20px !important;
+    /* margin-bottom: 20px !important; */
 }
-.star-item {
-    /* position: fixed */
-        /* margin-left: 30px !important; */
-        overflow: hidden;
-}
+
 .readbook-ui {
     padding: 0;
     display: block !important;
     margin-right: -5px !important;
     margin-left: -5px !important;
     margin: 14px 0 0;
+    list-style: none;
+    
 }
 
 .readbook-li {
@@ -235,10 +215,16 @@ export default {
 }
 .first {
     margin: 0 20px;
+    transition: 500ms;
+    /* display: flex; */
 }
 .logo-star {
     width: 12px;
     fill: aqua;
     color: #f93;
+    position: absolute;
+}
+.zero {
+    box-shadow: 5px 10px 10px rgba(0.03, 1, 1, 0.03);
 }
 </style>

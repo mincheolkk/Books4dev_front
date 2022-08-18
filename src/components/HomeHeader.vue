@@ -1,19 +1,39 @@
 <template>
-  <div>
-  <h1 @click="$router.push('/')">개발자의 서재</h1>
+<header class ="header-base">
+  <nav>
+    <div class="header-zero">
+      <ul class="header-ul">
+        <li class="li-logo">
+          <v-img :src="require(`@/assets/logo.png`)" @click="$router.push('/')"></v-img>
+        <li class="li-searchBar">
+          <v-spacer></v-spacer>
+          <book-input class="header-input"/> </li>
+        <li class="li-login">
+          <login-page v-if="getLoginMember === null"/>
+          <template v-if="isLoggedIn">
+            <v-list style="display: flex">
+                <v-list-item @click="$router.push('/mypage')">
+                  내 서재
+                </v-list-item>
+                <v-list-item @click="logout"> 로그아웃 </v-list-item>
+              </v-list>
+        </template> </li>
+      </ul>
+          
+      <!-- <h1 @click="$router.push('/')">개발자의 서재</h1>
         <login-page v-if="getLoginMember === null"/>
-
-    <book-input />
-      
-    <template v-if="isLoggedIn">
-        <v-list>
-            <v-list-item @click="$router.push('/mypage')">
-              내 서재
-            </v-list-item>
-            <v-list-item @click="logout"> 로그아웃 </v-list-item>
-          </v-list>
-    </template>
-  </div>
+        <book-input />
+        <template v-if="isLoggedIn">
+            <v-list>
+                <v-list-item @click="$router.push('/mypage')">
+                  내 서재
+                </v-list-item>
+                <v-list-item @click="logout"> 로그아웃 </v-list-item>
+              </v-list>
+        </template> -->
+    </div>
+  </nav>
+</header>
 </template>
 
 <script>
@@ -56,7 +76,7 @@ export default {
     },
     },
 
-    async beforeCreate() {
+    async beforeCreate() { 
       console.log("before home loading")
 
       await this.$store.dispatch("fetchLoginMember")
@@ -67,6 +87,49 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.header-base {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+.header-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+    position: relative;
+
+}
+.li-logo {
+  display: flex;
+  align-items: center;
+  height: 62px;
+  margin: 0 130px 0 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.li-searchBar {
+  margin: 20px 20px 0px 20px;
+    display: flex;
+    align-items: center;
+    height: 62px;
+    margin: 0 0 0 24px;
+    flex-shrink: 0;
+    width: 40%;
+}
+.li-login {
+  position: relative;
+  width: 20%;
+  margin: 0;
+  margin-left: auto;
+  cursor: pointer;
+}
+.header-input {
+  margin-right: 10px;
+}
 
 </style>

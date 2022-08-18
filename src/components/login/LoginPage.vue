@@ -9,14 +9,15 @@
 
 <style>
 .logo-kakao {
-  max-height: 160px !important;
+  /* max-height: 160px !important;
   max-width: 160px !important;
-  margin-right: 80px !important;
+  margin-right: 80px !important; */
+  max-height: 140px;
+  max-width: 140px;
+  margin-right: 80px; 
 }
 
 .btn-kakao {
-
   max-width: 1px !important;
-
 }
 </style>

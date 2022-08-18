@@ -10,7 +10,7 @@
       item-value="key"
       :items=memberTypeMap
       hide-details
-      placeholder="등록한 개발자"
+      placeholder="개발자 직군"
       menu-props="auto"
       single-line
     ></v-select>
@@ -42,13 +42,13 @@
       hide-details
       single-line
     ></v-select>
-    <v-btn
+    <!-- <v-btn
             color="blue darken-1"
             text
             @click="goFilter()"
           >
             조회
-          </v-btn>
+          </v-btn> -->
 
 
   </div>
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
         memberTypeMap: [
-            { key: "", text: "모든 개발자" },
+            { key: "All", text: "모든 개발자" },
             { key: "BackEnd", text: "백엔드 개발자" },
             { key: "FrontEnd", text: "프론트 개발자" }            
         ],
@@ -72,7 +72,7 @@ export default {
         ],
         
         recommendTypeMap: [
-            { key: "", text: "모든 시기" },
+            { key: "All", text: "모든 시기" },
             { key: "before", text: "취업 전" },
             { key: "after", text: "취업 후 ~ 2년" },
             { key: "twoYear", text: "취업 후 2년 ~ 5년" },
@@ -117,7 +117,8 @@ export default {
   width: 10em;
   max-width: 12em;
   margin-right: 50px;
-   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+  text-align: center;
   
   
 }

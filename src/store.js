@@ -30,7 +30,7 @@ export const store = new Vuex.Store({
         getReadBook(state) {
             return state.readBook;
         },
-        getWishBook(state) {
+        getWishBook: (state) => {
             return state.wishBookList;
         },
     },

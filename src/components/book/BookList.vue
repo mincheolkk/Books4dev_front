@@ -1,27 +1,28 @@
 <template>
-    <div>
+    <div class="base-size">
+        <div class="first-text">개발자들이 읽은 책들</div>
     <all-book-filter />
-    <v-card v-for="(result) in getResultList" v-bind:key="result.isbn" class="shadow">
+    <v-card v-for="(result) in getResultList" v-bind:key="result.isbn" class="card shadow">
         <div class="zero">
           <img :src="result.thumbnail" alt="image" class="book-img shadow"/>
           <div class="book-detail">
             <h3>{{result.title}}</h3>
-            <h4 class="authors-style">지은이 {{result.authors}}</h4>
+            <h4 class="authors-style"> {{result.authors}}</h4>
             <v-spacer></v-spacer>
-            <p class="text-top">평점 {{result.avgStar}} </p> 
-            <p class="text-bottom">등록된 수 : {{result.registerCount}}</p>
+            <p class="text-top"> 책 등록  {{result.registerCount}} </p> 
+            <p class="text-bottom"> 리뷰 평점 ★ {{result.avgStar}}</p>
           </div>
         </div>
         <!-- <p>개발자들이 추천 하는 시기</p> -->
-        <div class="first">
-        <list-chart v-bind:key="result.isbn" :isbn="result.isbn" :time="result.recommendTimeDto" />
-        <canvas :id="result.isbn" height="30"/>
+        <div class="chart">
+          <list-chart v-bind:key="result.isbn" :isbn="result.isbn" :time="result.recommendTimeDto" />
+          <canvas :id="result.isbn" height="30"/>
+        </div>
 
-        <add-read-book :isbn="result.isbn" />
-        <v-spacer></v-spacer>
-        <p></p>
-        <add-wish v-bind:key="result.isbn" :isbn="result.isbn" :title="result.title" :thumbnail="result.thumbnail" />
-        <p></p>
+        <div class="plus-button">
+          <v-spacer></v-spacer>
+          <add-read-book :isbn="result.isbn" class="add-button"/>
+          <add-wish v-bind:key="result.isbn" :isbn="result.isbn" :title="result.title" :thumbnail="result.thumbnail" class="wish-button shadow"/>
         </div>
     </v-card>
     </div>
@@ -87,7 +88,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .shadow {
   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
@@ -98,6 +99,7 @@ export default {
   padding-top: 20px;
   overflow: hidden;
   text-align: left;
+  text-overflow: ellipsis;
 
 }
 .book-img {
@@ -109,10 +111,9 @@ export default {
   padding: 20px 0 0 20px;
   position: relative;
   display: inline-block !important;
-      width: 100%;
-
+  width: 100%;
 }
-.first {
+.chart {
   position: relative;
   display: block;
 }
@@ -124,9 +125,44 @@ export default {
 .text-bottom {
   border-bottom: 1px solid rgb(237, 237, 237);
   padding: 0 0 8px 0;
+  color:  #fc4c4d;
 
 }
 .authors-style {
   color: gray;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+    overflow: hidden;
+
+}
+.base-size {
+  /* width: 522px;
+  width: 33.; */
+}
+.plus-button {
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  
+}
+.card {
+  /* height: 20%; */
+}
+.add-button {
+  
+}
+.first-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.01em;
+    color: #141414;
+    min-width: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    margin: 20px;
 }
 </style>

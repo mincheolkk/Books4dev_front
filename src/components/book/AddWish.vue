@@ -20,7 +20,6 @@ export default {
                 title: this.title,
                 thumbnail: this.thumbnail
             };
-            console.log(request);
             // this.$store.dispatch("saveWishList",request);
             ApiService.postWithToken(`http://localhost:8081/book/wish`, request);
             }

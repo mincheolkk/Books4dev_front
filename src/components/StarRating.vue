@@ -28,17 +28,17 @@ export default {
 
 <style>
 .star-ratings {
-  color: #aaa9a9; 
+  color: #ff5d5d; 
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
   -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
   -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #6d451e;
+  -webkit-text-stroke-color: #ff5d5d;
 }
  
 .star-ratings-fill {
-  color: #fff58c;
+  color: #ff5d5d;
   padding: 0;
   position: absolute;
   z-index: 1;
@@ -46,7 +46,7 @@ export default {
   top: 0;
   left: 0;
   overflow: hidden;
-  -webkit-text-fill-color: gold;
+  -webkit-text-fill-color: #ff5d5d;
 }
  
 .star-ratings-base {

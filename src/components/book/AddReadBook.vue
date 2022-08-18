@@ -1,6 +1,6 @@
 <template>
 
- <v-row justify="center">
+ <!-- <v-row justify="center"> -->
     <v-form ref="dialogForm" >
     <v-dialog
       v-model="dialog"
@@ -23,10 +23,10 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-            <v-row>
+            <!-- <v-row > -->
               <v-col
                 cols="12"
-                sm="6"
+                sm="8"
               >
                 <v-select
                   :items="['1', '2', '3', '4','5']"
@@ -38,7 +38,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="6"
+                sm="8"
               >
                 <v-select
                   :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
@@ -50,7 +50,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="6"
+                sm="8"
               >
                 <v-select
                   :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
@@ -60,7 +60,7 @@
                   :rules="rules.selected"
                 ></v-select>
               </v-col>
-            </v-row>
+            <!-- </v-row> -->
           </v-container>
           <small>*주절주절</small>
         </v-card-text>
@@ -84,7 +84,7 @@
       </v-card>
     </v-dialog>
     </v-form>
-  </v-row>
+  <!-- </v-row> -->
 </template>
 
 <script>
