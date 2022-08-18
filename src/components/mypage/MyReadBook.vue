@@ -1,5 +1,6 @@
 <template>
     <div>
+        <my-page />
         <template>
             <h2 class="timeLine-text">Before Career</h2>
         </template>
@@ -124,16 +125,27 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import StarRating from '../StarRating.vue'
+import MyPage from './MyPage.vue'
 
 
 export default {
-    props:["getReadBook"],
+    // props:["getReadBook"],
 
     components:{
-
+        MyPage,
         StarRating
     },
+    computed: {
+        ...mapGetters(
+            ["isLoggedIn", "getReadBook"]
+        )
+    },
+    async beforeCreate() {
+        await this.$store.dispatch("fetchLoginMember")
+        await this.$store.dispatch("fetchReadBook")
+    }
 }
 </script>
 

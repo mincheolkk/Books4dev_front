@@ -9,7 +9,6 @@ import ApiService from "../../index";
 
 export default {
    
-
     async beforeCreate() {
         const token = this.$route.query.token;
         const obj = {
@@ -22,10 +21,6 @@ export default {
         localStorage.setItem("refreshToken", refresh.data);
 
         this.$router.push('/selectPosition');
-    },
-
-    mounted() {
-        console.log("mounted ? ")
     },
 }
 </script>

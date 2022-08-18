@@ -85,9 +85,6 @@ export default {
   margin-bottom: 20px;
   display: flex;
 }
-.search-base {
-    /* height: 300px; */
-}
 .first-text {
     font-size: 22px;
     font-weight: 700;

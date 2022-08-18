@@ -10,14 +10,14 @@
         <div class="select-button">
             <ul class="my-ul">
                 <li class="my-li">
-                    <a href="/mypage/read" class="my-href">읽은 책</a>
+                    <a href="/mypage" class="my-href">읽은 책</a>
                 </li>
                 <li class="my-li">
                     <a href="/mypage/wish" class="my-href">관심있는 책</a>
                 </li>
             </ul>
         </div>
-            <my-read-book :getReadBook="getReadBook" />
+            <!-- <my-read-book :getReadBook="getReadBook" /> -->
             <!-- <my-wish-book /> -->
 
     </div>
@@ -26,13 +26,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import MyReadBook from './MyReadBook.vue'
+// import MyReadBook from './MyReadBook.vue'
 // import MyWishBook from './MyWishBook.vue'
 
 export default {
 
     components:{
-        MyReadBook,
+        // MyReadBook,
         // MyWishBook,
     },
 
@@ -44,8 +44,6 @@ export default {
 
     methods: {
         fetchReadBook() {
-
-            console.log("in mypage" + this.getReadBook.after[0]);
         }
     },
 

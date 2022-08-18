@@ -1,5 +1,6 @@
 <template>
-        
+    <div>
+        <my-page />
         <div class="zero" display=block>
             <div class="first-text">내가 관심있는 책들</div>
             <div class="first">
@@ -21,12 +22,13 @@
                 </ui>
             </div>
         </div>
-
+    </div>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import ApiService from "../../index";
+import MyPage from "./MyPage.vue"
 
 
 export default {
@@ -35,7 +37,14 @@ export default {
             wishbook:"",
         }
     },
-    
+    components:{
+      MyPage  
+    },
+    computed: {
+        ...mapGetters(
+            ["isLoggedIn"]
+        )
+    },
     async beforeCreate() {
         const res = await ApiService.getWithToken("http://localhost:8081/test/wish");
 

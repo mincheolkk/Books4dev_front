@@ -135,10 +135,7 @@ export default {
     overflow: hidden;
 
 }
-.base-size {
-  /* width: 522px;
-  width: 33.; */
-}
+
 .plus-button {
   position: relative;
   margin-top: 15px;
@@ -146,12 +143,8 @@ export default {
   display: flex;
   
 }
-.card {
-  /* height: 20%; */
-}
-.add-button {
-  
-}
+
+
 .first-text {
     font-size: 22px;
     font-weight: 700;
