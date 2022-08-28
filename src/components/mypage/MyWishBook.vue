@@ -38,7 +38,7 @@ export default {
         }
     },
     components:{
-      MyPage  
+        MyPage
     },
     computed: {
         ...mapGetters(

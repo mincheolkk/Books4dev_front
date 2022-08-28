@@ -2,9 +2,18 @@
 <header class ="header-base">
   <nav>
     <div class="header-zero">
+      
       <ul class="header-ul">
-        <li class="li-logo">
-          <v-img :src="require(`@/assets/logo.png`)" @click="$router.push('/')"></v-img>
+        <!-- <li class="li-logo">
+          <v-img :src="require(`@/assets/logo.png`)" @click="$router.push('/')"></v-img> -->
+        <li >
+          <svg width="350" height="70" viewBox="0 0 620 70">
+          <text 
+            x="30" y="20" 
+            fill="#ED6E46" font-size="50" font-family="Helvetica" @click="$router.push('/')">
+            개발자의 서재
+          </text>
+        </svg> </li>
         <li class="li-searchBar">
           <v-spacer></v-spacer>
           <book-input class="header-input"/> </li>

@@ -8,7 +8,7 @@
                 <h3>{{item.title}}</h3>
                 <h4 class="search-authors">출판사 : {{item.publisher}}</h4>
                 <h4 class="search-authors">지은이 : {{item.authors}}</h4>
-                <h4 class="search-authors">가격 : {{item.price}}</h4>
+                <h4 class="search-authors">정가 : {{item.price}}원</h4>
 
                 <!-- <add-read-book :bookData={item} />
                 <add-wish :isbn="item.isbn" :thumbnail="item.thumbnail" :title="item.title" /> -->

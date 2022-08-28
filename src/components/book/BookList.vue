@@ -1,7 +1,7 @@
 <template>
     <div class="base-size">
         <div class="first-text">개발자들이 읽은 책들</div>
-    <all-book-filter />
+    <all-book-filter class="book-filter" />
     <v-card v-for="(result) in getResultList" v-bind:key="result.isbn" class="card shadow">
         <div class="zero">
           <img :src="result.thumbnail" alt="image" class="book-img shadow"/>
@@ -144,7 +144,6 @@ export default {
   
 }
 
-
 .first-text {
     font-size: 22px;
     font-weight: 700;
@@ -154,8 +153,11 @@ export default {
     min-width: 0px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
     display: flex;
     margin: 20px;
+}
+.book-filter {
+
+
 }
 </style>

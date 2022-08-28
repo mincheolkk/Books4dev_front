@@ -1,8 +1,11 @@
 <template>
     <div>
         <my-page />
+        <div class="first-text">내가 읽은 책들</div>
+        <hr class="my-hr">
+
         <template>
-            <h2 class="timeLine-text">Before Career</h2>
+            <h2 class="timeLine-text">( ? ~ Before Career )</h2>
         </template>
         <div class="zero" display=block>
             <div class="first">
@@ -50,7 +53,7 @@
             </div>
         </div>
        <template>
-            <h2 class="timeLine-text">After Carrer 2 Year ~ 5 Year</h2>
+            <h2 class="timeLine-text">( AC 2년 ~ AC 5년 )</h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
@@ -239,4 +242,25 @@ export default {
 .zero {
     box-shadow: 5px 10px 10px rgba(0.03, 1, 1, 0.03);
 }
+.first-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.01em;
+    color: #141414;
+    min-width: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    margin: 30px 30px;
+}
+.my-hr {    
+    height: 1px;
+    background: #e5e5e5;
+    border: none;
+    margin: 10px 20px; 
+    margin-top: -10px; 
+}
+
 </style>

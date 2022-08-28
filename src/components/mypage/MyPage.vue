@@ -6,14 +6,14 @@
         <p>{{result.title}}</p></v-card> -->
         <!-- <my-wish-book /> -->
         <!-- <router-view></router-view> -->
-        <hr class="my-hr">
+        <!-- <hr class="my-hr"> -->
         <div class="select-button">
             <ul class="my-ul">
                 <li class="my-li">
                     <a href="/mypage" class="my-href">읽은 책</a>
                 </li>
                 <li class="my-li">
-                    <a href="/mypage/wish" class="my-href">관심있는 책</a>
+                    <a href="/mywish" class="my-href">관심있는 책</a>
                 </li>
             </ul>
         </div>
@@ -54,9 +54,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .select-button {
     display: flex;
+    align-items: center;
+  justify-content: right;
 }
 .my-hr {    
     height: 1px;

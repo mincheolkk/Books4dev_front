@@ -1,9 +1,8 @@
 <template>
   <div class="filter-box">
-    <br />
+    <!-- <br /> -->
     <v-select
       class="filters"
-
       v-model="memberType"
       v-on:change="onChange"
       item-text="text"
@@ -16,10 +15,20 @@
     ></v-select>
     <v-select
       class="filters"
-
+      v-model="recommendType"
+      v-on:change="onChange"
+      item-text="text"
+      item-value="key"
+      :items=recommendTypeMap
+      menu-props="auto"
+      placeholder="읽기 좋은 시기"
+      hide-details
+      single-line
+    ></v-select>
+    <v-select
+      class="filters"
       v-model="sortType"
       v-on:change="onChange"
-
       item-text="text"
       item-value="key"
       :items=sortTypeMap
@@ -28,29 +37,6 @@
       hide-details
       single-line
     ></v-select>
-    <v-select
-      class="filters"
-
-      v-model="recommendType"
-      v-on:change="onChange"
-
-      item-text="text"
-      item-value="key"
-      :items=recommendTypeMap
-      menu-props="auto"
-      placeholder="추천 시기"
-      hide-details
-      single-line
-    ></v-select>
-    <!-- <v-btn
-            color="blue darken-1"
-            text
-            @click="goFilter()"
-          >
-            조회
-          </v-btn> -->
-
-
   </div>
 </template>
 
@@ -62,8 +48,15 @@ export default {
     return {
         memberTypeMap: [
             { key: "All", text: "모든 개발자" },
-            { key: "BackEnd", text: "백엔드 개발자" },
-            { key: "FrontEnd", text: "프론트 개발자" }            
+            { key: "BackEnd", text: "백엔드" },
+            { key: "FrontEnd", text: "프론트" },
+            { key: "iOS", text: "iOS" },
+            { key: "Android", text: "안드로이드" },
+            { key: "AInML", text:"인공지능/머신러닝"},
+            { key: "DATA", text:"데이터 엔지니어/사이언티스트"},
+            { key: "BlockChain", text:"블록체인"},
+            { key: "DevOps", text:"DevOps"},
+            { key: "ETC", text:"기타 혹은 미정"}
         ],
         
         sortTypeMap: [
@@ -108,33 +101,20 @@ export default {
 .filter-box {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   font-family: "Noto Sans KR", "Noto Sans JP", sans-serif;
+  margin-left: 20px;
 }
 
 .filters {
   padding: 0;
   width: 10em;
   max-width: 12em;
-  margin-right: 50px;
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+  margin-right: 20px;
+  /* box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03); */
   text-align: center;
   
   
 }
 
-.filters:last-child {
-  margin-right: 0;
-}
-
-.filter-box.mobile {
-  margin-top: 30px;
-  justify-content: center;
-  margin-right: 0;
-}
-
-.filters.mobile {
-  max-width: 100px;
-  margin: 0 10px 15px 0;
-}
 </style>
