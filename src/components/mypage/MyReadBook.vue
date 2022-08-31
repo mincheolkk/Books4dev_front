@@ -28,8 +28,8 @@
             </ui>
             </div>
         </div>
-        <template>
-            <h2 class="timeLine-text">After Career</h2>
+        <template v-if="this.getReadBook.after.length > 0">
+            <h2 class="timeLine-text">After Career ~ </h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
@@ -52,8 +52,8 @@
             </ui>
             </div>
         </div>
-       <template>
-            <h2 class="timeLine-text">( AC 2년 ~ AC 5년 )</h2>
+       <template v-if="this.getReadBook.twoYear.length > 0">
+            <h2 class="timeLine-text">2 Years ~ </h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
@@ -76,8 +76,8 @@
             </ui>
             </div>
         </div>
-        <template>
-            <h2 class="timeLine-text">A.C 5년 ~ 10년</h2>
+        <template v-if="this.getReadBook.fiveYear.length > 0">
+            <h2 class="timeLine-text">5 Years ~ </h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
@@ -100,8 +100,8 @@
             </ui>
             </div>
         </div>
-        <template>
-            <h2 class="timeLine-text">A.C 10년 ~ </h2>
+        <template v-if="this.getReadBook.tenYear.length > 0">
+            <h2 class="timeLine-text">10 Years  ~ </h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
@@ -149,6 +149,7 @@ export default {
         await this.$store.dispatch("fetchLoginMember")
         await this.$store.dispatch("fetchReadBook")
     }
+    
 }
 </script>
 
