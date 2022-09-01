@@ -60,8 +60,10 @@ export default {
         ],
         
         sortTypeMap: [
+            { key: "STAR", text: "평점 높은 순" },
             { key: "COUNT", text: "등록 많은 순" },
-            { key: "STAR", text: "평점 높은 순" }
+            { key: "WISH", text: "관심 많은 순" }
+
         ],
         
         recommendTypeMap: [
