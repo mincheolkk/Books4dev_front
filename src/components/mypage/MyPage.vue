@@ -6,7 +6,7 @@
         <p>{{result.title}}</p></v-card> -->
         <!-- <my-wish-book /> -->
         <!-- <router-view></router-view> -->
-        <!-- <hr class="my-hr"> -->
+        <hr class="my-hr">
         <div class="select-button">
             <ul class="my-ul">
                 <li class="my-li">
@@ -17,8 +17,14 @@
                 </li>
             </ul>
         </div>
-            <!-- <my-read-book :getReadBook="getReadBook" /> -->
-            <!-- <my-wish-book /> -->
+        <div>
+            <div class="my-profile-img">
+                <profile-img />
+            </div>
+            <!-- <p>나</p>  -->
+            <!-- <p>백엔드 개발자</p> -->
+            <!-- <p>( 2019 ~ )</p> -->
+        </div>
 
     </div>
 
@@ -28,12 +34,14 @@
 import { mapGetters } from 'vuex'
 // import MyReadBook from './MyReadBook.vue'
 // import MyWishBook from './MyWishBook.vue'
+// import ProfileImg from './ProfileImg.vue'
 
 export default {
 
     components:{
         // MyReadBook,
         // MyWishBook,
+        // ProfileImg
     },
 
     computed: {
@@ -58,7 +66,7 @@ export default {
 .select-button {
     display: flex;
     align-items: center;
-  justify-content: right;
+  justify-content: left;
 }
 .my-hr {    
     height: 1px;
@@ -89,5 +97,12 @@ export default {
     /* line-height: 19px; */
     /* letter-spacing: -0.01em; */
         cursor: pointer;
+}
+.my-profile-img {
+    /* justify-content: center; */
+        display: inline-flex;
+        /* position: absolute */
+
+    text-align: center;
 }
 </style>

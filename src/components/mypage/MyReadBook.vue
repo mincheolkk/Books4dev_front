@@ -2,7 +2,7 @@
     <div>
         <my-page />
         <div class="first-text">내가 읽은 책들</div>
-        <hr class="my-hr">
+        <!-- <hr class="my-hr"> -->
 
         <template>
             <h2 class="timeLine-text">( ? ~ Before Career )</h2>
