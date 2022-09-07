@@ -7,7 +7,11 @@
         <!-- <my-wish-book /> -->
         <!-- <router-view></router-view> -->
         <hr class="my-hr">
+        <div class="my-logout" @click="logout()">
+                <p>로그아웃 </p>
+            </div>
         <div class="select-button">
+            
             <ul class="my-ul">
                 <li class="my-li">
                     <a href="/mypage" class="my-href">읽은 책</a>
@@ -17,12 +21,12 @@
                 </li>
             </ul>
         </div>
-        <div>
+        <div class="my-profile">
             <div class="my-profile-img">
                 <profile-img />
             </div>
             <!-- <p>나</p>  -->
-            <!-- <p>백엔드 개발자</p> -->
+            <p>백엔드 개발자</p>
             <!-- <p>( 2019 ~ )</p> -->
         </div>
 
@@ -34,14 +38,14 @@
 import { mapGetters } from 'vuex'
 // import MyReadBook from './MyReadBook.vue'
 // import MyWishBook from './MyWishBook.vue'
-// import ProfileImg from './ProfileImg.vue'
+import ProfileImg from './ProfileImg.vue'
 
 export default {
 
     components:{
         // MyReadBook,
         // MyWishBook,
-        // ProfileImg
+        ProfileImg
     },
 
     computed: {
@@ -52,7 +56,15 @@ export default {
 
     methods: {
         fetchReadBook() {
-        }
+        },
+        logout() {
+          this.$store.dispatch("fetchLogOutMember");
+
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          this.$router.push('/');
+    },
+
     },
 
     async beforeCreate() {
@@ -83,6 +95,11 @@ export default {
 .my-li {
     display: inline-flex;
 }
+.go-right {
+        /* justify-content: center; */
+        float: right;
+
+}
 .my-href {
     display: inline-flex;
     justify-content: center;
@@ -104,5 +121,15 @@ export default {
         /* position: absolute */
 
     text-align: center;
+}
+.my-profile {
+      /* box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03); */
+
+}
+.my-logout {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    cursor: pointer;
 }
 </style>

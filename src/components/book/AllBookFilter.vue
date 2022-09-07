@@ -21,7 +21,7 @@
       item-value="key"
       :items=recommendTypeMap
       menu-props="auto"
-      placeholder="읽기 좋은 시기"
+      placeholder="추천 시기"
       hide-details
       single-line
     ></v-select>

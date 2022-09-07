@@ -9,10 +9,12 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="primary"
+          color="#6297CD"
           dark
+          depressed
           v-bind="attrs"
           v-on="on"
+          @click="checkLogin()"
         >
          + 읽은 책
         </v-btn>
@@ -23,7 +25,7 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-            <!-- <v-row > -->
+            <v-row >
               <v-col
                 cols="12"
                 sm="8"
@@ -42,7 +44,7 @@
               >
                 <v-select
                   :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
-                  label="이 책을 읽었거나 읽고 있는 시기를 알려주세요"
+                  label="읽었거나 읽고 있는 시기를 알려주세요"
                   v-model="request.readTime"
                   required
                   :rules="rules.selected"
@@ -54,13 +56,13 @@
               >
                 <v-select
                   :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
-                  label="이 책을 읽기에 좋은 시기를 추천해주세요"
+                  label="읽기에 좋은 시기를 추천해주세요"
                   v-model="request.recommendTime"
                   required
                   :rules="rules.selected"
                 ></v-select>
               </v-col>
-            <!-- </v-row> -->
+            </v-row>
           </v-container>
           <small>*주절주절</small>
         </v-card-text>
@@ -91,9 +93,16 @@
 import ApiService from '../../index';
 import validator from '../../utils/validator';
 import { timeConverter } from '../../utils/bookUtil'
+import { mapGetters } from 'vuex'
 
   export default {
     props: ['bookData','isbn'],
+
+    computed: {
+      ...mapGetters([
+        "isLoggedIn", "getLoginMember"
+      ])
+    },
 
     data() {
         return {
@@ -111,6 +120,14 @@ import { timeConverter } from '../../utils/bookUtil'
     
 
     methods:{
+        checkLogin() {
+            if (!this.isLoggedIn) {
+              alert("로그인 부탁드립니다 :)")
+              location.reload();
+              return;
+        }
+        },
+
         convertReviewData() {
           return {
               readTime: timeConverter(this.request.readTime),

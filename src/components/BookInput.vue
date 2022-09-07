@@ -2,14 +2,13 @@
     <div class="input-zero">
         <div class="input-first">
             <label class="input-label">
-            <input type="text" v-model="searchTitle" placeholder="읽은 책, 보고싶은 책을 검색해주세요" @keyup.enter="vuexSearch()" class="input-input shadow">        
+             <v-img class="icon-search" :src="require(`@/assets/search-icon.png`)" @click="vuexSearch()"></v-img>
+             <p></p>
+            <input type="text" v-model="searchTitle" placeholder="읽거나 보고싶은 개발 책을 검색해주세요" @keyup.enter="vuexSearch()" class="input-input shadow">        
             </label>
         </div>
     </div>
 
-    <!-- <div class="inputBox shadow">
-        <input type="text" v-model="searchTitle" placeholder="읽은 책, 보고싶은 책을 검색해주세요" @keyup.enter="vuexSearch()" class="shadow">        
-    </div> -->
 </template>
 <script>
 // import axios from "axios";
@@ -50,7 +49,9 @@ export default {
         //     }
         // },
         async vuexSearch() {
-
+            if (this.searchTitle.length < 1){
+                return;
+            }
             this.res = await this.$store.dispatch("searchBook", this.searchTitle );
             this.$router.push('search').catch(()=>{});
         }
@@ -105,5 +106,16 @@ input:focus {
     letter-spacing: -0.01em;
     color: #141414;
     /* caret-color: #1E9EFF; */
+}
+.icon-search {
+    max-width: 15px;
+    margin-right: 10px;
+    cursor: pointer;
+
+}
+@media screen and (max-width:768px) {
+    .placeholder {
+        color: red;
+    }
 }
 </style>

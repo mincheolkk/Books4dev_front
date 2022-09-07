@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <canvas :id={isbn} height="30"/> -->
-        <h3 class="reco-title">개발자들이 추천 하는 시기</h3>
+        <h3 class="recommend-title">개발자들이 추천 하는 시기</h3>
     </div>
 </template>
 
@@ -33,16 +33,16 @@ export default {
               legend:{
                   display:true,
                   position:'bottom',
-                  align:'center',
+                  align:'left',
                   labels:{
-                      boxWidth : 30
-                  }
+                      boxWidth : 8
+                  },
               }
           },
           layout: {
               padding: {
-                  left: 50,
-                  right:50,
+                  left: 20,
+                  right:20,
               }
           }
       },
@@ -55,14 +55,12 @@ export default {
 
         },
         makeData(timeData) {
-            console.log(timeData);
             this.beforeChart = {
                 "before":this.timeDivide(timeData["beforeCount"]),
                 "after":this.timeDivide(timeData["afterCount"]),
                 "twoYear":this.timeDivide(timeData["twoYearCount"]),
                 "fiveYear":this.timeDivide(timeData["fiveYearCount"]),       
                 "tenYear":this.timeDivide(timeData["tenYearCount"])}     
-                console.log(this.beforeChart);
                 return this.beforeChart;
             },
         timeDivide(time) {
@@ -88,12 +86,12 @@ export default {
                                 backgroundColor:"#56B0D1"
                             },
                             {
-                                label:'2년 ~ 5년',
+                                label:'2 ~ 5년',
                                 data:[timeData["twoYearCount"]],
                                 backgroundColor:"#6297CD"
                             },
                             {
-                                label:'5년 ~ 10년',
+                                label:'5 ~ 10년',
                                 data:[timeData["fiveYearCount"]],
                                 backgroundColor:"#7F7AB9"
                             },
@@ -132,7 +130,7 @@ export default {
 </script>
 
 <style>
-.reco-title {
+.recommend-title {
     font-size: 16px;
     font-weight: 500;
     letter-spacing: -0.3px;

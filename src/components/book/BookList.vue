@@ -3,22 +3,23 @@
         <div class="first-text">개발자들이 읽은 책들</div>
     <all-book-filter class="book-filter" />
     <v-card v-for="(result) in getResultList" v-bind:key="result.isbn" class="card shadow">
-        <div class="zero">
-          <img :src="result.thumbnail" alt="image" class="book-img shadow"/>
-          <div class="book-detail">
-            <h3>{{result.title}}</h3>
-            <h4 class="authors-style"> {{result.authors}}</h4>
-            <v-spacer></v-spacer>
-            <p class="text-top"> 책 등록  {{result.registerCount}} </p> 
-            <p class="text-bottom"> 리뷰 평점 ★ {{result.avgStar}}</p>
+        <div class="card-without-plus">
+          <div class="zero">
+            <img :src="result.thumbnail" alt="image" class="book-img shadow"/>
+            <div class="book-detail">
+              <h3 class="book-title">{{result.title}}</h3>
+              <h4 class="authors-style"> {{result.authors}}</h4>
+              <v-spacer></v-spacer>
+              <p class="text-top"> 책 등록  {{result.registerCount}} </p> 
+              <p class="text-bottom"> 리뷰 평점 ★ {{result.avgStar}}</p>
+            </div>
+          </div>
+
+          <div class="chart">
+            <list-chart v-bind:key="result.isbn" :isbn="result.isbn" :time="result.recommendTimeDto" />
+            <canvas :id="result.isbn" height="35"/>
           </div>
         </div>
-        <!-- <p>개발자들이 추천 하는 시기</p> -->
-        <div class="chart">
-          <list-chart v-bind:key="result.isbn" :isbn="result.isbn" :time="result.recommendTimeDto" />
-          <canvas :id="result.isbn" height="30"/>
-        </div>
-
         <div class="plus-button">
           <v-spacer></v-spacer>
           <add-read-book :isbn="result.isbn" class="add-button"/>
@@ -37,9 +38,6 @@ import AddWish from './AddWish.vue'
 import { Chart, registerables } from 'chart.js'
 import ListChart from './ListChart.vue'
 import AllBookFilter from './AllBookFilter.vue'
-// import StarRating from '../StarRating.vue'
-// import InfiniteLoading from 'vue-infinite-loading'
-// import axios from 'axios';
 
 Chart.register(...registerables)
 
@@ -65,13 +63,13 @@ export default {
           thumbnail:""
       },
      
-    }},
+  }},
     
   computed: {
         ...mapGetters([
-            "getResultList"
+            "getResultList","isLoggedIn", "getLoginMember"
         ])
-    },
+  },
   async created() {
     this.allBooks();
   },
@@ -81,10 +79,15 @@ export default {
            await this.$store.dispatch("fetchAllBooks")
         },
 
-        wishBook() {
-            console.log
-        },
-    },
+        checkLogin() {
+          console.log("ss");
+            if (!this.isLoggedIn) {
+              alert("로그인 부탁드립니다 :)")
+              location.reload();
+              return this.dialog = false;
+            }
+        }
+  }
 }
 </script>
 
@@ -100,7 +103,10 @@ export default {
   overflow: hidden;
   text-align: left;
   text-overflow: ellipsis;
-
+  /* width: 500px; */
+  display: block;
+  white-space: nowrap;
+  -webkit-line-clamp: 3;
 }
 .book-img {
   float: left;
@@ -113,9 +119,15 @@ export default {
   display: inline-block !important;
   width: 100%;
 }
+.card-without-plus {
+  /* position: relative; */
+  /* height: 600px; */
+}
 .chart {
   position: relative;
   display: block;
+  height: 100%;
+  
 }
 .text-top {
   border-top: 1px solid rgb(237, 237, 237);
@@ -157,7 +169,35 @@ export default {
     margin: 20px;
 }
 .book-filter {
+}
 
+@media screen and (max-width:768px) {
+  .book-detail {
+  padding: 20px 0 0 20px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  width: 270px;
+  display: block;
+  white-space: nowrap;
+  -webkit-line-clamp: 3;
+}
+.book-title {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 
+.zero {
+  padding: 20px 0 0 20px;
+  position: relative;
+  /* display: inline-block !important; */
+
+  /* width: 100%; */
+}
 }
 </style>

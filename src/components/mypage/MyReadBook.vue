@@ -1,7 +1,7 @@
 <template>
     <div>
         <my-page />
-        <div class="first-text">내가 읽은 책들</div>
+        <!-- <div class="first-text">내가 읽은 책들</div> -->
         <!-- <hr class="my-hr"> -->
 
         <template>
@@ -163,7 +163,7 @@ export default {
 
 }
 .shadow {
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+  /* box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03); */
 }
 
 .timeLine-text {
@@ -241,7 +241,7 @@ export default {
     position: absolute;
 }
 .zero {
-    box-shadow: 5px 10px 10px rgba(0.03, 1, 1, 0.03);
+    box-shadow: 5px 10px 10px rgba(0.3, 1, 1, 0.01);
 }
 .first-text {
     font-size: 22px;

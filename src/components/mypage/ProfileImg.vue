@@ -1,5 +1,5 @@
 <template>
-    <v-img class="logo-profile" :src="require(`@/assets/tempProfile.png`)"></v-img>
+    <v-img class="logo-profile" :src="require(`@/assets/profile-basic.png`)"></v-img>
 
 </template>
 

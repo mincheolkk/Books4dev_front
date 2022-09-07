@@ -1,32 +1,31 @@
 <template>
-<header class ="header-base">
+<header class ="header-base" >
   <nav>
     <div class="header-zero">
       
       <ul class="header-ul">
         <!-- <li class="li-logo">
           <v-img :src="require(`@/assets/logo.png`)" @click="$router.push('/')"></v-img> -->
-        <li >
-          <svg width="350" height="70" viewBox="0 0 620 70">
+        <!-- <li > -->
+          <svg width="150" height="70" viewBox="0 0 620 70" class="header-logo" >
           <text 
             x="30" y="20" 
-            fill="#ED6E46" font-size="50" font-family="Helvetica" @click="$router.push('/')">
+            fill="#ED6E46" font-size="100" font-family="Helvetica" @click="$router.push('/')">
             개발자의 서재
           </text>
-        </svg> </li>
-        <li class="li-searchBar">
-          <v-spacer></v-spacer>
-          <book-input class="header-input"/> </li>
-        <li class="li-login">
-          <login-page v-if="getLoginMember === null"/>
+        </svg>
+        <!-- </li> -->
+        <div class="li-searchBar" >
+          <!-- <v-spacer></v-spacer> -->
+          <book-input class="header-input" /> </div>
+        <!-- <li class="li-login" > -->
+          <login-page class="header-login" v-if="getLoginMember === null"/>
           <template v-if="isLoggedIn">
-            <v-list style="display: flex">
-                <v-list-item @click="$router.push('/mypage')">
+                <div class="header-mypage" @click="$router.push('/mypage')">
                   내 서재
-                </v-list-item>
-                <v-list-item @click="logout"> 로그아웃 </v-list-item>
-              </v-list>
-        </template> </li>
+                </div>
+        </template>
+        <!-- </li> -->
       </ul>
           
       <!-- <h1 @click="$router.push('/')">개발자의 서재</h1>
@@ -70,7 +69,6 @@ export default {
 
     methods: {
       checkLoggedIn() {
-        console.log("when");
         if (!this.isLoggedIn) {
           this.$router.push("/");
         }
@@ -124,21 +122,44 @@ export default {
 .li-searchBar {
   margin: 20px 20px 0px 20px;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     height: 62px;
     margin: 0 0 0 24px;
     flex-shrink: 0;
-    width: 40%;
+    width: 60%;
 }
 .li-login {
-  position: relative;
-  width: 20%;
-  margin: 0;
+  /* position: relative; */
+  /* width: 50%; */
+  /* margin: 0; */
+  /* margin-right: 10px; */
   margin-left: auto;
-  cursor: pointer;
+  /* cursor: pointer; */
+  /* max-width: 50px !important;  */
+
 }
 .header-input {
   margin-right: 10px;
 }
+.header-mypage {
+  float: right !important;
+  margin-right: 20px !important;
+  margin-left: auto;
+}
+.header-login {
+  width: 100px;
+}
 
+
+@media screen and (max-width:768px) {
+  .header-base {
+
+  width: 100%;
+}
+.header-logo {
+  position: absolute;
+  left: -1000px;
+}
+  
+}
 </style>

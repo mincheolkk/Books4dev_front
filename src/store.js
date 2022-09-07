@@ -44,7 +44,6 @@ export const store = new Vuex.Store({
         },
         setLoginMember(state, res) {
             state.loginMember = res;
-            console.log("mu state.login = " + state.loginMember);
         },
         setLogOutMember(state) {
             state.loginMember = null;
@@ -84,8 +83,6 @@ export const store = new Vuex.Store({
         // 로그인 관련 
         async fetchLoginMember({ commit }) {
             const { res } = await ApiService.getWithToken(`http://localhost:8081/me`);
-            console.log(res);
-            console.log("action fetchLogin res = " + res);
             commit("setLoginMember", res);
             return res;
         },
