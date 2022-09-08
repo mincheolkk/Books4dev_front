@@ -1,9 +1,6 @@
 <template>
   <v-btn class="btn-kakao" href="http://localhost:8081/oauth2/authorization/kakao" >
       <v-img class="logo-kakao" :src="require(`@/assets/kakao_login_small.png`)" ></v-img>
-      <v-alert type="success">
-      I'm a success alert.
-    </v-alert>
   </v-btn>
 </template>
 
