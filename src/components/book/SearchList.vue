@@ -1,7 +1,32 @@
 <template>
-    <div class="search-base">
+    <div>
         <div class="first-text">검색 리스트</div>
-    <v-card v-for="item in getSearchList" v-bind:key="item.isbn" class="card-search shadow">
+        <v-card v-for="(result) in getRegistedList" v-bind:key="result.isbn" class="card-search shadow">
+          <div>
+            <div class="search-zero">
+            <img :src="result.thumbnail" alt="image" class="book-img shadow"/>
+            <div class="book-detail">
+              <h3 class="book-title">{{result.title}}</h3>
+              <h4 class="authors-style"> {{result.authors}}</h4>
+              <v-spacer></v-spacer>
+              <p class="text-top"> 책 등록  {{result.registerCount}} </p> 
+              <p class="text-bottom"> 리뷰 평점 ★ {{result.avgStar}}</p>
+            </div>
+          </div>
+
+          <div class="chart">
+            <list-chart v-bind:key="result.isbn" :isbn="result.isbn" :time="result.recommendTimeDto" />
+            <canvas :id="result.isbn" height="35"/>
+          </div>
+        </div>
+        <div class="plus-button">
+          <v-spacer></v-spacer>
+          <add-read-book :isbn="result.isbn" class="add-button"/>
+          <add-wish v-bind:key="result.isbn" :isbn="result.isbn" :title="result.title" :thumbnail="result.thumbnail" />
+        </div>
+    </v-card>
+
+    <v-card v-for="item in this.getSearchList" v-bind:key="item.isbn" class="card-search shadow">
         <div class="search-zero">
             <img :src="item.thumbnail" alt="image" class="search-img shadow"/>
             <div class="search-detail">
@@ -17,7 +42,7 @@
         <div class="plus-button">
             <v-spacer></v-spacer>
             <add-read-book :bookData={item} />
-            <add-wish :isbn="item.isbn" :thumbnail="item.thumbnail" :title="item.title" />
+            <add-wish v-bind:key="item.isbn" :isbn="item.isbn" :thumbnail="item.thumbnail" :title="item.title" />
         </div>
 
     </v-card>
@@ -28,21 +53,33 @@
 import { mapGetters } from 'vuex';
 import AddReadBook from './AddReadBook.vue'
 import AddWish from './AddWish.vue'
+import ListChart from './ListChart.vue'
+
 
 export default {
     name:"SearchList",
     computed: {
         ...mapGetters([
-            "getSearchList"
+            "getSearchList", 
+            "getRegistedList"
         ])
     },
+    data() {
+        return {
+            fixedSearchList: [],
+            isbnList: []
+       }
+    },
+    
     components: {
         AddReadBook,
-        AddWish
+        AddWish,
+        ListChart
     },
     methods: {
 
-    }
+    },
+
 }
 </script>
 
@@ -97,5 +134,52 @@ export default {
     text-overflow: ellipsis;
     display: flex;
     margin: 20px;
+}
+.book-img {
+  float: left;
+  position: relative;
+  overflow: hidden;
+}
+.book-detail {
+  padding: 0 0 0 40px;
+  float: left;
+  position: relative;
+  padding-top: 20px;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  /* width: 500px; */
+  display: block;
+  white-space: nowrap;
+  -webkit-line-clamp: 3;
+}
+.authors-style {
+  color: gray;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+    overflow: hidden;
+}
+.chart {
+  position: relative;
+  display: block;
+  height: 100%; 
+}
+.text-top {
+  border-top: 1px solid rgb(237, 237, 237);
+  padding: 8px 0 0 0;
+
+}
+.text-bottom {
+  border-bottom: 1px solid rgb(237, 237, 237);
+  padding: 0 0 8px 0;
+  color:  #fc4c4d;
+
+}
+.book-title {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 </style>
