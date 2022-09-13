@@ -33,13 +33,13 @@ export default {
   unicode-bidi: bidi-override;
   width: max-content;
   -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #ff5d5d;
+  -webkit-text-stroke-width: 0px;
+  -webkit-text-stroke-color: #fff;
 }
  
 .star-ratings-fill {
   color: #ff5d5d;
-  padding: 0;
+  padding: 10;
   position: absolute;
   z-index: 1;
   display: flex;
