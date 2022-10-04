@@ -6,7 +6,7 @@
             <div class="first">
                 <ui class="readbook-ui">
                 <li 
-                    v-for="(result) in this.wishbook" 
+                    v-for="(result) in getWishBook" 
                     v-bind:key="result.isbn" 
                     class="readbook-li"
                 >
@@ -27,7 +27,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import ApiService from "../../index";
 import MyPage from "./MyPage.vue"
 
 
@@ -42,15 +41,13 @@ export default {
     },
     computed: {
         ...mapGetters(
-            ["isLoggedIn"]
+            ["getWishBook"]
         )
     },
     async beforeCreate() {
-        const res = await ApiService.getWithToken("http://localhost:8081/test/wish");
+        await this.$store.dispatch("fetchWishBook")
+    }
 
-        this.wishbook = res.data;
-        console.log(this.res);
-    },
 
 }
 </script>

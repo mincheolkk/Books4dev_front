@@ -25,9 +25,9 @@
             <div class="my-profile-img">
                 <profile-img />
             </div>
-            <!-- <p>나</p>  -->
-            <p>백엔드 개발자</p>
-            <!-- <p>( 2019 ~ )</p> -->
+            <p>나</p> 
+            <!-- <p>{{this.getLoginMember}}</p> -->
+            <p>( 2019 ~ )</p>
         </div>
 
     </div>
@@ -50,7 +50,7 @@ export default {
 
     computed: {
         ...mapGetters(
-            ["isLoggedIn", "getReadBook"]
+            // ["isLoggedIn", "getReadBook","getLoginMember"]
         )
     },
 
@@ -68,8 +68,7 @@ export default {
     },
 
     async beforeCreate() {
-        await this.$store.dispatch("fetchLoginMember")
-        await this.$store.dispatch("fetchReadBook")
+        // await this.$store.dispatch("fetchLoginMember")
     }
 }
 </script>

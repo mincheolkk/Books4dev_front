@@ -74,11 +74,11 @@ export const store = new Vuex.Store({
             commit("setResultList", resultBook)
             return resultBook;
         },
+        
         async searchBook ({commit}, param) {
-
+            // 등록된 책 가져오기
             const resSec  = await ApiService.get(`http://localhost:8081/search/readbook?query=${param}`);
             const registeredList = resSec.data;
-           
             commit("setRegistedList", registeredList);
             
             const isbnList = [];
@@ -87,21 +87,19 @@ export const store = new Vuex.Store({
                 console.log("store isbnList = " + isbnList);
             }
 
+            // 책 검색 가져오기
             const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
             const searchBook = res.data.documents;
 
+            // 중복 제거
             for (let i=searchBook.length-1; i>=0; i--) {
                 if(isbnList.includes(searchBook[i].isbn)){
                     searchBook.splice(i,1);
                 }
             }
-
-
-
-            commit("setSearchList",searchBook);
-
-            
+            commit("setSearchList",searchBook);            
         },
+
         async saveWishList(request) {
             ApiService.post(`http://localhost:8081/book/wish`, request);
         },
@@ -131,7 +129,7 @@ export const store = new Vuex.Store({
         },
 
         async fetchWishBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/readBook");
+            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/wish");
             commit("setWishBook", fetchData.data);
         }
     }

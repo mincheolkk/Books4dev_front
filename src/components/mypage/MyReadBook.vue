@@ -134,19 +134,17 @@ import MyPage from './MyPage.vue'
 
 
 export default {
-    // props:["getReadBook"],
-
     components:{
         MyPage,
         StarRating
     },
     computed: {
         ...mapGetters(
-            ["isLoggedIn", "getReadBook"]
+            ["getReadBook"]
         )
     },
     async beforeCreate() {
-        await this.$store.dispatch("fetchLoginMember")
+        // await this.$store.dispatch("fetchLoginMember")
         await this.$store.dispatch("fetchReadBook")
     }
     
