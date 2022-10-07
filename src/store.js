@@ -13,6 +13,8 @@ export const store = new Vuex.Store({
         loginMember: null,
         readBook: {},
         wishBookList: [],
+        snackbarState: false,
+        snackbarText: ""
     },
 
     getters: {
@@ -39,6 +41,12 @@ export const store = new Vuex.Store({
         getWishBook: (state) => {
             return state.wishBookList;
         },
+        fetchedSnackBarState(state) {
+            return state.snackbarState;
+        },
+        fetchedSnackBarText(state) {
+            return state.snackbarText;
+        }
     },
 
     mutations: {
@@ -64,7 +72,14 @@ export const store = new Vuex.Store({
         },
         setWishBook(state, res) {
             state.wishBookList = res;
+        },
+        setSnackbarState(state, snackbarState) {
+            state.snackbarState = snackbarState;
+        },
+        setSnackbarText(state, snackbarText) {
+            state.snackbarText = snackbarText;
         }
+          
     },
 
     actions: {
@@ -131,6 +146,15 @@ export const store = new Vuex.Store({
         async fetchWishBook({ commit }) {
             const fetchData = await ApiService.getWithToken("http://localhost:8081/test/wish");
             commit("setWishBook", fetchData.data);
+        },
+
+        async updateSnackbarState({ commit }, snackbarState) {
+            commit("setSnackbarState", snackbarState);
+        },
+
+        async updateSnackbarText({ commit }, snackbarText) {
+            commit("setSnackbarState", true);
+            commit("setSnackbarText", snackbarText);
         }
     }
 
