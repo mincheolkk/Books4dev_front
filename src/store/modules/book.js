@@ -1,3 +1,5 @@
+import ApiService from "@/"
+
 export default {
     state: {
         resultLists: [],

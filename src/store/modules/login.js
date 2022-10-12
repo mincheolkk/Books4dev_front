@@ -3,7 +3,7 @@ import ApiService from "@/"
 
 export default {
     state: {
-        loginMember: []
+        loginMember: null,
     },
 
     getters: {
@@ -11,8 +11,8 @@ export default {
             return state.loginMember;
         },
         isLoggedIn(state) {
-            return state.loginMember.length !== 0;
-        }
+            return state.loginMember !== null;
+        },
     },
 
     mutations: {
@@ -20,15 +20,20 @@ export default {
             state.loginMember = res;
         },
         setLogOutMember(state) {
-            state.loginMember = [];
-        }
+            state.loginMember = null;
+        },
     },
 
     actions:{
         async fetchLoginMember({ commit }) {
-            const { res } = await ApiService.getWithToken("http://localhost:8081/me");
+            const { res } = await ApiService.getWithToken(`http://localhost:8081/me`);
             commit("setLoginMember", res);
             return res;
-        }
+        },
+      
+        async fetchLogOutMember({ commit }) {
+            await ApiService.getWithToken(`http://localhost:8081/out`)
+            commit("setLogOutMember");
+        },
     }
 }

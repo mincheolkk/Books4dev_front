@@ -32,6 +32,9 @@ export default {
             };
             // this.$store.dispatch("saveWishList",request);
             ApiService.postWithToken(`http://localhost:8081/book/wish`, request);
+            alert("굳 :)")
+
+              return
             },
         },
         checkLogin() {
