@@ -26,10 +26,9 @@
                 <profile-img />
             </div>
             <p>나</p> 
-            <!-- <p>{{this.getLoginMember}}</p> -->
-            <p>( 2019 ~ )</p>
+            <p>{{this.memberType}}</p>
+            <v-img class="icon-search" :src="require(`@/assets/search-icon.png`)" @click="changePosition()"></v-img>
         </div>
-
     </div>
 
 </template>
@@ -39,6 +38,8 @@ import { mapGetters } from 'vuex'
 // import MyReadBook from './MyReadBook.vue'
 // import MyWishBook from './MyWishBook.vue'
 import ProfileImg from './ProfileImg.vue'
+import { ReversePositionConverter } from '../../utils/memberUtil'
+
 
 export default {
 
@@ -46,6 +47,12 @@ export default {
         // MyReadBook,
         // MyWishBook,
         ProfileImg
+    },
+
+    data() {
+        return {
+            memberType:""
+        }
     },
 
     computed: {
@@ -63,12 +70,17 @@ export default {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           this.$router.push('/');
-    },
+        },
+        changePosition() {
+            this.$router.push('/changePosition')
+        }
 
     },
 
     async beforeCreate() {
-        // await this.$store.dispatch("fetchLoginMember")
+       const member = await this.$store.dispatch("fetchLoginMember");
+       this.memberType = ReversePositionConverter(member.data.memberType);
+
     }
 }
 </script>
@@ -131,4 +143,17 @@ export default {
     margin-right: 20px;
     cursor: pointer;
 }
+.icon-search {
+    max-width: 15px;
+    margin-right: 10px;
+    cursor: pointer;  
+    align-self: center;
+      margin-left: ;
+
+
+
+}
+
+
+
 </style>

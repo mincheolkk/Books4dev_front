@@ -10,6 +10,7 @@ import NewLogin from './components/login/NewLogin'
 // import MyPage from './components/mypage/MyPage'
 import MyWishBook from './components/mypage/MyWishBook'
 import MyReadBook from './components/mypage/MyReadBook'
+import ChangePosition from './components/mypage/ChangePosition'
 
 
 Vue.use(VueRouter);
@@ -28,6 +29,7 @@ export const router = new VueRouter({
           component:MyReadBook,
         },
         { path: "/mywish", component:MyWishBook},
+        { path: "/changePosition", component: ChangePosition}
         // { path: "/myread", component:My}
 
     ]
