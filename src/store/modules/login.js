@@ -17,6 +17,7 @@ export default {
 
     mutations: {
         setLoginMember(state, res) {
+            console.log("setLoginMember res = " + res);
             state.loginMember = res;
         },
         setLogOutMember(state) {
@@ -26,7 +27,8 @@ export default {
 
     actions:{
         async fetchLoginMember({ commit }) {
-            const { res } = await ApiService.getWithToken(`http://localhost:8081/me`);
+            const res = await ApiService.getWithToken(`http://localhost:8081/me`);
+            console.log("fetchLoginMember res = " + res);
             commit("setLoginMember", res);
             return res;
         },
