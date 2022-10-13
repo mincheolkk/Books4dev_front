@@ -15,7 +15,7 @@ export default {
     props:['isbn','title','thumbnail'],
     computed: {
       ...mapGetters([
-        "isLoggedIn", "getLoginMember"
+        "isLoggedIn"
       ])
     },
     methods:{
