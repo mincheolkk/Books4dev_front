@@ -6,16 +6,6 @@
       persistent
       max-width="600px"
     >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-         + 읽은 책
-        </v-btn>
-      </template>
       <v-card>
         <v-card-title>
           <span class="text-h5">개발 직군을 알려주세요</span>
@@ -64,7 +54,7 @@
 <script>
 import ApiService from '../../index.js'
 import validator from '../../utils/validator';
-import { positionConverter } from '../../utils/bookUtil'
+import { positionConverter } from '../../utils/memberUtil'
 
 
 export default {
