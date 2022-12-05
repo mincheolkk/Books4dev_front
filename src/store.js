@@ -8,10 +8,13 @@ export const store = new Vuex.Store({
     state: {
         resultList: [],
         searchList: [],
+        registedList: [],
         kakaoData: "",
         loginMember: null,
         readBook: {},
         wishBookList: [],
+        snackbarState: false,
+        snackbarText: ""
     },
 
     getters: {
@@ -19,7 +22,12 @@ export const store = new Vuex.Store({
             return state.resultList;
         },
         getSearchList: (state) => {
+            console.log("getSearchlist = " + state);
             return state.searchList;
+        },
+        getRegistedList: (state) => {
+            console.log("state.registedList = " + state.registedList);
+            return state.registedList;
         },
         getLoginMember(state) {
             return state.loginMember;
@@ -33,6 +41,12 @@ export const store = new Vuex.Store({
         getWishBook: (state) => {
             return state.wishBookList;
         },
+        fetchedSnackBarState(state) {
+            return state.snackbarState;
+        },
+        fetchedSnackBarText(state) {
+            return state.snackbarText;
+        }
     },
 
     mutations: {
@@ -42,6 +56,11 @@ export const store = new Vuex.Store({
         setSearchList(state, searchList) {
             console.log("search ++ =" + searchList);
             state.searchList = searchList;
+            console.log("state.searchList = " + state.searchList);
+        },
+        setRegistedList(state, searchRegistedList) {
+            state.registedList = searchRegistedList;
+            console.log("state.searchRegistedList = " + searchRegistedList);
         },
         setLoginMember(state, res) {
             state.loginMember = res;
@@ -54,7 +73,14 @@ export const store = new Vuex.Store({
         },
         setWishBook(state, res) {
             state.wishBookList = res;
+        },
+        setSnackbarState(state, snackbarState) {
+            state.snackbarState = snackbarState;
+        },
+        setSnackbarText(state, snackbarText) {
+            state.snackbarText = snackbarText;
         }
+          
     },
 
     actions: {
@@ -64,13 +90,38 @@ export const store = new Vuex.Store({
             commit("setResultList", resultBook)
             return resultBook;
         },
+        
         async searchBook ({commit}, param) {
+            // 등록된 책 가져오기
+            const resSec  = await ApiService.get(`http://localhost:8081/search/readbook?query=${param}`);
+            const registeredList = resSec.data;
+            commit("setRegistedList", registeredList);
+            
+            const isbnList = [];
+            for (let i = 0; i < registeredList.length; i++) {
+                isbnList.push(registeredList[i].isbn);
+                console.log("store isbnList = " + isbnList);
+            }
+
+            // 책 검색 가져오기
             const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
             const searchBook = res.data.documents;
+<<<<<<< HEAD
             console.log("search = " + searchBook)
             commit("setSearchList",searchBook);
             return searchBook;
+=======
+
+            // 중복 제거
+            for (let i=searchBook.length-1; i>=0; i--) {
+                if(isbnList.includes(searchBook[i].isbn)){
+                    searchBook.splice(i,1);
+                }
+            }
+            commit("setSearchList",searchBook);            
+>>>>>>> d4b99f01afc9441336689d98902d8a858296a8a6
         },
+
         async saveWishList(request) {
             ApiService.post(`http://localhost:8081/book/wish`, request);
         },
@@ -100,8 +151,17 @@ export const store = new Vuex.Store({
         },
 
         async fetchWishBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/readBook");
+            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/wish");
             commit("setWishBook", fetchData.data);
+        },
+
+        async updateSnackbarState({ commit }, snackbarState) {
+            commit("setSnackbarState", snackbarState);
+        },
+
+        async updateSnackbarText({ commit }, snackbarText) {
+            commit("setSnackbarState", true);
+            commit("setSnackbarText", snackbarText);
         }
     }
 

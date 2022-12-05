@@ -15,7 +15,7 @@ export default {
     props:['isbn','title','thumbnail'],
     computed: {
       ...mapGetters([
-        "isLoggedIn", "getLoginMember"
+        "isLoggedIn"
       ])
     },
     methods:{
@@ -32,6 +32,9 @@ export default {
             };
             // this.$store.dispatch("saveWishList",request);
             ApiService.postWithToken(`http://localhost:8081/book/wish`, request);
+            alert("굳 :)")
+
+              return
             },
         },
         checkLogin() {

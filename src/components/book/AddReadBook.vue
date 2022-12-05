@@ -120,11 +120,15 @@ import { mapGetters } from 'vuex'
     
 
     methods:{
-        checkLogin() {
+        async checkLogin() {
             if (!this.isLoggedIn) {
-              alert("로그인 부탁드립니다 :)")
-              location.reload();
-              return;
+              // alert("로그인 부탁드립니다 :)")
+              // location.reload();
+              // return;
+              await this.$store.dispatch(
+                "updateSnackbarText",
+                "로그인 해줘요"
+              );
         }
         },
 

@@ -63,8 +63,8 @@ export default {
             rules: { ...validator.book },
             dialog: true,
             positionData: "",
-            temp:{}
-
+            temp:{},
+            memberType:""
        }
     },
 
@@ -84,11 +84,11 @@ export default {
 
             await ApiService.postWithToken("http://localhost:8081/selectPosition", this.temp)
             this.dialog = false;
-            this.$router.push('/');
+            this.$router.push('/mypage');
         },
         async closeModal() {
             this.dialog = false;
-            this.$router.push('/');
+            this.$router.push('/mypage');
         }
     },
     gohome() {
@@ -96,14 +96,19 @@ export default {
     },
 
     async beforeCreate() {
-        const res = await ApiService.getWithToken("http://localhost:8081/checkPosition");
-        await this.$store.dispatch("fetchLoginMember")
-        if (res.status === 200) {
-            this.$router.push('/'); 
-            console.log("go home!");
+        // const res = await ApiService.getWithToken("http://localhost:8081/checkPosition");
+        // await this.$store.dispatch("fetchLoginMember")
+        // if (res.status === 200) {
+        //     this.$router.push('/'); 
+        //     console.log("go home!");
 
-            // this.$router.push('/');
-        }
+        //     // this.$router.push('/');
+        // }
+        // const member = await this.$store.dispatch("fetchLoginMember");
+        // this.memberType = member.data.memberType;
+        // if (this.memberType !== null) {
+        //   this.$router.push('/');
+        // }
     }
 }    
   

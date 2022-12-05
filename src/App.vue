@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-
+    <snack-bar></snack-bar>
     <home-header />
     <!-- <book-list /> -->
     <router-view />
@@ -10,12 +10,14 @@
 <script>
 // import BookList from './components/BookList.vue'
 import HomeHeader from './components/HomeHeader.vue'
+import SnackBar from "./components/SnackBar";
 
 export default {
   name: 'App',
   components: {
     HomeHeader,
     // BookList,
+    SnackBar
   },
   created() {
     // this.$router.push()
@@ -39,7 +41,7 @@ export default {
   padding-top:20px; 
   border-left:1px #D8D8D8 solid; 
   border-right:1px #D8D8D8 solid; 
-  positon:relative; 
+  position:relative; 
   text-align:center;
   box-shadow: cm;
 }

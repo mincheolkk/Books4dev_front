@@ -4,7 +4,7 @@
             <label class="input-label">
              <v-img class="icon-search" :src="require(`@/assets/search-icon.png`)" @click="vuexSearch()"></v-img>
              <p></p>
-            <input type="text" v-model="searchTitle" placeholder="읽거나 보고싶은 개발 책을 검색해주세요" @keyup.enter="vuexSearch()" class="input-input shadow">        
+            <input type="text" v-model="searchTitle" placeholder="읽고싶은 책을 검색해보세요" @keyup.enter="vuexSearch()" class="input-input shadow">        
             </label>
         </div>
     </div>
@@ -22,7 +22,7 @@ export default {
 
     computed: {
         ...mapGetters([
-            "getSearchList"
+            // "getSearchList"
         ])
     },
 
