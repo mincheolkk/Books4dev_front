@@ -42,6 +42,9 @@ export default {
     },
     methods: {
 
+    },
+    beforeMount() {
+      console.log("getsearch =" + this.getSearchList);
     }
 }
 </script>

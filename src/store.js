@@ -40,6 +40,7 @@ export const store = new Vuex.Store({
             state.resultList = resultList;
         },
         setSearchList(state, searchList) {
+            console.log("search ++ =" + searchList);
             state.searchList = searchList;
         },
         setLoginMember(state, res) {
@@ -66,6 +67,7 @@ export const store = new Vuex.Store({
         async searchBook ({commit}, param) {
             const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
             const searchBook = res.data.documents;
+            console.log("search = " + searchBook)
             commit("setSearchList",searchBook);
             return searchBook;
         },
