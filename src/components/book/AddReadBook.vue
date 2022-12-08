@@ -151,14 +151,14 @@ import { mapGetters } from 'vuex'
             let min;
             min = Object.assign(this.bookData, review);
 
-            ApiService.postWithToken("http://localhost:8081/bySearch",min)
+            ApiService.postWithToken("/bySearch",min)
           } 
           else if (this.isbn !== undefined){
             let review;
             review = {review :  this.convertReviewData()};
             review.isbn = this.isbn;
 
-            ApiService.postWithToken("http://localhost:8081/bylist",review)
+            ApiService.postWithToken("/bylist",review)
           }
           
           this.dialog = false;

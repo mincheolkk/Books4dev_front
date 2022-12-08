@@ -31,7 +31,7 @@ export default {
                 thumbnail: this.thumbnail
             };
             // this.$store.dispatch("saveWishList",request);
-            ApiService.postWithToken(`http://localhost:8081/book/wish`, request);
+            ApiService.postWithToken(`/book/wish`, request);
             alert("굳 :)")
 
               return

@@ -82,7 +82,7 @@ export default {
                 position: this.convertPositionData()
             }
 
-            await ApiService.postWithToken("http://localhost:8081/selectPosition", this.temp)
+            await ApiService.postWithToken("/selectPosition", this.temp)
             this.dialog = false;
             this.$router.push('/mypage');
         },

@@ -48,7 +48,7 @@ export default {
 
     actions: {
         async fetchAllBooks({commit}){
-            const res = await ApiService.get('http://localhost:8081/test/all');
+            const res = await ApiService.get('/test/all');
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
             return resultBook;
@@ -56,7 +56,7 @@ export default {
         
         async searchBook ({commit}, param) {
             // 등록된 책 가져오기
-            const resSec  = await ApiService.get(`http://localhost:8081/search/readbook?query=${param}`);
+            const resSec  = await ApiService.get(`/search/readbook?query=${param}`);
             const registeredList = resSec.data;
             commit("setRegistedList", registeredList);
             
@@ -67,7 +67,7 @@ export default {
             }
       
             // 책 검색 가져오기
-            const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
+            const res = await ApiService.get(`/todo?query=${param}`);
             const searchBook = res.data.documents;
       
             // 중복 제거
@@ -79,22 +79,22 @@ export default {
             commit("setSearchList",searchBook);            
         },
         async saveWishList(request) {
-            ApiService.post(`http://localhost:8081/book/wish`, request);
+            ApiService.post(`/book/wish`, request);
         },
       
         async filterAllBooks({commit}, param) {
-            const res = await ApiService.get(`http://localhost:8081/test/all${param}`);
+            const res = await ApiService.get(`/test/all${param}`);
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
             return resultBook;
         },
         async fetchReadBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/readBook");
+            const fetchData = await ApiService.getWithToken("/test/readBook");
             commit("setReadBook", fetchData.data);
         },
       
         async fetchWishBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/wish");
+            const fetchData = await ApiService.getWithToken("/test/wish");
             commit("setWishBook", fetchData.data);
         },
     } 

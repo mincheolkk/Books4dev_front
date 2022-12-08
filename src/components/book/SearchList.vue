@@ -79,13 +79,7 @@ export default {
     methods: {
 
     },
-<<<<<<< HEAD
-    beforeMount() {
-      console.log("getsearch =" + this.getSearchList);
-    }
-=======
 
->>>>>>> d4b99f01afc9441336689d98902d8a858296a8a6
 }
 </script>
 

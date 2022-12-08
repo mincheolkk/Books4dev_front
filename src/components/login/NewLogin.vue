@@ -17,7 +17,7 @@ export default {
         }
         localStorage.setItem("accessToken",JSON.stringify(obj));
 
-        const refresh = await ApiService.getWithToken("http://localhost:8081/test/token");
+        const refresh = await ApiService.getWithToken("/test/token");
         localStorage.setItem("refreshToken", refresh.data);
 
         this.$router.push('/selectPosition');

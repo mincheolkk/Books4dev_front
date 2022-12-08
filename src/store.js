@@ -54,7 +54,6 @@ export const store = new Vuex.Store({
             state.resultList = resultList;
         },
         setSearchList(state, searchList) {
-            console.log("search ++ =" + searchList);
             state.searchList = searchList;
             console.log("state.searchList = " + state.searchList);
         },
@@ -106,11 +105,6 @@ export const store = new Vuex.Store({
             // 책 검색 가져오기
             const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
             const searchBook = res.data.documents;
-<<<<<<< HEAD
-            console.log("search = " + searchBook)
-            commit("setSearchList",searchBook);
-            return searchBook;
-=======
 
             // 중복 제거
             for (let i=searchBook.length-1; i>=0; i--) {
@@ -119,7 +113,6 @@ export const store = new Vuex.Store({
                 }
             }
             commit("setSearchList",searchBook);            
->>>>>>> d4b99f01afc9441336689d98902d8a858296a8a6
         },
 
         async saveWishList(request) {
