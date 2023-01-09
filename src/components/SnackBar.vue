@@ -3,7 +3,7 @@
     <v-snackbar
       v-model="fetchedSnackBarState"
       :multi-line="true"
-      timeout="0"
+      timeout="2000"
       top
       centered
       class="snack-bar"
