@@ -127,8 +127,9 @@ import { mapGetters } from 'vuex'
               // return;
               await this.$store.dispatch(
                 "updateSnackbarText",
-                "로그인 해줘요"
+                "로그인 후 이용해주세요."
               );
+              this.dialog = false;
         }
         },
 
@@ -151,14 +152,14 @@ import { mapGetters } from 'vuex'
             let min;
             min = Object.assign(this.bookData, review);
 
-            ApiService.postWithToken("/bySearch",min)
+            ApiService.postWithToken("http://localhost:8084/bySearch",min)
           } 
           else if (this.isbn !== undefined){
             let review;
             review = {review :  this.convertReviewData()};
             review.isbn = this.isbn;
 
-            ApiService.postWithToken("/bylist",review)
+            ApiService.postWithToken("http://localhost:8084/bylist",review)
           }
           
           this.dialog = false;
