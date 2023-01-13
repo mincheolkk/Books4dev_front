@@ -30,6 +30,12 @@ export default {
         async updateSnackbarText({ commit }, snackbarText) {
             commit("setSnackbarState", true);
             commit("setSnackbarText", snackbarText);
-        }
+        },
+
+        async closeSnackbarAfterTimeout( { commit }, timeout) {
+            setTimeout(() => {
+                commit("setSnackbarState", false)
+            }, timeout)
+        } 
     }
 }
