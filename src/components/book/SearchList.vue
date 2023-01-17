@@ -4,9 +4,9 @@
         <v-card v-for="(result) in getRegistedList" v-bind:key="result.isbn" class="card-search shadow">
           <div>
             <div class="search-zero">
-            <img :src="result.thumbnail" alt="image" class="book-img shadow"/>
+            <img :src="result.thumbnail" @click="$router.push(`/books/${result.id}`)" alt="image" class="book-img shadow cursor"/>
             <div class="book-detail">
-              <h3 class="book-title">{{result.title}}</h3>
+              <h3 class="book-title cursor" @click="$router.push(`/books/${result.id}`)" >{{result.title}}</h3>
               <h4 class="authors-style"> {{result.authors}}</h4>
               <v-spacer></v-spacer>
               <p class="text-top"> 책 등록  {{result.registerCount}} </p> 
@@ -181,5 +181,8 @@ export default {
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+.cursor {
+  cursor: pointer;
 }
 </style>

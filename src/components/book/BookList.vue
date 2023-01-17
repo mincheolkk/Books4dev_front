@@ -5,9 +5,9 @@
     <v-card v-for="(result) in getResultList" v-bind:key="result.isbn" class="card shadow">
         <div class="card-without-plus">
           <div class="zero">
-            <img :src="result.thumbnail" alt="image" class="book-img shadow"/>
+            <img :src="result.thumbnail" @click="$router.push(`/books/${result.id}`)" alt="image" class="book-img shadow cursor"/>
             <div class="book-detail">
-              <h3 class="book-title">{{result.title}}</h3>
+              <h3 @click="$router.push(`/books/${result.id}`)" class="book-title cursor">{{result.title}}</h3>
               <h4 class="authors-style"> {{result.authors}}</h4>
               <v-spacer></v-spacer>
               <p class="text-top"> 책 등록  {{result.registerCount}} </p> 
@@ -22,7 +22,7 @@
         </div>
         <div class="plus-button">
           <v-spacer></v-spacer>
-          <add-read-book :isbn="result.isbn" class="add-button"/>
+          <add-read-book v-bind:key="result.isbn" :isbn="result.isbn" class="add-button"/>
           <add-wish v-bind:key="result.isbn" :isbn="result.isbn" :title="result.title" :thumbnail="result.thumbnail" class="wish-button shadow"/>
         </div>
     </v-card>
@@ -86,7 +86,7 @@ export default {
               location.reload();
               return this.dialog = false;
             }
-        }
+        },
   }
 }
 </script>
@@ -107,7 +107,8 @@ export default {
   display: block;
   white-space: nowrap;
   -webkit-line-clamp: 3;
-}
+  max-width: 235px;
+} 
 .book-img {
   float: left;
   position: relative;
@@ -168,10 +169,23 @@ export default {
     display: flex;
     margin: 20px;
 }
+
+.book-title {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+    white-space: nowrap;
+
+}
 .book-filter {
 }
+.cursor {
+  cursor: pointer;
+}
 
-@media screen and (max-width:768px) {
+/* @media screen and (max-width:768px) {
   .book-detail {
   padding: 20px 0 0 20px;
   float: left;
@@ -198,6 +212,39 @@ export default {
   /* display: inline-block !important; */
 
   /* width: 100%; */
+/* }}  */
+
+@media screen and (min-width: 768px) {
+   .book-detail {
+  padding: 20px 0 0 20px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  width: 270px;
+  display: block;
+  white-space: nowrap;
+  -webkit-line-clamp: 3;
 }
+.book-title {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+    white-space: nowrap;
+
+}
+
+.zero {
+  padding: 20px 0 0 20px;
+  position: relative;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
 }
 </style>
