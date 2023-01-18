@@ -20,10 +20,11 @@
             <canvas :id="result.isbn" height="35"/>
           </div>
         </div>
-        <div class="plus-button">
+        <div class="plus-button ">
           <v-spacer></v-spacer>
-          <add-read-book v-bind:key="result.isbn" :isbn="result.isbn" class="add-button"/>
           <add-wish v-bind:key="result.isbn" :isbn="result.isbn" :title="result.title" :thumbnail="result.thumbnail" class="wish-button shadow"/>
+          <add-read-book v-bind:key="result.isbn" :isbn="result.isbn" class="add-button"/>
+
         </div>
     </v-card>
     </div>
@@ -66,28 +67,13 @@ export default {
   }},
     
   computed: {
-        ...mapGetters([
-            "getResultList","isLoggedIn", "getLoginMember"
-        ])
+    ...mapGetters([
+        "getResultList"
+    ])
   },
   async created() {
-    this.allBooks();
+    await this.$store.dispatch("fetchAllBooks")
   },
-
-  methods: {
-         async allBooks() {
-           await this.$store.dispatch("fetchAllBooks")
-        },
-
-        checkLogin() {
-          console.log("ss");
-            if (!this.isLoggedIn) {
-              alert("로그인 부탁드립니다 :)")
-              location.reload();
-              return this.dialog = false;
-            }
-        },
-  }
 }
 </script>
 
@@ -183,6 +169,9 @@ export default {
 }
 .cursor {
   cursor: pointer;
+}
+.add-button {
+  padding-right: 20px;
 }
 
 /* @media screen and (max-width:768px) {
