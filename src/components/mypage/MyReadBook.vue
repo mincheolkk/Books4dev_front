@@ -1,11 +1,9 @@
 <template>
     <div>
         <my-page />
-        <!-- <div class="first-text">내가 읽은 책들</div> -->
-        <!-- <hr class="my-hr"> -->
-
-        <template>
-            <h2 class="timeLine-text">( ? ~ Before Career )</h2>
+        <div class="first-text" v-if="this.getReadBook.before === undefined &&  this.getReadBook.after === undefined && this.getReadBook.twoYear === undefined && this.getReadBook.fiveYear === undefined && this.getReadBook.tenYear === undefined"> 내가 읽은 책들 </div>
+        <template v-if="this.getReadBook.before !== undefined">
+            <div class="first-text">Before Developer</div>
         </template>
         <div class="zero" display=block>
             <div class="first">
@@ -28,8 +26,9 @@
             </ui>
             </div>
         </div>
-        <template v-if="this.getReadBook.after.length > 0">
-            <h2 class="timeLine-text">After Career ~ </h2>
+            <div class="first-text" v-if="this.getReadBook.after !== undefined || this.getReadBook.twoYear !== undefined || this.getReadBook.fiveYear !== undefined || this.getReadBook.tenYear !== undefined">After Developer</div>
+        <template v-if="this.getReadBook.after !== undefined">
+            <h2 class="timeLine-text"> 0 ~ 2 Years</h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
@@ -52,8 +51,8 @@
             </ui>
             </div>
         </div>
-       <template v-if="this.getReadBook.twoYear.length > 0">
-            <h2 class="timeLine-text">2 Years ~ </h2>
+       <template v-if="this.getReadBook.twoYear !== undefined">
+            <h2 class="timeLine-text"> 2 ~ 5 Years</h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
@@ -76,7 +75,7 @@
             </ui>
             </div>
         </div>
-        <template v-if="this.getReadBook.fiveYear.length > 0">
+        <template v-if="this.getReadBook.fiveYear !== undefined">
             <h2 class="timeLine-text">5 Years ~ </h2>
         </template>
         <div class="zero" display=block>
@@ -100,7 +99,7 @@
             </ui>
             </div>
         </div>
-        <template v-if="this.getReadBook.tenYear.length > 0">
+        <template v-if="this.getReadBook.tenYear !== undefined">
             <h2 class="timeLine-text">10 Years  ~ </h2>
         </template>
         <div class="zero" display=block>
@@ -144,8 +143,7 @@ export default {
         )
     },
     async beforeCreate() {
-        // await this.$store.dispatch("fetchLoginMember")
-        await this.$store.dispatch("fetchReadBook")
+        await this.$store.dispatch("fetchReadBook");
     }
     
 }
