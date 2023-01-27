@@ -4,7 +4,9 @@
             <label class="input-label">
              <v-img class="icon-search" :src="require(`@/assets/search-icon.png`)" @click="vuexSearch()"></v-img>
              <p></p>
-            <input type="text" v-model="searchTitle" placeholder="읽고싶은 책을 검색해보세요" @keyup.enter="vuexSearch()" class="input-input shadow">        
+            <input type="text" v-model="searchTitle" placeholder="읽은 책, 관심있는 책검색" @keyup.enter="vuexSearch()" class="input-input long-size shadow">        
+            <input type="text" v-model="searchTitle" placeholder="책을 검색해보세요" @keyup.enter="vuexSearch()" class="input-input short-size shadow">        
+
             </label>
         </div>
     </div>
@@ -42,7 +44,7 @@ export default {
         // async getSearch() {
         //     if (this.searchTitle.length > 0) {
             
-        //     this.res = await axios.get('http://localhost:8081/todo?query='+this.searchTitle);        
+        //     this.res = await axios.get('/todo?query='+this.searchTitle);        
         //     // this.$router.push('search')
         //     this.clearInput();
         //     return this.res;
@@ -53,7 +55,7 @@ export default {
                 return;
             }
             this.res = await this.$store.dispatch("searchBook", this.searchTitle );
-            this.$router.push('search').catch(()=>{});
+            this.$router.push('/search');
         }
     },
 }
@@ -80,7 +82,7 @@ input:focus {
 }
 .input-zero {
     position: relative;
-    width: 60%;
+    width: 75%;
 }
 .input-first {
     margin: 12px 0;
@@ -89,9 +91,6 @@ input:focus {
     background: #f0f0f0;
     border: 1px solid rgba(0, 0, 0, 0.5%);
     border-radius: 8px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     align-items: center;
     padding: 0 11px;
@@ -105,17 +104,34 @@ input:focus {
     line-height: 18px;
     letter-spacing: -0.01em;
     color: #141414;
+    
     /* caret-color: #1E9EFF; */
 }
 .icon-search {
     max-width: 15px;
     margin-right: 10px;
     cursor: pointer;
-
 }
-@media screen and (max-width:768px) {
-    .placeholder {
-        color: red;
+.long-size {
+    display: none;
+}
+.short-size {
+    display: flex;
+}
+
+@media screen and (min-width:768px) {
+    .icon-search {
+        display: flex;
+    }
+    .long-size {
+        display: flex;
+    }
+    .short-size {
+        display: none;
+    }
+    .input-zero {
+        position: relative;
+        width: 50%;
     }
 }
 </style>
