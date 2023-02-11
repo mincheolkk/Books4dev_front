@@ -20,7 +20,11 @@ Vue.use(VueMq, {
 });
 
 Vue.config.productionTip = false
-
+Vue.config.errorHandler = function(err) {
+  if (err.response || err.response.status === 429) {
+    alert('너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해보세요');
+  }
+};
 new Vue({
   store,
   router,
