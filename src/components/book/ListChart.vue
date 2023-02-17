@@ -26,19 +26,23 @@ export default {
                     y: {
                   stacked:true,
                   display:false,
-              }
-          },
-          indexAxis:'y',
-          plugins:{
-              legend:{
-                  display:true,
-                  position:'bottom',
-                  align:'left',
-                  labels:{
-                      boxWidth : 8
-                  },
-              }
-          },
+                    }
+                },
+                indexAxis:'y',
+                plugins:{
+                    legend:{
+                        display:true,
+                        position:'bottom',
+                        align:'left',
+                        labels:{
+                            boxWidth : 8,
+                            fontSize: 12
+                        },
+                        
+                    },
+                    
+                    
+                },
           layout: {
               padding: {
                   left: 20,
@@ -49,7 +53,10 @@ export default {
         }
     },
 
+
+    
     methods:{
+        
           pleaseChart(time) {
              this.drawChart(time);
 
@@ -78,32 +85,31 @@ export default {
                             {
                                 label:"취업 전",
                                 data:[timeData["beforeCount"]],
-                                backgroundColor:"#6EC6CC"
+                                backgroundColor:"#EA002C"
                             },
                             {
                                 label:"취업 후 ~ 2년",
                                 data:[timeData["afterCount"]],
-                                backgroundColor:"#56B0D1"
+                                backgroundColor:"#FF7E36"
                             },
                             {
-                                label:'2 ~ 5년',
+                                label:'~ 5년',
                                 data:[timeData["twoYearCount"]],
-                                backgroundColor:"#6297CD"
+                                backgroundColor:"#FFE300"
                             },
                             {
-                                label:'5 ~ 10년',
+                                label:'~ 10년',
                                 data:[timeData["fiveYearCount"]],
-                                backgroundColor:"#7F7AB9"
+                                backgroundColor:"#04CF5C"
                             },
                             {
-                                label:'10년 ~',
+                                label:'10년차 ~',
                                 data:[timeData["tenYearCount"]],
-                                backgroundColor:"#955B93"
+                                backgroundColor:"#1877F2"
                             },
                         ]
                     };
 
-            // var ctx = document.getElementById(this.isbn)
             let start = null;
             var ctx = this.isbn;
 
@@ -117,12 +123,29 @@ export default {
                 options: this.options
             })
 
-        }
+        },
+        handleMediaQueryChange(mediaQuery) {
+            if (mediaQuery.matches) {
+                this.options.layout.padding.left = 10
+                this.options.layout.padding.right = 10
+            } else {
+                this.options.layout.padding.left = 20
+                this.options.layout.padding.right = 20
+            }
+        },
     },
     
     async mounted() {
         this.$nextTick(function () {this.pleaseChart(this.time);
         })
+        
+        const mediaQuery = window.matchMedia('(max-width: 385px)')
+        mediaQuery.addEventListener('change', this.handleMediaQueryChange)
+        this.handleMediaQueryChange(mediaQuery)
+    },
+    beforeDestroy() {
+            const mediaQuery = window.matchMedia('(max-width: 385px)')
+            mediaQuery.removeEventListener('change', this.handleMediaQueryChange)
     },
     
 
@@ -132,9 +155,10 @@ export default {
 <style>
 .recommend-title {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: -0.3px;
     text-align: left;
     margin: 20px;
+
 }
 </style>
