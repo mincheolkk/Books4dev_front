@@ -82,11 +82,15 @@ export default {
                 position: this.convertPositionData()
             }
 
-            await ApiService.postWithToken("/selectPosition", this.temp)
+            await ApiService.postWithToken("http://localhost:8084/selectPosition", this.temp)
             this.dialog = false;
             this.$router.push('/');
         },
         async closeModal() {
+            this.temp = {
+              position: 'ETC'
+            }
+            await ApiService.postWithToken("http://localhost:8084/selectPosition", this.temp);
             this.dialog = false;
             this.$router.push('/');
         }
@@ -96,13 +100,10 @@ export default {
     },
 
     async beforeCreate() {
-        const res = await ApiService.getWithToken("http://localhost:8081/checkPosition");
+        const res = await ApiService.getWithToken("http://localhost:8084/checkPosition");
         await this.$store.dispatch("fetchLoginMember")
         if (res.status === 200) {
             this.$router.push('/'); 
-            console.log("go home!");
-
-            // this.$router.push('/');
         }
     }
 }    
