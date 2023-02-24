@@ -9,18 +9,23 @@
         >
          + 관심있는 책
         </v-btn>
-      </template>
+</template>
 
 <script>
-import ApiService from "../../index";
+import ApiService from '../../index';
 import { mapGetters } from 'vuex'
 
 export default {
-    props:['isbn','title','thumbnail'],
+    props:['isbn', 'bookData'],
     computed: {
       ...mapGetters([
         "isLoggedIn", 
       ])
+    },
+    data() {
+      return {
+        // isbn: "",
+      }
     },
     methods:{
         async wishBook(){
@@ -36,26 +41,45 @@ export default {
               );
             }
 
-            const request = {
-                isbn: this.isbn,
-                title: this.title,
-                thumbnail: this.thumbnail
-            };
+            if (this.isbn === undefined){
+              ApiService.postWithToken(`http://localhost:8084/book/wish`, this.bookData)
+                .then(()=> {
+                    this.$store.dispatch("updateSnackbarText","등록되었습니다.")
+                    .then(() => 
+                      this.$store.dispatch("closeSnackbarAfterTimeout",1000)
+                    )
+                })
+                .catch(error => {
+                  if (error.response.status === 406){
+                    this.$store.dispatch("updateSnackbarText", "이미 등록되었습니다.");
+                    this.$store.dispatch("closeSnackbarAfterTimeout", 1000);
+                  }
+                });
 
+              return;
+            } 
             
-            ApiService.postWithToken(`http://localhost:8084/book/wish`, request)
-              .then(()=> {
-                  this.$store.dispatch("updateSnackbarText","등록되었습니다.")
-                  .then(() => 
-                    this.$store.dispatch("closeSnackbarAfterTimeout",1000)
-                  )
-              })
-              .catch(error => {
-                if (error.response.status === 406){
-                  this.$store.dispatch("updateSnackbarText", "이미 등록되었습니다.");
-                  this.$store.dispatch("closeSnackbarAfterTimeout", 1000);
-                }
-              });
+            if (this.isbn !== undefined) {
+
+              let data ={}
+              data = { isbn : this.isbn };
+              
+              ApiService.postWithToken(`http://localhost:8084/book/wish`, data)
+                .then(()=> {
+                    this.$store.dispatch("updateSnackbarText","등록되었습니다.")
+                    .then(() => 
+                      this.$store.dispatch("closeSnackbarAfterTimeout",1000)
+                    )
+                })
+                .catch(error => {
+                  if (error.response.status === 406){
+                    this.$store.dispatch("updateSnackbarText", "이미 등록되었습니다.");
+                    this.$store.dispatch("closeSnackbarAfterTimeout", 1000);
+                  }
+                });
+            }
+              
+              return
             },
         },
     }
