@@ -36,6 +36,7 @@
       placeholder="조회 순서"
       hide-details
       single-line
+      overflow="auto"
     ></v-select>
   </div>
 </template>
@@ -61,7 +62,7 @@ export default {
         
         sortTypeMap: [
             { key: "STAR", text: "평점 높은 순" },
-            { key: "COUNT", text: "등록 많은 순" },
+            { key: "COUNT", text: "많이 읽은 순" },
             { key: "WISH", text: "관심 많은 순" }
 
         ],
@@ -110,13 +111,12 @@ export default {
 
 .filters {
   padding: 0;
-  width: 10em;
-  max-width: 12em;
+  /* width: 10em; */
+  /* max-width: 12em; */
   margin-right: 20px;
   /* box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03); */
   text-align: center;
-  
-  
+  white-space: nowrap; 
 }
 
 </style>
