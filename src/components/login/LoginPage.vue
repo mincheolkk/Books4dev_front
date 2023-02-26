@@ -1,10 +1,20 @@
 <template>
-  <v-btn class="btn-kakao" href="http://localhost:8084/oauth2/authorization/kakao" >
-      <v-img class="logo-kakao" :src="require(`@/assets/kakao_login_small.png`)" ></v-img>
-  </v-btn>
+  <div class="backgroud">
+    <div class="button-box">
+        <img class="kakao-icon"  @click="kakaoLogin" src="@/assets/kakao_login_small.png" />
+    </div>
+  </div>
 </template>
 
 <script>
+ export default {
+  name: "LoginPage",
+  methods: {
+    kakaoLogin() {
+      window.location.href = "http://localhost:8084/oauth2/authorization/kakao";
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -13,17 +23,28 @@
   max-width: 160px !important;
   margin-right: 180px !important;
   cursor: pointer;
-  /* max-height: 50px;
-  max-width: 10px;
-  margin-right: 80px;  */
 }
 
 .btn-kakao {
   max-height: 10px !important;
-  /* max-width: 1px !important; */
-  /* margin-right: 80px !important; */
-  right: -130px;
+  color :transparent;
+  border: none;
+}
 
-  
+.background {
+  position: absolute;
+  height: 100vh;
+  z-index: 9999;
+}
+
+.button-box {
+  width: 2%;
+  margin-top: 10px;
+  background-color: transparent !important;
+}
+
+.kakao-icon {
+  width: 70px;
+  margin-right: 100px;
 }
 </style>
