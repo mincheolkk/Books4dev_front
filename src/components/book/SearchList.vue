@@ -1,52 +1,52 @@
 <template>
     <div>
+        <popular-keyword />
+        <hr class="my-hr">
+
         <div class="first-text">검색 리스트</div>
         <v-card v-for="(result) in getRegistedList" v-bind:key="result.isbn" class="card-search shadow">
           <div>
             <div class="search-zero">
-            <img :src="result.thumbnail" @click="$router.push(`/books/${result.id}`)" alt="image" class="book-img shadow cursor"/>
-            <div class="book-detail">
-              <h3 class="book-title cursor" @click="$router.push(`/books/${result.id}`)" >{{result.title}}</h3>
-              <h4 class="authors-style"> {{result.authors}}</h4>
-              <v-spacer></v-spacer>
-              <p class="text-top"> 책 등록  {{result.registerCount}} </p> 
-              <p class="text-bottom"> 리뷰 평점 ★ {{result.avgStar}}</p>
+              <img :src="result.thumbnail" @click="$router.push(`/books/${result.id}`)" alt="image" class="book-img shadow cursor"/>
+                <div class="book-detail">
+                  <h3 class="book-title cursor" @click="$router.push(`/books/${result.id}`)" >{{result.title}}</h3>
+                  <h4 class="authors-style"> {{result.authors}}</h4>
+                  <v-spacer></v-spacer>
+                  <p class="text-top"> 책 등록  {{result.readCount}} </p> 
+                  <p class="text-bottom"> 리뷰 평점 ★ {{result.avgStar}}</p>
+                </div>
             </div>
-          </div>
 
-          <div class="chart">
-            <list-chart v-bind:key="result.isbn" :isbn="result.isbn" :time="result.recommendTimeDto" />
+          <div v-if="result.readCount > 0" class="chart">
+            <list-chart v-bind:key="result.isbn" :isbn="result.isbn" :time="result.recommendTime" />
             <canvas :id="result.isbn" height="35"/>
           </div>
         </div>
         <div class="plus-button">
           <v-spacer></v-spacer>
-          <add-read-book :isbn="result.isbn" class="add-button"/>
           <add-wish v-bind:key="result.isbn" :isbn="result.isbn" :title="result.title" :thumbnail="result.thumbnail" />
+          <add-read-book :isbn="result.isbn" class="add-button"/>
         </div>
     </v-card>
 
     <v-card v-for="item in this.getSearchList" v-bind:key="item.isbn" class="card-search shadow">
         <div class="search-zero">
-            <img :src="item.thumbnail" alt="image" class="search-img shadow"/>
-            <div class="search-detail">
-                <h3>{{item.title}}</h3>
+            <img :src="item.thumbnail" alt="image" class="book-img "/>
+            <div class="book-detail">
+                <h3 class="book-title">{{item.title}}</h3>
                 <h4 class="search-authors">출판사 : {{item.publisher}}</h4>
                 <h4 class="search-authors">지은이 : {{item.authors}}</h4>
                 <h4 class="search-authors">정가 : {{item.price}}원</h4>
-
-                <!-- <add-read-book :bookData={item} />
-                <add-wish :isbn="item.isbn" :thumbnail="item.thumbnail" :title="item.title" /> -->
             </div>
         </div>
         <div class="plus-button">
             <v-spacer></v-spacer>
+            <add-wish  :bookData="item" />
             <add-read-book :bookData={item} />
-            <add-wish v-bind:key="item.isbn" :isbn="item.isbn" :thumbnail="item.thumbnail" :title="item.title" />
         </div>
-
     </v-card>
-    </div>
+
+  </div>
 </template>
 
 <script>
@@ -54,6 +54,7 @@ import { mapGetters } from 'vuex';
 import AddReadBook from './AddReadBook.vue'
 import AddWish from './AddWish.vue'
 import ListChart from './ListChart.vue'
+import PopularKeyword from './PopularKeyword.vue'
 
 
 export default {
@@ -74,12 +75,15 @@ export default {
     components: {
         AddReadBook,
         AddWish,
-        ListChart
+        ListChart,
+        PopularKeyword
     },
     methods: {
 
     },
-
+    beforeUpdate() {
+      window.scrollTo({ left: 0, top: 0, behavior: 'smooth'});
+    }
 }
 </script>
 
@@ -89,8 +93,6 @@ export default {
 }
 .card-search {
     width: 100% ;
-    /* height: 290px;  */
-
 }
 
 .search-zero {
@@ -98,7 +100,6 @@ export default {
   position: relative;
   display: inline-block !important;
   width: 100%;
-  /* height: 250px; */
 }
 .search-img { 
   float: left;
@@ -112,8 +113,15 @@ export default {
   padding-top: 20px;
   overflow: hidden;
   text-align: left;
+  max-width: 64%;
 }
 .search-authors {
+   overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: nowrap;
   color: gray;
 }
 .plus-button {
@@ -133,25 +141,26 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     display: flex;
-    margin: 20px;
+    margin: 0 20px 20px 20px;
 }
 .book-img {
   float: left;
   position: relative;
   overflow: hidden;
+  border: 1px solid #e6e6e4;
+  border-radius: 5px;
 }
 .book-detail {
-  padding: 0 0 0 40px;
+  padding: 10px 20px 0 20px;
   float: left;
   position: relative;
-  padding-top: 20px;
   overflow: hidden;
   text-align: left;
   text-overflow: ellipsis;
-  /* width: 500px; */
   display: block;
   white-space: nowrap;
   -webkit-line-clamp: 3;
+  max-width: 64%;
 }
 .authors-style {
   color: gray;
@@ -184,5 +193,13 @@ export default {
 }
 .cursor {
   cursor: pointer;
+}
+.my-hr {    
+    height: 1px;
+    background: #e5e5e5;
+    border: none;
+    margin: 0 20px; 
+    margin-top: 0px; 
+    margin-bottom: 15px;
 }
 </style>
