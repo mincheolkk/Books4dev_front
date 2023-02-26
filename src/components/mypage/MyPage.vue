@@ -1,17 +1,11 @@
 <template>
     <div>
-        <!-- <v-btn @click="fetchReadBook()">readbook</v-btn>
-        <v-card v-for="(result) in getReadBook.before" v-bind:key="result.isbn" >
-                <img :src="result.thumbnail" alt="image"/>
-        <p>{{result.title}}</p></v-card> -->
-        <!-- <my-wish-book /> -->
-        <!-- <router-view></router-view> -->
         <hr class="my-hr">
         <div class="my-logout" @click="logout()">
                 <p>로그아웃 </p>
-            </div>
+        </div>
+
         <div class="select-button">
-            
             <ul class="my-ul">
                 <li class="my-li">
                     <a href="/mypage" class="my-href">읽은 책</a>
@@ -21,31 +15,27 @@
                 </li>
             </ul>
         </div>
+
         <div class="my-profile">
             <div class="my-profile-img">
                 <profile-img />
             </div>
-            <p>나</p> 
-            <p>{{this.memberType}}</p>
-            <v-img class="icon-search" :src="require(`@/assets/search-icon.png`)" @click="changePosition()"></v-img>
+            <p>나</p>
+            <div class="my-type">
+                <span class="type-text">{{this.memberType}}</span>
+                <v-img class="icon-search" :src="require(`@/assets/edit2.png`)" @click="changePosition()"></v-img>
+            </div>
         </div>
     </div>
 
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-// import MyReadBook from './MyReadBook.vue'
-// import MyWishBook from './MyWishBook.vue'
 import ProfileImg from './ProfileImg.vue'
 import { ReversePositionConverter } from '../../utils/memberUtil'
 
-
 export default {
-
     components:{
-        // MyReadBook,
-        // MyWishBook,
         ProfileImg
     },
 
@@ -55,18 +45,9 @@ export default {
         }
     },
 
-    computed: {
-        ...mapGetters(
-            // ["isLoggedIn", "getReadBook","getLoginMember"]
-        )
-    },
-
     methods: {
-        fetchReadBook() {
-        },
         logout() {
           this.$store.dispatch("fetchLogOutMember");
-
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           this.$router.push('/');
@@ -74,13 +55,11 @@ export default {
         changePosition() {
             this.$router.push('/changePosition')
         }
-
     },
 
     async beforeCreate() {
        const member = await this.$store.dispatch("fetchLoginMember");
        this.memberType = ReversePositionConverter(member.data.memberType);
-
     }
 }
 </script>
@@ -100,14 +79,13 @@ export default {
 }
 .my-ul {
     display: flex;
-    padding: 10px 30px;
+    padding: 10px 10px;
     overflow: hidden;
 }
 .my-li {
     display: inline-flex;
 }
 .go-right {
-        /* justify-content: center; */
         float: right;
 
 }
@@ -117,25 +95,13 @@ export default {
     align-items: center;
     padding: 0 10px;
     height: 34px;
-    /* border-radius: 40px; */
     margin: 6px 2px;
-    /* color: #141414; */
     font-size: 16px;
-    /* font-weight: 500; */
-    /* line-height: 19px; */
-    /* letter-spacing: -0.01em; */
-        cursor: pointer;
+    cursor: pointer;
 }
 .my-profile-img {
-    /* justify-content: center; */
-        display: inline-flex;
-        /* position: absolute */
-
+    display: inline-flex;
     text-align: center;
-}
-.my-profile {
-      /* box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03); */
-
 }
 .my-logout {
     float: right;
@@ -144,16 +110,33 @@ export default {
     cursor: pointer;
 }
 .icon-search {
-    max-width: 15px;
+    max-width: 17px;
+    margin-top: 10px;
     margin-right: 10px;
     cursor: pointer;  
     align-self: center;
-      margin-left: ;
-
-
+    display: inline-block;
+    margin-left: 10px;
+}
+.type-text {
+    width: 250px;
+}
+.my-type {
+    margin-top: -10px;
+    position: relative;
 
 }
+li a {
+  color: #808991;
+  font-weight: normal;
+  text-decoration: none;
+}
 
+
+li a:active, li a:focus, li a:hover {
+  color: black;
+  font-weight: 600;
+}
 
 
 </style>
