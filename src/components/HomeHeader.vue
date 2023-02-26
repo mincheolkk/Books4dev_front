@@ -2,43 +2,21 @@
 <header class ="header-base" >
   <nav>
     <div class="header-zero">
-      
       <ul class="header-ul">
-        <!-- <li class="li-logo">
-          <v-img :src="require(`@/assets/logo.png`)" @click="$router.push('/')"></v-img> -->
-        <!-- <li > -->
-          <svg width="150" height="70" viewBox="0 0 620 70" class="header-logo" >
-          <text 
-            x="30" y="20" 
-            fill="#ED6E46" font-size="100" font-family="Helvetica" @click="$router.push('/')">
-            개발자의 서재
-          </text>
-        </svg>
-        <!-- </li> -->
-        <div class="li-searchBar" >
-          <!-- <v-spacer></v-spacer> -->
-          <book-input class="header-input" /> </div>
-        <!-- <li class="li-login" > -->
-          <login-page class="header-login" v-if="getLoginMember === null"/>
+          <v-img class="main-logo-large" :src="require(`@/assets/group3.svg`)" @click="goMainPage" ></v-img>
+          <v-img class="main-logo-small" :src="require(`@/assets/three-books.svg`)" @click="goMainPage" ></v-img>
+          <book-input class="header-input" /> 
+        <li>
+          <div class="header-right">
+            <login-page class="header-login" v-if="!isLoggedIn"/>
           <template v-if="isLoggedIn">
-                <div class="header-mypage" @click="$router.push('/mypage')">
-                  내 서재
-                </div>
+            <div class="header-mypage" @click="goMyPage">
+              내 서재
+            </div>
         </template>
-        <!-- </li> -->
+          </div>
+        </li>
       </ul>
-          
-      <!-- <h1 @click="$router.push('/')">개발자의 서재</h1>
-        <login-page v-if="getLoginMember === null"/>
-        <book-input />
-        <template v-if="isLoggedIn">
-            <v-list>
-                <v-list-item @click="$router.push('/mypage')">
-                  내 서재
-                </v-list-item>
-                <v-list-item @click="logout"> 로그아웃 </v-list-item>
-              </v-list>
-        </template> -->
     </div>
   </nav>
 </header>
@@ -69,8 +47,9 @@ export default {
 
     methods: {
       checkLoggedIn() {
+            this.goMainPage;
         if (!this.isLoggedIn) {
-          this.$router.push("/");
+          this.goMainPage;
         }
       },
 
@@ -80,21 +59,45 @@ export default {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           this.$router.push('/');
-    },
+      },
+
+      goMainPage() {
+        if (window.location.href === "http://localhost:8081/") {
+            this.$router.go(this.$router.currentroute);
+        } else {
+           this.$router.push('/');
+        }  
+      },
+      goMyPage() {
+        if (window.location.href === "http://localhost:8081/mypage") {
+             this.$router.go(this.$router.currentroute);
+        } else {
+             this.$router.push('/mypage');
+        }  
+      }
     },
 
     async beforeCreate() { 
-      console.log("before home loading")
-
-      await this.$store.dispatch("fetchLoginMember")
-      console.log("after home loading")
-
+      await this.$store.dispatch("fetchLoginMember");
     },
     
 }
 </script>
 
 <style scoped>
+@media screen and (max-width: 384px) {
+  .header-login {
+    display: flex;
+    position: relative;
+    float: right !important;
+  }
+  .main-logo-small{
+    margin-left: 20px;
+    margin-right: 60px !important;
+    width: 10%;
+  }
+}
+
 .header-base {
   display: block;
   position: relative;
@@ -108,58 +111,94 @@ export default {
   display: flex;
   overflow: hidden;
   align-items: center;
-    position: relative;
+  position: relative;
+}
+.main-logo-small{
+  margin-left: 20px;
+  margin-right: 70px;
+  width: 10%;
+}
+.main-logo-large {
+  display:none;
+}
+.header-logo {
+  display: none;
+}
+.header-text {
+  display: none;
+}
 
-}
-.li-logo {
-  display: flex;
-  align-items: center;
-  height: 62px;
-  margin: 0 130px 0 20px;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-.li-searchBar {
-  margin: 20px 20px 0px 20px;
-    display: flex;
-    /* align-items: center; */
-    height: 62px;
-    margin: 0 0 0 24px;
-    flex-shrink: 0;
-    width: 60%;
-}
-.li-login {
-  /* position: relative; */
-  /* width: 50%; */
-  /* margin: 0; */
-  /* margin-right: 10px; */
-  margin-left: auto;
-  /* cursor: pointer; */
-  /* max-width: 50px !important;  */
-
-}
 .header-input {
-  margin-right: 10px;
+  margin-right: -13px;
 }
-.header-mypage {
+
+.header-right {
+  float: right;
+  display: flex;
+}
+.header-login {
   float: right !important;
   margin-right: 20px !important;
   margin-left: auto;
+  width: 60px;
 }
+.header-mypage {
+  float: right !important;
+  margin-right: 15px !important;
+  margin-left: auto;
+  width: 60px;
+}
+
+
+
+@media screen and (min-width: 768px) {
+.header-base {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+.header-text {
+  display: flex;
+  font-size: 150px;
+}
+.header-logo {
+  display: flex;
+  width: 400px;
+  height: 70px;
+  margin-right: 70px;
+  float: right;
+  display: flex;
+  position: relative;
+}
+
+.header-mypage {
+  margin-right: 20px !important;
+  width: 100px;
+}
+.header-right {
+  margin-right: -20px;
+}
+
 .header-login {
   width: 100px;
 }
-
-
-@media screen and (max-width:768px) {
-  .header-base {
-
-  width: 100%;
+.main-logo-large {
+  width: 220px;
+  margin-left: 20px;
+  margin-right: 5px;
+  margin-top: 20px;
+  display: inline;
 }
-.header-logo {
-  position: absolute;
-  left: -1000px;
+.main-logo-small{
+  display: none;
 }
-  
+.header-input {
+  margin-right: 10px;
+  margin-left: 140px;
+  display: flex;
+}
+
+
 }
 </style>
