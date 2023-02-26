@@ -1,16 +1,14 @@
 <template>
-
- <!-- <v-row justify="center"> -->
     <v-form ref="dialogForm" >
     <v-dialog
       v-model="dialog"
       persistent
-      max-width="600px"
+      max-width="350px"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="#6297CD"
-          dark
+          color="#FFFFFF"
+          :style="{'font-size': '17px'}"
           depressed
           v-bind="attrs"
           v-on="on"
@@ -28,7 +26,7 @@
             <v-row >
               <v-col
                 cols="12"
-                sm="8"
+                sm="12"
               >
                 <v-select
                   :items="['1', '2', '3', '4','5']"
@@ -40,7 +38,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="8"
+                sm="12"
               >
                 <v-select
                   :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
@@ -52,7 +50,7 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="8"
+                sm="12"
               >
                 <v-select
                   :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
@@ -86,7 +84,6 @@
       </v-card>
     </v-dialog>
     </v-form>
-  <!-- </v-row> -->
 </template>
 
 <script>
@@ -100,7 +97,7 @@ import { mapGetters } from 'vuex'
 
     computed: {
       ...mapGetters([
-        "isLoggedIn", "getLoginMember"
+        "isLoggedIn", "getSearchKeyword"
       ])
     },
 
@@ -113,31 +110,44 @@ import { mapGetters } from 'vuex'
                 readTime: "",
                 recommendTime: "",
             },
-            review: {}
+            review: {},
+            searchKeyword : ""
 
        }
     },
-    
 
     methods:{
         async checkLogin() {
             if (!this.isLoggedIn) {
-              // alert("로그인 부탁드립니다 :)")
-              // location.reload();
-              // return;
               await this.$store.dispatch(
                 "updateSnackbarText",
                 "로그인 후 이용해주세요."
               );
+
               this.dialog = false;
-        }
+              
+              await this.$store.dispatch(
+                "closeSnackbarAfterTimeout",
+                1000
+              );
+          }
         },
 
         convertReviewData() {
+          if (window.location.href === "http://localhost:8081/search") {
+            console.log(this.getSearchKeyword);
+            return {
+              readTime: timeConverter(this.request.readTime),
+              recommendTime: timeConverter(this.request.recommendTime),
+              star: this.request.star,
+              searchKeyword: this.getSearchKeyword
+            }
+          }
+
           return {
               readTime: timeConverter(this.request.readTime),
               recommendTime: timeConverter(this.request.recommendTime),
-              star: this.request.star
+              star: this.request.star,
           }
         },
 
@@ -149,10 +159,21 @@ import { mapGetters } from 'vuex'
           if (this.isbn === undefined){            
             let review;
             review = {review :  this.convertReviewData()};
+
             let min;
             min = Object.assign(this.bookData, review);
 
             ApiService.postWithToken("http://localhost:8084/bySearch",min)
+            
+            await this.$store.dispatch(
+                "updateSnackbarText",
+                "등록되었습니다."
+              );
+
+            await this.$store.dispatch(
+                "closeSnackbarAfterTimeout",
+                1000
+              );
           } 
           else if (this.isbn !== undefined){
             let review;
@@ -163,6 +184,16 @@ import { mapGetters } from 'vuex'
           }
           
           this.dialog = false;
+
+          await this.$store.dispatch(
+              "updateSnackbarText",
+              "등록되었습니다."
+            );
+
+          await this.$store.dispatch(
+              "closeSnackbarAfterTimeout",
+              1000
+            );
         }
     }
   }
