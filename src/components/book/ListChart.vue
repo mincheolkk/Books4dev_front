@@ -1,7 +1,7 @@
 <template>
     <div>
-        <!-- <canvas :id={isbn} height="30"/> -->
-        <h3 class="recommend-title">개발자들이 추천 하는 시기</h3>
+        <h3 v-if="this.read === undefined" class="recommend-title">개발자들이 추천 하는 시기</h3>
+        <h3 v-else class="recommend-title">개발자들이 읽은 시기</h3>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ Chart.register(...registerables)
 
 
 export default {
-    props:['isbn','time'],
+    props:['isbn','time','read'],
 
     data() {
         return {
@@ -40,8 +40,6 @@ export default {
                         },
                         
                     },
-                    
-                    
                 },
           layout: {
               padding: {
@@ -52,8 +50,6 @@ export default {
       },
         }
     },
-
-
     
     methods:{
         
@@ -78,14 +74,13 @@ export default {
             }
         },
         async drawChart(timeData) {
-
             var chartData =  {
                         labels:['추천 수'],
                         datasets:[
                             {
                                 label:"취업 전",
                                 data:[timeData["beforeCount"]],
-                                backgroundColor:"#EA002C"
+                                backgroundColor:"#ED2124"
                             },
                             {
                                 label:"취업 후 ~ 2년",
@@ -144,8 +139,8 @@ export default {
         this.handleMediaQueryChange(mediaQuery)
     },
     beforeDestroy() {
-            const mediaQuery = window.matchMedia('(max-width: 385px)')
-            mediaQuery.removeEventListener('change', this.handleMediaQueryChange)
+        const mediaQuery = window.matchMedia('(max-width: 385px)')
+        mediaQuery.removeEventListener('change', this.handleMediaQueryChange)
     },
     
 
@@ -159,6 +154,5 @@ export default {
     letter-spacing: -0.3px;
     text-align: left;
     margin: 20px;
-
 }
 </style>
