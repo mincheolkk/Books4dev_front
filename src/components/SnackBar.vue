@@ -3,7 +3,7 @@
     <v-snackbar
       v-model="fetchedSnackBarState"
       :multi-line="true"
-      timeout="2000"
+      timeout="-1"
       top
       centered
       class="snack-bar"
@@ -32,7 +32,7 @@ export default {
     closeSnackBar: function() {
       this.$store.dispatch("updateSnackbarState", false);
     }
-  }
+  },
 };
 </script>
 
