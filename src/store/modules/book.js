@@ -8,6 +8,9 @@ export default {
         kakaoData: "",
         readBook: {},
         wishBookList: [],
+        detailBook: {},
+        searchKeyword: "",
+        popularKeyword: [],
     },
 
     getters: {
@@ -25,6 +28,15 @@ export default {
         },
         getWishBook: (state) => {
             return state.wishBookList;
+        },
+        getDetailBook: (state) => {
+            return state.detailBook;
+        },
+        getSearchKeyword: (state) => {
+            return state.searchKeyword;
+        },
+        getPopularKeyword: (state) => {
+            return state.popularKeyword;
         },
     },
 
@@ -44,19 +56,30 @@ export default {
         setWishBook(state, res) {
             state.wishBookList = res;
         },
+        setDetailBook(state, res) {
+            state.detailBook = res;
+        },
+        setSearchKeyword(state, res) {
+            state.searchKeyword = res;
+        },
+        setPopularKeyword(state, res) {
+            state.popularKeyword = res;
+        },
+        
     },
 
     actions: {
         async fetchAllBooks({commit}){
-            const res = await ApiService.get('/test/all');
+            const res = await ApiService.get(`http://localhost:8084/book/all`);
             const resultBook = res.data.body;
-            commit("setResultList", resultBook)
+            commit("setResultList", resultBook);
+            commit("setFilterCount")
             return resultBook;
         },
         
         async searchBook ({commit}, param) {
             // 등록된 책 가져오기
-            const resSec  = await ApiService.get(`/search/readbook?query=${param}`);
+            const resSec  = await ApiService.get(`http://localhost:8084/search/readbook?query=${param}`);
             const registeredList = resSec.data;
             commit("setRegistedList", registeredList);
             
@@ -67,7 +90,7 @@ export default {
             }
       
             // 책 검색 가져오기
-            const res = await ApiService.get(`/todo?query=${param}`);
+            const res = await ApiService.get(`http://localhost:8084/todo?query=${param}`);
             const searchBook = res.data.documents;
       
             // 중복 제거
@@ -78,24 +101,36 @@ export default {
             }
             commit("setSearchList",searchBook);            
         },
-        async saveWishList(request) {
-            ApiService.post(`/book/wish`, request);
-        },
-      
+
         async filterAllBooks({commit}, param) {
-            const res = await ApiService.get(`/test/all${param}`);
+            const res = await ApiService.get(`http://localhost:8084/book/all${param}`);
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
+            
             return resultBook;
         },
         async fetchReadBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("/test/readBook");
+            const fetchData = await ApiService.getWithToken(`http://localhost:8084/my/readBook`);
             commit("setReadBook", fetchData.data);
         },
       
         async fetchWishBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("/test/wish");
+            const fetchData = await ApiService.getWithToken(`http://localhost:8084/my/wish`);
             commit("setWishBook", fetchData.data);
         },
+
+        async fetchDetailBook({ commit }, id) {
+            const fetchData = await ApiService.get(`http://localhost:8084/books/${id}`)
+            commit("setDetailBook", fetchData.data);
+
+            return fetchData.data;
+
+        },
+
+        async fetchPopularKeyword({ commit }) {
+            const fetchData = await ApiService.get(`http://localhost:8084/popular`);
+            commit("setPopularKeyword", fetchData.data);
+        },
+
     } 
 }
