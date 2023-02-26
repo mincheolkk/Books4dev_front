@@ -1,26 +1,24 @@
 <template>
-    <v-img class="logo-profile" :src="require(`@/assets/profile-basic.png`)"></v-img>
-
+    <v-img class="logo-profile" :src="this.profileImg"></v-img>
 </template>
 
 <script>
+import developer from '@/assets/developer.svg';
+
 export default {
 
+  data() {
+        return {
+            profileImg : developer
+        }
+    },
 }
 </script>
 
 <style scoped>
 .logo-profile {
-  /* max-height: 160px !important;
-  max-width: 160px !important;
-  margin-right: 80px !important; */
   max-height: 70px !important;
   max-width: 70px !important;
-  /* margin-right: 80px !important; */
-    /* justify-content: left !important; */
-    display: inline-flex; 
-        /* text-align: center; */
-
-
+  display: inline-flex; 
 }
 </style>
