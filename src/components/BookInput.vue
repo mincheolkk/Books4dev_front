@@ -3,8 +3,7 @@
         <div class="input-first">
             <label class="input-label">
              <v-img class="icon-search" :src="require(`@/assets/search-icon.png`)" @click="vuexSearch()"></v-img>
-             <p></p>
-            <input type="text" v-model="searchTitle" placeholder="읽은 책, 관심있는 책검색" @keyup.enter="vuexSearch()" class="input-input long-size shadow">        
+            <input type="text" v-model="searchTitle" placeholder="읽은 책, 관심있는 책을 검색해보세요" @keyup.enter="vuexSearch()" class="input-input long-size shadow">        
             <input type="text" v-model="searchTitle" placeholder="책을 검색해보세요" @keyup.enter="vuexSearch()" class="input-input short-size shadow">        
 
             </label>
@@ -13,54 +12,33 @@
 
 </template>
 <script>
-// import axios from "axios";
-import { mapGetters } from 'vuex';
-
-
 export default {
-    components: {
-
-    },
-
-    computed: {
-        ...mapGetters([
-            // "getSearchList"
-        ])
-    },
-
     data() {
         return {
             searchTitle: "",
-            res:""
         }
     },
     methods: {
-
         clearInput() {
-        // input 박스 초기화 방법
             this.searchTitle = '';
-        }
-        ,
-        // async getSearch() {
-        //     if (this.searchTitle.length > 0) {
-            
-        //     this.res = await axios.get('/todo?query='+this.searchTitle);        
-        //     // this.$router.push('search')
-        //     this.clearInput();
-        //     return this.res;
-        //     }
-        // },
+        },
+    
         async vuexSearch() {
             if (this.searchTitle.length < 1){
                 return;
             }
-            this.res = await this.$store.dispatch("searchBook", this.searchTitle );
+            await this.$store.dispatch("searchBook", this.searchTitle);
             this.$router.push('/search');
-        }
+            this.$store.commit('setSearchKeyword', this.searchTitle);
+        },
     },
 }
 </script>
 <style scoped>
+.input-zero {
+    position: relative;
+    width: 75%;
+}
 input:focus {
     outline: none;
 }
@@ -80,10 +58,7 @@ input:focus {
 .shadow {
   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
-.input-zero {
-    position: relative;
-    width: 75%;
-}
+
 .input-first {
     margin: 12px 0;
 }
@@ -94,7 +69,8 @@ input:focus {
     display: flex;
     align-items: center;
     padding: 0 11px;
-    height: 40px;
+    height: 35px;
+    width: 170px;
 }
 .input-input {
     flex: 1;
@@ -104,12 +80,10 @@ input:focus {
     line-height: 18px;
     letter-spacing: -0.01em;
     color: #141414;
-    
-    /* caret-color: #1E9EFF; */
 }
 .icon-search {
     max-width: 15px;
-    margin-right: 10px;
+    margin-right: 8px;
     cursor: pointer;
 }
 .long-size {
@@ -131,7 +105,17 @@ input:focus {
     }
     .input-zero {
         position: relative;
-        width: 50%;
+        width: 90%;
     }
+    .input-label {
+    background: #f0f0f0;
+    border: 1px solid rgba(0, 0, 0, 0.5%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 11px;
+    height: 35px;
+    width:280px;
+}
 }
 </style>
