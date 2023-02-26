@@ -4,7 +4,7 @@
     <v-dialog
       v-model="dialog"
       persistent
-      max-width="600px"
+      max-width="350px"
     >
       <v-card>
         <v-card-title>
@@ -15,7 +15,7 @@
             <v-row>
               <v-col
                 cols="12"
-                sm="6"
+                sm="8"
               >
                 <v-select
                   :items="['백엔드', '프론트엔드', '안드로이드', 'iOS', '인공지능/머신러닝', '데이터 엔지니어/사이언티스트', '블록체인', 'DevOps', '기타 혹은 미정']"
@@ -57,6 +57,7 @@ import validator from '../../utils/validator';
 import { positionConverter } from '../../utils/memberUtil'
 
 
+
 export default {
     data() {
         return {
@@ -67,6 +68,7 @@ export default {
 
        }
     },
+
 
     methods:{
 
@@ -103,8 +105,10 @@ export default {
         const res = await ApiService.getWithToken("http://localhost:8084/checkPosition");
         await this.$store.dispatch("fetchLoginMember")
         if (res.status === 200) {
+            this.dialog = false;
             this.$router.push('/'); 
         }
+
     }
 }    
   
