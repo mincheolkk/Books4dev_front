@@ -7,9 +7,6 @@ export default {
     },
 
     getters: {
-        getLoginMember(state) {
-            return state.loginMember;
-        },
         isLoggedIn(state) {
             return state.loginMember !== null;
         },
@@ -17,7 +14,6 @@ export default {
 
     mutations: {
         setLoginMember(state, res) {
-            console.log("setLoginMember res = " + res);
             state.loginMember = res;
         },
         setLogOutMember(state) {
@@ -27,14 +23,16 @@ export default {
 
     actions:{
         async fetchLoginMember({ commit }) {
-            const res = await ApiService.getWithToken(`http://localhost:8081/me`);
-            console.log("fetchLoginMember res = " + res);
+            const res = await ApiService.getWithToken(`http://localhost:8084/me`);
+            if (res.status !== 200) {
+                this.$router.push('/');
+            }
             commit("setLoginMember", res);
             return res;
         },
       
         async fetchLogOutMember({ commit }) {
-            await ApiService.getWithToken(`http://localhost:8081/out`)
+            await ApiService.getWithToken(`http://localhost:8084/out`)
             commit("setLogOutMember");
         },
     }
