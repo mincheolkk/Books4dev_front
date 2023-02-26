@@ -1,8 +1,5 @@
 <template>
     <div>
-        <!-- <h3> {{getDetailBook}} </h3> -->
-        <!-- <button @click="$router.go(-1)">뒤로가기</button> -->
-        
         <v-card class="v-card"> 
             <v-img class="icon-search" :src="require(`@/assets/back3.png`)" @click="$router.go(-1)"></v-img>
             <img :src="getDetailBook.thumbnail" alt="image" class="book-img shadow"/>
@@ -29,10 +26,10 @@
               <div class="h2-div">
                 <h2 class="h2-line"> 리뷰 </h2>
               </div>
-              <div v-if="getDetailBook.count.registerCount > 0">
-                <p> 읽은 사람 : {{getDetailBook.count.registerCount}}명 </p>
+              <div v-if="getDetailBook.count.readCount > 0">
+                <p> 읽은 사람 : {{getDetailBook.count.readCount}}명 </p>
                 <p v-if="getDetailBook.count.wishCount !== 0"> 관심 있는 사람 : {{getDetailBook.count.wishCount}}명 </p>
-                <p class="text-bottom"> 리뷰 평점 ★ {{getDetailBook.star.avgStar}} ({{getDetailBook.count.registerCount}}명) </p>
+                <p class="text-bottom"> 리뷰 평점 ★ {{getDetailBook.star.avgStar}} ({{getDetailBook.count.readCount}}명) </p>
               </div>
               </div>
 
@@ -44,10 +41,12 @@
               </ul>
             </div>
             <div >
-              <div v-if="getDetailBook.count.registerCount > 0" class="chart">
-                <list-chart v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.isbn" :time="getDetailBook.recommendTime" />
-                <canvas :id="getDetailBook.isbn" height="35"/>
-              </div>
+                <div v-if="getDetailBook.count.readCount > 0" class="chart">
+                  <list-chart v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.title" :time="getDetailBook.recommendTime" :read="1"/>
+                  <canvas :id="getDetailBook.title" height="35"/>
+                  <list-chart v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.isbn" :time="getDetailBook.readTime" />
+                  <canvas :id="getDetailBook.isbn" height="35"/>
+                </div>
               <div class="plus-button">
                 <v-spacer></v-spacer>
                 <add-wish v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.isbn" class="wish-button shadow"/>
@@ -164,16 +163,12 @@ export default {
   margin-right: 20px;
   padding: 0;
   min-width:97%
-  
-  /* margin-bottom: 0px; */
-
 }
 
 .text-bottom {
   
   padding: 0 0 8px 0;
   color:  #fc4c4d;
-  /* color: #f7552f */
 }
 .h2-line {
     display: inline-block;
@@ -196,13 +191,10 @@ export default {
 }
 
 .hr {
-   /* border-bottom: 0.1px solid rgb(237, 237, 237); */
-    /* padding-top: 1px; */
-    margin-right: 20px;
-    border: 0.1 lightgray;
+  margin-right: 20px;
+  border: 0.1 lightgray;
   width: 100%;
   height: 1px;
-  /* background-color: ; */
 }
 .related-keyword {
   margin-left: 20px;
@@ -210,16 +202,14 @@ export default {
   width: 100px;
 }
 .icon-search {
-    max-width: 20px;
-    margin-left: 20px;
-    cursor: pointer;
-    margin-top: 5px;
+  max-width: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+  margin-top: 5px;
 }
 .my-text{
-    text-align: left;
-    margin-right: 10px;
+  text-align: left;
+  margin-right: 10px;
 }
-.hr2 {
-  width:100%
-}
+
 </style>
