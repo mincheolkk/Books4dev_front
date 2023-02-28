@@ -10,9 +10,9 @@
     <v-card v-for="(result) in getResultList" v-bind:key="result.isbn" class="card shadow" >
         <div class="card-without-plus" v-if="listView">
           <div class="zero">
-            <img :src="result.thumbnail" @click="$router.push(`/books/${result.id}`)" alt="image" class="book-img shadow cursor shadow"/>
+            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="book-img shadow cursor shadow"/>
             <div class="book-detail">
-              <h3 @click="$router.push(`/books/${result.id}`)" class="book-title cursor">{{result.title}}</h3>
+              <h3 @click="$router.push(`/book/${result.id}`)" class="book-title cursor">{{result.title}}</h3>
               <h4 class="authors-style"> {{result.authors}}</h4>
               <v-spacer></v-spacer>
               <p class="text-top"> 읽은 사람 {{result.readCount}}명 </p> 

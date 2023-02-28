@@ -14,8 +14,8 @@
           <v-container>
             <v-row>
               <v-col
-                cols="12"
-                sm="6"
+                cols="4"
+                sm="4"
               >
                 <v-select
                   :items="['백엔드', '프론트엔드', '안드로이드', 'iOS', '인공지능/머신러닝', '데이터 엔지니어/사이언티스트', '블록체인', 'DevOps', '기타 혹은 미정']"
@@ -82,7 +82,7 @@ export default {
                 position: this.convertPositionData()
             }
 
-            await ApiService.postWithToken("/selectPosition", this.temp)
+            await ApiService.postWithToken("http://localhost:8084/member/selectPosition", this.temp)
             this.dialog = false;
             this.$router.push('/mypage');
         },
@@ -96,7 +96,7 @@ export default {
     },
 
     async beforeCreate() {
-        // const res = await ApiService.getWithToken("http://localhost:8081/checkPosition");
+        // const res = await ApiService.getWithToken("/checkPosition");
         // await this.$store.dispatch("fetchLoginMember")
         // if (res.status === 200) {
         //     this.$router.push('/'); 

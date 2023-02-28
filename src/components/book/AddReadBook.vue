@@ -163,7 +163,7 @@ import { mapGetters } from 'vuex'
             let min;
             min = Object.assign(this.bookData, review);
 
-            ApiService.postWithToken("http://localhost:8084/bySearch",min)
+            ApiService.postWithToken("http://localhost:8084/book/fromSearch",min)
             
             await this.$store.dispatch(
                 "updateSnackbarText",
@@ -180,7 +180,7 @@ import { mapGetters } from 'vuex'
             review = {review :  this.convertReviewData()};
             review.isbn = this.isbn;
 
-            ApiService.postWithToken("http://localhost:8084/bylist",review)
+            ApiService.postWithToken("http://localhost:8084/book/fromList",review)
           }
           
           this.dialog = false;

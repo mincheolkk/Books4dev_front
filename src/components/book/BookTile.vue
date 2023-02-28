@@ -10,11 +10,11 @@
                 >
                     <div class="readbook-img-first">
                         <div class="readbook-img-second">
-                            <img @click="$router.push(`/books/${result.id}`)" :src="result.thumbnail" alt="image" class="readbook-img"/>
+                            <img @click="$router.push(`/book/${result.id}`)" :src="result.thumbnail" alt="image" class="readbook-img"/>
                         </div>
                     </div>
                     <div>
-                        <div @click="$router.push(`/books/${result.id}`)" class="readbook-title">{{result.title}}</div>
+                        <div @click="$router.push(`/book/${result.id}`)" class="readbook-title">{{result.title}}</div>
                     </div>
                 </li>
                 </ui>
@@ -37,14 +37,12 @@ export default {
     margin-left: -5px !important;
     margin: 14px 0 0;
     list-style: none;
-    
 }
 
 .readbook-li {
     display: inline-block !important;
     vertical-align: top;
     box-sizing: border-box;
-    /* width: 20%; */
     padding: 0 5px;
     margin: 0 0 24px;
     width: 140px;
@@ -90,7 +88,6 @@ export default {
 .first {
     margin: 0 20px;
     transition: 500ms;
-    /* display: flex; */
 }
 .zero {
     box-shadow: 5px 10px 10px rgba(0.03, 1, 1, 0.03);
