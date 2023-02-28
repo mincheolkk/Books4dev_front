@@ -1,10 +1,9 @@
 import axios from 'axios';
-
-// const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
+import { router } from './router.js'
 
 const ApiService = {
   get(url) {
-    return axios.get(url);
+    return axios.get(`${url}`);
   },
   post(url, params) {
     return axios.post(`${url}`, params);
@@ -17,7 +16,6 @@ const ApiService = {
   },
 
   getWithToken(url) {
-    console.log("this is getWithToken")
     const accessToken = this.getToken();
     this.validToken();
 
@@ -30,6 +28,7 @@ const ApiService = {
 
   postWithToken(url, params) {
     const accessToken = this.getToken();
+    this.validToken();
     return axios.post(`${url}`, params, {
       headers: {
         contentType: 'application/json',
@@ -56,48 +55,60 @@ const ApiService = {
     });
   },
 
-  async validToken() {
+
+  validToken() {
     const stirngToken = `${localStorage.getItem("accessToken")}`;
     const Token = JSON.parse(stirngToken);
     const expireTime = Date.now();
-    console.log("in validToken")
-    console.log(expireTime - Token.expire);
     
-    // if (expireTime - Token.expire < 200 * 1000) {
-      console.log("in valid if sentence")
-      const refresh = localStorage.getItem("refreshToken");
-      console.log("refresh" + refresh);
-      console.log(typeof(refresh));
-
-      const request = {
-        refreshToken : refresh
-      };
-
-      const newToken = this.postWithToken("http://localhost:8081/update/token",request);
-      console.log(newToken);
-      console.log("999999");
-      console.log(newToken.data);
+    if (Token.expire - expireTime > 0) {
+      if (Token.expire - expireTime < 110 * 1000) {
+        this.updateToken();
+      }
+    } else {
+      this.removeToken();
       
-    // }
+      if (window.location.href === "http://localhost:8081/") {
+        router.go(this.$router.currentroute);
+      } else {
+        router.push('/');
+    }  
+    }
   },
 
-  updateToken() {
+  async updateToken() {
     const refresh = `${localStorage.getItem("refreshToken")}`;
-    console.log("22")
-    console.log(typeof(refresh));
     const request = {
       refreshToken : refresh
     };
     
-    this.postWithToken("http://localhost:8081/update/token", request)
+    const newData = await this.postWithToken("http://localhost:8084/auth/update/token",request);
+
+    if (newData.status === 500) {
+      this.removeToken();
+      router.push('/');
+      return;
+    }
+
+    const newAccessToken = newData.data
+    const obj = {
+      "accessToken":newAccessToken,
+      expire:Date.now() + 1000 * 60 * 60
+    }
+
+    localStorage.setItem("accessToken",JSON.stringify(obj));
   },
 
   getToken() {
     const stirngToken = `${localStorage.getItem("accessToken")}`;
     const Token = JSON.parse(stirngToken);
     return `Bearer ${Token.accessToken}`;
-  }
+  },
 
+  removeToken() {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+  },
 };
 
 export default ApiService;
