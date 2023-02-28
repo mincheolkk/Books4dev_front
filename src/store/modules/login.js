@@ -23,7 +23,7 @@ export default {
 
     actions:{
         async fetchLoginMember({ commit }) {
-            const res = await ApiService.getWithToken(`http://localhost:8084/me`);
+            const res = await ApiService.getWithToken(`http://localhost:8084/auth/me`);
             if (res.status !== 200) {
                 this.$router.push('/');
             }
@@ -32,7 +32,7 @@ export default {
         },
       
         async fetchLogOutMember({ commit }) {
-            await ApiService.getWithToken(`http://localhost:8084/out`)
+            await ApiService.getWithToken(`http://localhost:8084/auth/out`)
             commit("setLogOutMember");
         },
     }

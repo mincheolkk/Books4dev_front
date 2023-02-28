@@ -79,18 +79,17 @@ export default {
         
         async searchBook ({commit}, param) {
             // 등록된 책 가져오기
-            const resSec  = await ApiService.get(`http://localhost:8084/search/readbook?query=${param}`);
+            const resSec  = await ApiService.get(`http://localhost:8084/book/search/readbook?query=${param}`);
             const registeredList = resSec.data;
             commit("setRegistedList", registeredList);
             
             const isbnList = [];
             for (let i = 0; i < registeredList.length; i++) {
                 isbnList.push(registeredList[i].isbn);
-                console.log("store isbnList = " + isbnList);
             }
       
             // 책 검색 가져오기
-            const res = await ApiService.get(`http://localhost:8084/todo?query=${param}`);
+            const res = await ApiService.get(`http://localhost:8084/kakao/search?query=${param}`);
             const searchBook = res.data.documents;
       
             // 중복 제거
@@ -110,17 +109,17 @@ export default {
             return resultBook;
         },
         async fetchReadBook({ commit }) {
-            const fetchData = await ApiService.getWithToken(`http://localhost:8084/my/readBook`);
+            const fetchData = await ApiService.getWithToken(`http://localhost:8084/member/readBook`);
             commit("setReadBook", fetchData.data);
         },
       
         async fetchWishBook({ commit }) {
-            const fetchData = await ApiService.getWithToken(`http://localhost:8084/my/wish`);
+            const fetchData = await ApiService.getWithToken(`http://localhost:8084/member/wish`);
             commit("setWishBook", fetchData.data);
         },
 
         async fetchDetailBook({ commit }, id) {
-            const fetchData = await ApiService.get(`http://localhost:8084/books/${id}`)
+            const fetchData = await ApiService.get(`http://localhost:8084/book/${id}`)
             commit("setDetailBook", fetchData.data);
 
             return fetchData.data;
@@ -128,7 +127,7 @@ export default {
         },
 
         async fetchPopularKeyword({ commit }) {
-            const fetchData = await ApiService.get(`http://localhost:8084/popular`);
+            const fetchData = await ApiService.get(`http://localhost:8084/book/popular`);
             commit("setPopularKeyword", fetchData.data);
         },
 
