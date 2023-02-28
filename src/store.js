@@ -55,11 +55,10 @@ export const store = new Vuex.Store({
         },
         setSearchList(state, searchList) {
             state.searchList = searchList;
-            console.log("state.searchList = " + state.searchList);
+
         },
         setRegistedList(state, searchRegistedList) {
             state.registedList = searchRegistedList;
-            console.log("state.searchRegistedList = " + searchRegistedList);
         },
         setLoginMember(state, res) {
             state.loginMember = res;
@@ -84,7 +83,7 @@ export const store = new Vuex.Store({
 
     actions: {
         async fetchAllBooks({commit}){
-            const res = await ApiService.get('http://localhost:8081/test/all');
+            const res = await ApiService.get('http://localhost:8084/book/all');
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
             return resultBook;
@@ -92,7 +91,7 @@ export const store = new Vuex.Store({
         
         async searchBook ({commit}, param) {
             // 등록된 책 가져오기
-            const resSec  = await ApiService.get(`http://localhost:8081/search/readbook?query=${param}`);
+            const resSec  = await ApiService.get(`http://localhost:8084/book/search/readbook?query=${param}`);
             const registeredList = resSec.data;
             commit("setRegistedList", registeredList);
             
@@ -103,7 +102,7 @@ export const store = new Vuex.Store({
             }
 
             // 책 검색 가져오기
-            const res = await ApiService.get(`http://localhost:8081/todo?query=${param}`);
+            const res = await ApiService.get(`http://localhost:8084/kakao/search?query=${param}`);
             const searchBook = res.data.documents;
 
             // 중복 제거
@@ -116,11 +115,11 @@ export const store = new Vuex.Store({
         },
 
         async saveWishList(request) {
-            ApiService.post(`http://localhost:8081/book/wish`, request);
+            ApiService.post(`http://localhost:8084/book/wish`, request);
         },
 
         async filterAllBooks({commit}, param) {
-            const res = await ApiService.get(`http://localhost:8081/test/all${param}`);
+            const res = await ApiService.get(`http://localhost:8084/book/all${param}`);
             const resultBook = res.data.body;
             commit("setResultList", resultBook)
             return resultBook;
@@ -128,23 +127,23 @@ export const store = new Vuex.Store({
 
         // 로그인 관련 
         async fetchLoginMember({ commit }) {
-            const { res } = await ApiService.getWithToken(`http://localhost:8081/me`);
+            const { res } = await ApiService.getWithToken(`http://localhost:8084/auth/me`);
             commit("setLoginMember", res);
             return res;
         },
 
         async fetchLogOutMember({ commit }) {
-            await ApiService.getWithToken(`http://localhost:8081/out`)
+            await ApiService.getWithToken(`http://localhost:8084/auth/out`)
             commit("setLogOutMember");
         },
 
         async fetchReadBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/readBook");
+            const fetchData = await ApiService.getWithToken("http://localhost:8084/member/readBook");
             commit("setReadBook", fetchData.data);
         },
 
         async fetchWishBook({ commit }) {
-            const fetchData = await ApiService.getWithToken("http://localhost:8081/test/wish");
+            const fetchData = await ApiService.getWithToken("http://localhost:8084/member/wish");
             commit("setWishBook", fetchData.data);
         },
 
