@@ -4,7 +4,7 @@
     <v-dialog
       v-model="dialog"
       persistent
-      max-width="350px"
+      max-width="280px"
     >
       <v-card>
         <v-card-title>

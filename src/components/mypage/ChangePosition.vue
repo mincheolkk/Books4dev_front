@@ -4,7 +4,7 @@
     <v-dialog
       v-model="dialog"
       persistent
-      max-width="600px"
+      max-width="280px"
     >
       <v-card>
         <v-card-title>
@@ -14,8 +14,8 @@
           <v-container>
             <v-row>
               <v-col
-                cols="4"
-                sm="4"
+                cols="12"
+                sm="8"
               >
                 <v-select
                   :items="['백엔드', '프론트엔드', '안드로이드', 'iOS', '인공지능/머신러닝', '데이터 엔지니어/사이언티스트', '블록체인', 'DevOps', '기타 혹은 미정']"
@@ -91,25 +91,7 @@ export default {
             this.$router.push('/mypage');
         }
     },
-    gohome() {
-      
-    },
-
-    async beforeCreate() {
-        // const res = await ApiService.getWithToken("/checkPosition");
-        // await this.$store.dispatch("fetchLoginMember")
-        // if (res.status === 200) {
-        //     this.$router.push('/'); 
-        //     console.log("go home!");
-
-        //     // this.$router.push('/');
-        // }
-        // const member = await this.$store.dispatch("fetchLoginMember");
-        // this.memberType = member.data.memberType;
-        // if (this.memberType !== null) {
-        //   this.$router.push('/');
-        // }
-    }
+  
 }    
   
 </script>
