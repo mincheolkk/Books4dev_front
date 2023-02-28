@@ -18,14 +18,14 @@ export const router = new VueRouter({
     routes:[
         { path: '/', component: BookList},
         { path: "/search", component: SearchList},
-        { path: "/selectPosition", component: SelectPosition},
+        { path: "/member/selectPosition", component: SelectPosition},
         { path: "/init", component:NewLogin},
 
         { path: "/mypage", component:MyReadBook,},
         { path: "/mywish", component:MyWishBook},
-        { path: "/changePosition", component: ChangePosition},
+        { path: "/member/changePosition", component: ChangePosition},
         { path: "/login", component: LoginPage},
-        { path: "/books/:id", component: DetailBook},
+        { path: "/book/:id", component: DetailBook},
     ],
     scrollBehavior() {
       return { top: 0}
