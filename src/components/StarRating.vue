@@ -28,7 +28,7 @@ export default {
 
 <style>
 .star-ratings {
-  color: #ff5d5d; 
+  color: #FC4C4D; 
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
@@ -38,7 +38,7 @@ export default {
 }
  
 .star-ratings-fill {
-  color: #ff5d5d;
+  color: #FC4C4D;
   padding: 10;
   position: absolute;
   z-index: 1;
@@ -46,7 +46,7 @@ export default {
   top: 0;
   left: 0;
   overflow: hidden;
-  -webkit-text-fill-color: #ff5d5d;
+  -webkit-text-fill-color: #FC4C4D;
 }
  
 .star-ratings-base {
