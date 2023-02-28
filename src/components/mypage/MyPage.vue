@@ -53,7 +53,7 @@ export default {
           this.$router.push('/');
         },
         changePosition() {
-            this.$router.push('/changePosition')
+            this.$router.push('/member/changePosition')
         }
     },
 

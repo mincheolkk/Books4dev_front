@@ -15,7 +15,7 @@
                 >
                     <div class="readbook-img-first">
                         <div class="readbook-img-second">
-                            <img :src="result.thumbnail" alt="image" class="readbook-img"/>
+                            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image"  class="readbook-img"/>
                         </div>
                     </div>
                     <div>
@@ -40,7 +40,7 @@
                 >
                     <div class="readbook-img-first">
                         <div class="readbook-img-second">
-                            <img :src="result.thumbnail" alt="image" class="readbook-img"/>
+                            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="readbook-img"/>
                         </div>
                     </div>
                     <div>
@@ -64,7 +64,7 @@
                 >
                     <div class="readbook-img-first">
                         <div class="readbook-img-second">
-                            <img :src="result.thumbnail" alt="image" class="readbook-img"/>
+                            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="readbook-img"/>
                         </div>
                     </div>
                     <div>
@@ -88,7 +88,7 @@
                 >
                     <div class="readbook-img-first">
                         <div class="readbook-img-second">
-                            <img :src="result.thumbnail" alt="image" class="readbook-img"/>
+                            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="readbook-img"/>
                         </div>
                     </div>
                     <div>
@@ -112,7 +112,7 @@
                 >
                     <div class="readbook-img-first">
                         <div class="readbook-img-second">
-                            <img :src="result.thumbnail" alt="image" class="readbook-img"/>
+                            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="readbook-img"/>
                         </div>
                     </div>
                     <div>
@@ -215,6 +215,7 @@ export default {
     opacity: 1;
     object-fit: cover;
     transition: opacity 420ms ease 0s;
+    cursor: pointer;
 }
 .readbook-title {
     font-size: 16px;

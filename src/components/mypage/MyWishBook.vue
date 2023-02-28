@@ -12,7 +12,7 @@
                 >
                     <div class="readbook-img-first">
                         <div class="readbook-img-second">
-                            <img :src="result.thumbnail" @click="$router.push(`/books/${result.id}`)" alt="image" class="readbook-img"/>
+                            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="readbook-img"/>
                         </div>
                     </div>
                     <div>
