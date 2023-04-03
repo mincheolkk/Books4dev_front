@@ -1,6 +1,6 @@
 <template>
     <div>
-        <my-page />
+        <member-page />
         <div class="zero" display=block>
             <div class="first-text">내가 관심있는 책들</div>
             <div class="first">
@@ -27,7 +27,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import MyPage from "./MyPage.vue"
+import MemberPage from './MemberPage.vue'
 
 
 export default {
@@ -37,15 +37,18 @@ export default {
         }
     },
     components:{
-        MyPage
+        MemberPage
     },
     computed: {
         ...mapGetters(
             ["getWishBook"]
-        )
+        ),
+        memberId() {
+            return this.$route.params.id
+        }
     },
     async beforeCreate() {
-        await this.$store.dispatch("fetchWishBook")
+        await this.$store.dispatch("fetchMemberWishBook", this.$route.params.id);
     }
 
 
@@ -67,7 +70,6 @@ export default {
     display: inline-block !important;
     vertical-align: top;
     box-sizing: border-box;
-    /* width: 20%; */
     padding: 0 5px;
     margin: 0 0 24px;
     width: 140px;
@@ -113,7 +115,6 @@ export default {
 .first {
     margin: 0 20px;
     transition: 500ms;
-    /* display: flex; */
 }
 .zero {
     box-shadow: 5px 10px 10px rgba(0.03, 1, 1, 0.03);

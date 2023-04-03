@@ -1,7 +1,7 @@
 <template>
     <div>
-        <my-page />
-        <div class="first-text" v-if="this.getReadBook.before === undefined &&  this.getReadBook.after === undefined && this.getReadBook.twoYear === undefined && this.getReadBook.fiveYear === undefined && this.getReadBook.tenYear === undefined"> 내가 읽은 책들 </div>
+        <member-page />
+        <div class="first-text" v-if="this.getReadBook.before === undefined &&  this.getReadBook.after === undefined && this.getReadBook.threeYear === undefined && this.getReadBook.sixYear === undefined"> 내가 읽은 책들 </div>
         <template v-if="this.getReadBook.before !== undefined">
             <div class="first-text">Before Developer</div>
         </template>
@@ -26,7 +26,7 @@
             </ui>
             </div>
         </div>
-            <div class="first-text" v-if="this.getReadBook.after !== undefined || this.getReadBook.twoYear !== undefined || this.getReadBook.fiveYear !== undefined || this.getReadBook.tenYear !== undefined">After Developer</div>
+            <div class="first-text" v-if="this.getReadBook.after !== undefined || this.getReadBook.threeYear !== undefined || this.getReadBook.sixYear !== undefined">After Developer</div>
         <template v-if="this.getReadBook.after !== undefined">
             <h2 class="timeLine-text"> 0 ~ 2 Years</h2>
         </template>
@@ -51,14 +51,14 @@
             </ui>
             </div>
         </div>
-       <template v-if="this.getReadBook.twoYear !== undefined">
-            <h2 class="timeLine-text"> 2 ~ 5 Years</h2>
+       <template v-if="this.getReadBook.threeYear !== undefined">
+            <h2 class="timeLine-text"> 3 ~ 5 Years</h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
             <ui class="readbook-ui">
                 <li 
-                    v-for="(result) in getReadBook.twoYear"
+                    v-for="(result) in getReadBook.threeYear"
                     v-bind:key="result.isbn"
                     class="readbook-li"
                 >
@@ -75,38 +75,14 @@
             </ui>
             </div>
         </div>
-        <template v-if="this.getReadBook.fiveYear !== undefined">
-            <h2 class="timeLine-text">5 Years ~ </h2>
+        <template v-if="this.getReadBook.sixYear !== undefined">
+            <h2 class="timeLine-text">6 Years ~ </h2>
         </template>
         <div class="zero" display=block>
             <div class="first" margin="0 20px">
             <ui class="readbook-ui">
                 <li 
-                    v-for="(result) in getReadBook.fiveYear"
-                    v-bind:key="result.isbn"
-                    class="readbook-li"
-                >
-                    <div class="readbook-img-first">
-                        <div class="readbook-img-second">
-                            <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="readbook-img"/>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="readbook-title">{{result.title}}</div>
-                        <star-rating :avgStar="result.star" />
-                    </div>
-                </li>
-            </ui>
-            </div>
-        </div>
-        <template v-if="this.getReadBook.tenYear !== undefined">
-            <h2 class="timeLine-text">10 Years  ~ </h2>
-        </template>
-        <div class="zero" display=block>
-            <div class="first" margin="0 20px">
-            <ui class="readbook-ui">
-                <li 
-                    v-for="(result) in getReadBook.tenYear"
+                    v-for="(result) in getReadBook.sixYear"
                     v-bind:key="result.isbn"
                     class="readbook-li"
                 >
@@ -129,21 +105,28 @@
 <script>
 import { mapGetters } from 'vuex'
 import StarRating from '../StarRating.vue'
-import MyPage from './MyPage.vue'
+import MemberPage from './MemberPage.vue'
+
 
 
 export default {
     components:{
-        MyPage,
-        StarRating
+        StarRating,
+        MemberPage
     },
     computed: {
         ...mapGetters(
             ["getReadBook"]
         )
     },
+    data() {
+        return {
+            memberNickname:"",
+        }
+    },
     async beforeCreate() {
-        await this.$store.dispatch("fetchReadBook");
+        await this.$store.dispatch("fetchMemberReadBook", this.$route.params.id);
+        await this.$store.dispatch("fetch")
     }
     
 }
@@ -158,14 +141,10 @@ export default {
     height:"1200px"
 
 }
-.shadow {
-  /* box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03); */
-}
 
 .timeLine-text {
     text-align: left !important;
     margin-left: 50px !important;
-    /* margin-bottom: 20px !important; */
 }
 
 .readbook-ui {
@@ -182,7 +161,6 @@ export default {
     display: inline-block !important;
     vertical-align: top;
     box-sizing: border-box;
-    /* width: 20%; */
     padding: 0 5px;
     margin: 0 0 24px;
     width: 140px;
@@ -229,7 +207,6 @@ export default {
 .first {
     margin: 0 20px;
     transition: 500ms;
-    /* display: flex; */
 }
 .logo-star {
     width: 12px;

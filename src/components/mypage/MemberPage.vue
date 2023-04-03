@@ -1,17 +1,17 @@
 <template>
     <div>
         <hr class="my-hr">
-        <div class="my-logout" @click="logout()">
-                <p>로그아웃 </p>
+        <div v-if="isOwner()" class="my-logout" @click="logout()">
+            <p style="color: #808991;">로그아웃 </p>
         </div>
-
+        
         <div class="select-button">
             <ul class="my-ul">
                 <li class="my-li">
-                    <a href="/mypage" class="my-href">읽은 책</a>
+                    <a :href="this.memberPage" class="my-href">읽은 책</a>
                 </li>
                 <li class="my-li">
-                    <a href="/mywish" class="my-href">관심있는 책</a>
+                    <a :href="this.wishPage" class="my-href">관심있는 책</a>
                 </li>
             </ul>
         </div>
@@ -19,11 +19,21 @@
         <div class="my-profile">
             <div class="my-profile-img">
                 <profile-img />
+            </div >
+            <div v-if="isOwner()" class="my-type"> 
+                <span style="margin-left:35px" class="type-text">{{this.getLoginMember.nickname}}</span>
+                <v-img class="icon-search" :src="require(`@/assets/edit.png`)" @click="changeNickname()"></v-img>
             </div>
-            <p>나</p>
-            <div class="my-type">
+            <div v-else style="margin-top:3px" class="my-type"> 
+                <span class="type-text">{{this.memberNickname}}</span>
+
+            </div>
+            <div v-if="isOwner()" class="my-type">
+                <span style="margin-left:35px" class="type-text">{{this.memberType}}</span>
+                <v-img class="icon-search" :src="require(`@/assets/edit.png`)" @click="changePosition()"></v-img>
+            </div>
+            <div v-else style="margin-top:3px" class="my-type">
                 <span class="type-text">{{this.memberType}}</span>
-                <v-img class="icon-search" :src="require(`@/assets/edit2.png`)" @click="changePosition()"></v-img>
             </div>
         </div>
     </div>
@@ -33,19 +43,33 @@
 <script>
 import ProfileImg from './ProfileImg.vue'
 import { ReversePositionConverter } from '../../utils/memberUtil'
+import { mapGetters } from 'vuex';
+
+
 
 export default {
     components:{
         ProfileImg
     },
-
+    computed: {
+        ...mapGetters([
+            "getLoginMember", "getMemberPage"
+      ])
+    },
     data() {
         return {
-            memberType:""
+            memberType:"",
+            memberNickname:"",
+            memberOauth:"",
+            wishPage:"",
+            memberPage:"",
         }
     },
 
     methods: {
+        isOwner() {
+            return this.getLoginMember !== null && this.getLoginMember.oauth === this.getMemberPage.oauth;
+        },
         logout() {
           this.$store.dispatch("fetchLogOutMember");
           localStorage.removeItem("accessToken");
@@ -54,12 +78,20 @@ export default {
         },
         changePosition() {
             this.$router.push('/member/changePosition')
+        },
+        changeNickname() {
+            this.$router.push('/member/changeNickname')
         }
     },
 
     async beforeCreate() {
-       const member = await this.$store.dispatch("fetchLoginMember");
-       this.memberType = ReversePositionConverter(member.data.memberType);
+        const member = await this.$store.dispatch("fetchMember", this.$route.params.id);
+        this.memberType = ReversePositionConverter(member.memberType);
+        this.memberNickname = member.nickname;
+        this.memberOauth = member.oauth;
+        this.wishPage = "/member/wishBook/" + member.oauth;
+        this.memberPage = "/member/" +member.oauth
+
     }
 }
 </script>
