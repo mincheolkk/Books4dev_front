@@ -8,11 +8,8 @@
 <script>
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
-
-
 export default {
     props:['isbn','time','read'],
-
     data() {
         return {
             start:null,
@@ -55,15 +52,14 @@ export default {
         
           pleaseChart(time) {
              this.drawChart(time);
-
         },
         makeData(timeData) {
             this.beforeChart = {
                 "before":this.timeDivide(timeData["beforeCount"]),
                 "after":this.timeDivide(timeData["afterCount"]),
-                "twoYear":this.timeDivide(timeData["twoYearCount"]),
-                "fiveYear":this.timeDivide(timeData["fiveYearCount"]),       
-                "tenYear":this.timeDivide(timeData["tenYearCount"])}     
+                "threeYear":this.timeDivide(timeData["threeYearCount"]),
+                "sixeYear":this.timeDivide(timeData["sixYearCount"]),       
+                "anyTime":this.timeDivide(timeData["anyTimeCount"])}     
                 return this.beforeChart;
             },
         timeDivide(time) {
@@ -75,50 +71,51 @@ export default {
         },
         async drawChart(timeData) {
             var chartData =  {
-                        labels:['추천 수'],
+                        labels:['시기'],
                         datasets:[
                             {
                                 label:"취업 전",
                                 data:[timeData["beforeCount"]],
-                                backgroundColor:"#ED2124"
+                                backgroundColor:"#D40C00"
                             },
                             {
-                                label:"취업 후 ~ 2년",
+                                label:"0-2년차",
                                 data:[timeData["afterCount"]],
-                                backgroundColor:"#FF7E36"
+                                backgroundColor:"#FF5500"
                             },
                             {
-                                label:'~ 5년',
-                                data:[timeData["twoYearCount"]],
-                                backgroundColor:"#FFE300"
+                                label:'3-5년차',
+                                data:[timeData["threeYearCount"]],
+                                backgroundColor:"#FFCD00"
                             },
                             {
-                                label:'~ 10년',
-                                data:[timeData["fiveYearCount"]],
-                                backgroundColor:"#04CF5C"
+                                label:'6년차 이상',
+                                data:[timeData["sixYearCount"]],
+                                backgroundColor:"#32C12C"
                             },
                             {
-                                label:'10년차 ~',
-                                data:[timeData["tenYearCount"]],
+                                label:'언제든 좋음',
+                                data:[timeData["anyTimeCount"]],
                                 backgroundColor:"#1877F2"
                             },
                         ]
                     };
-
-            let start = null;
-            var ctx = this.isbn;
-
-            if(start != null) {
-                start.destory();
-                
+            if (this.read !== undefined) {
+                chartData.datasets.splice(4,1);
             }
-            start = new Chart(ctx, {
+            
+
+            var ctx = this. isbn;
+
+            this.start = new Chart(ctx, {
                 type: 'bar',
                 data: chartData,
                 options: this.options
-            })
-
+            });
         },
+
+
+
         handleMediaQueryChange(mediaQuery) {
             if (mediaQuery.matches) {
                 this.options.layout.padding.left = 10
@@ -141,8 +138,8 @@ export default {
     beforeDestroy() {
         const mediaQuery = window.matchMedia('(max-width: 385px)')
         mediaQuery.removeEventListener('change', this.handleMediaQueryChange)
+        this.start.destroy();
     },
-    
 
 }
 </script>

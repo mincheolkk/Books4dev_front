@@ -4,15 +4,15 @@
         <hr class="my-hr">
 
         <div class="first-text">검색 리스트</div>
-        <v-card v-for="(result) in getRegistedList" v-bind:key="result.isbn" class="card-search shadow">
+        <v-card v-for="(result) in getRegistedList" v-bind:key="result.isbn" class="card-search">
           <div>
             <div class="search-zero">
-              <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="book-img shadow cursor"/>
+              <img :src="result.thumbnail" @click="$router.push(`/book/${result.id}`)" alt="image" class="book-img cursor"/>
                 <div class="book-detail">
                   <h3 class="book-title cursor" @click="$router.push(`/book/${result.id}`)" >{{result.title}}</h3>
                   <h4 class="authors-style"> {{result.authors}}</h4>
                   <v-spacer></v-spacer>
-                  <p class="text-top"> 책 등록  {{result.readCount}} </p> 
+                  <p class="text-top"> 읽은 사람  {{result.readCount}}명 </p> 
                   <p class="text-bottom"> 리뷰 평점 ★ {{result.avgStar}}</p>
                 </div>
             </div>
@@ -23,27 +23,29 @@
           </div>
         </div>
         <div class="plus-button">
+          <comment-dialog v-bind:key="result.isbn" :commentCount="result.commentCount" :bookId="result.id" :bookTitle="result.title" />
           <v-spacer></v-spacer>
           <add-wish v-bind:key="result.isbn" :isbn="result.isbn" :title="result.title" :thumbnail="result.thumbnail" />
           <add-read-book :isbn="result.isbn" class="add-button"/>
         </div>
     </v-card>
 
-    <v-card v-for="item in this.getSearchList" v-bind:key="item.isbn" class="card-search shadow">
+    <v-card v-for="info in this.getSearchList" v-bind:key="info.isbn" class="card-search shadow">
         <div class="search-zero">
-            <img :src="item.thumbnail" alt="image" class="book-img "/>
+            <img :src="info.thumbnail" alt="image" class="book-img "/>
             <div class="book-detail">
-                <h3 class="book-title">{{item.title}}</h3>
-                <h4 class="search-authors">출판사 : {{item.publisher}}</h4>
-                <h4 class="search-authors">지은이 : {{item.authors}}</h4>
-                <h4 class="search-authors">정가 : {{item.price}}원</h4>
+                <h3 class="book-title">{{info.title}}</h3>
+                <h4 class="search-authors">출판사 : {{info.publisher}}</h4>
+                <h4 class="search-authors">지은이 : {{info.authors}}</h4>
+                <h4 class="search-authors">정가 : {{info.price}}원</h4>
             </div>
         </div>
         <div class="plus-button">
             <v-spacer></v-spacer>
-            <add-wish  :bookData="item" />
-            <add-read-book :bookData={item} />
+            <add-wish  :bookData="info" />
+            <add-read-book :info={info} />
         </div>
+        <hr class="bottom-hr">
     </v-card>
 
   </div>
@@ -55,6 +57,7 @@ import AddReadBook from './AddReadBook.vue'
 import AddWish from './AddWish.vue'
 import ListChart from './ListChart.vue'
 import PopularKeyword from './PopularKeyword.vue'
+import CommentDialog from '../comment/CommentDialog.vue'
 
 
 export default {
@@ -76,7 +79,8 @@ export default {
         AddReadBook,
         AddWish,
         ListChart,
-        PopularKeyword
+        PopularKeyword,
+        CommentDialog,
     },
     methods: {
 
@@ -88,9 +92,6 @@ export default {
 </script>
 
 <style scoped>
-.shadow {
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.3);
-}
 .card-search {
     width: 100% ;
 }
@@ -201,5 +202,10 @@ export default {
     margin: 0 20px; 
     margin-top: 0px; 
     margin-bottom: 15px;
+}
+.comment-button{
+  margin-left: 20px;
+  display: block;
+  max-width: 23px;
 }
 </style>

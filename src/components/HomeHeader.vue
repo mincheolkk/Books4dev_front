@@ -3,7 +3,7 @@
   <nav>
     <div class="header-zero">
       <ul class="header-ul">
-          <v-img class="main-logo-large" :src="require(`@/assets/group3.svg`)" @click="goMainPage" ></v-img>
+          <v-img class="main-logo-large" :src="require(`@/assets/group-icon.svg`)" @click="goMainPage" ></v-img>
           <v-img class="main-logo-small" :src="require(`@/assets/three-books.svg`)" @click="goMainPage" ></v-img>
           <book-input class="header-input" /> 
         <li>
@@ -62,17 +62,17 @@ export default {
       },
 
       goMainPage() {
-        if (window.location.href === "http://localhost:8081/") {
+        if (window.location.href === "https://books4dev.me/") {
             this.$router.go(this.$router.currentroute);
         } else {
            this.$router.push('/');
         }  
       },
       goMyPage() {
-        if (window.location.href === "http://localhost:8081/mypage") {
+        if (window.location.href === "https://books4dev.me/member/"+this.getLoginMember.oauth) {
              this.$router.go(this.$router.currentroute);
         } else {
-             this.$router.push('/mypage');
+             this.$router.push('/member/'+this.getLoginMember.oauth);
         }  
       }
     },
@@ -85,6 +85,71 @@ export default {
 </script>
 
 <style scoped>
+
+@media (max-width: 370px) {
+  .header-login {
+    display: flex;
+    position: relative;
+    float: right !important;
+  }
+  .main-logo-small{
+    margin-left: 20px;
+    margin-right: 60px !important;
+    width: 10%;
+  }
+
+.header-base {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+.header-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  position: relative;
+}
+.main-logo-small{
+  margin-left: 20px;
+  margin-right: 70px;
+  width: 10%;
+}
+.main-logo-large {
+  display:none;
+}
+.header-logo {
+  display: none;
+}
+.header-text {
+  display: none;
+}
+
+.header-input {
+  margin-right: -20px;
+}
+
+.header-right {
+  float: right;
+  display: flex;
+}
+.header-login {
+  float: right !important;
+  margin-right: 20px !important;
+  margin-left: auto;
+  width: 60px;
+}
+.header-mypage {
+  float: right !important;
+  margin-right: 5px !important;
+  margin-left: auto;
+  width: 60px;
+}
+}
+
 @media screen and (max-width: 384px) {
   .header-login {
     display: flex;

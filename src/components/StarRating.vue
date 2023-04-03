@@ -32,7 +32,7 @@ export default {
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-fill-color: transparent; 
   -webkit-text-stroke-width: 0px;
   -webkit-text-stroke-color: #fff;
 }

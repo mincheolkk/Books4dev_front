@@ -22,11 +22,7 @@ export default {
         "isLoggedIn", 
       ])
     },
-    data() {
-      return {
-        // isbn: "",
-      }
-    },
+    
     methods:{
         async wishBook(){
             if (!this.isLoggedIn) {
@@ -39,10 +35,11 @@ export default {
                 "closeSnackbarAfterTimeout",
                 1000
               );
+              return
             }
 
             if (this.isbn === undefined){
-              ApiService.postWithToken(`http://localhost:8084/book/wish`, this.bookData)
+              ApiService.postWithToken(`https://apiis.books4dev.me/book/wish`, this.bookData)
                 .then(()=> {
                     this.$store.dispatch("updateSnackbarText","등록되었습니다.")
                     .then(() => 
@@ -56,7 +53,7 @@ export default {
                   }
                 });
 
-              return;
+              return
             } 
             
             if (this.isbn !== undefined) {
@@ -64,7 +61,7 @@ export default {
               let data ={}
               data = { isbn : this.isbn };
               
-              ApiService.postWithToken(`http://localhost:8084/book/wish`, data)
+              ApiService.postWithToken(`https://apiis.books4dev.me/book/wish`, data)
                 .then(()=> {
                     this.$store.dispatch("updateSnackbarText","등록되었습니다.")
                     .then(() => 
@@ -77,8 +74,7 @@ export default {
                     this.$store.dispatch("closeSnackbarAfterTimeout", 1000);
                   }
                 });
-            }
-              
+              }
               return
             },
         },

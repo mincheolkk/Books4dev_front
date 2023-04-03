@@ -1,6 +1,5 @@
 <template>
   <div class="filter-box">
-    <!-- <br /> -->
     <v-select
       class="filters"
       v-model="memberType"
@@ -51,29 +50,26 @@ export default {
             { key: "All", text: "모든 개발자" },
             { key: "BackEnd", text: "백엔드" },
             { key: "FrontEnd", text: "프론트" },
-            { key: "iOS", text: "iOS" },
-            { key: "Android", text: "안드로이드" },
-            { key: "AInML", text:"인공지능/머신러닝"},
-            { key: "DATA", text:"데이터 엔지니어/사이언티스트"},
-            { key: "BlockChain", text:"블록체인"},
             { key: "DevOps", text:"DevOps"},
-            { key: "ETC", text:"기타 혹은 미정"}
+            { key: "AInML", text:"인공지능/머신러닝"},
+            { key: "ETC", text:"기타 혹은 미정"},
         ],
         
         sortTypeMap: [
             { key: "STAR", text: "평점 높은 순" },
             { key: "COUNT", text: "많이 읽은 순" },
-            { key: "WISH", text: "관심 많은 순" }
+            { key: "WISH", text: "관심 많은 순" },
+            { key: "COMMENT", text: "댓글 많은 순" },
 
         ],
         
         recommendTypeMap: [
-            { key: "All", text: "모든 시기" },
+            { key: "All", text: "추천 시기" },
             { key: "before", text: "취업 전" },
-            { key: "after", text: "취업 후 ~ 2년" },
-            { key: "twoYear", text: "취업 후 2년 ~ 5년" },
-            { key: "fiveYear", text: "취업 후 5년 ~ 10년" },
-            { key: "tenYear", text: "취업 후 10년 ~ "}
+            { key: "after", text: "0-2년차" },
+            { key: "threeYear", text: "3-5년차" },
+            { key: "sixYear", text: "6년차 이상" },
+            { key: "anyTime", text: "언제든 좋음"}
         ],
 
         memberType: "",
@@ -85,7 +81,7 @@ export default {
 
   methods:{
         async createFilterUrl () {
-           return "?"+"memberType="+this.memberType+
+           return "?memberType="+this.memberType+
                         "&"+"sortType="+this.sortType+
                         "&"+"recommendType="+this.recommendType;
            
@@ -93,8 +89,9 @@ export default {
        
        async onChange() {
         this.tempUrl = await this.createFilterUrl();
+        this.$store.commit("setSearchCondition", this.tempUrl);
 
-        this.$store.dispatch("filterAllBooks",this.tempUrl);
+        await this.$store.dispatch("filterAllBooks",this.tempUrl);
     }
   }
 }
@@ -105,16 +102,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: left;
-  font-family: "Noto Sans KR", "Noto Sans JP", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   margin-left: 20px;
 }
 
 .filters {
   padding: 0;
-  /* width: 10em; */
-  /* max-width: 12em; */
   margin-right: 20px;
-  /* box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03); */
   text-align: center;
   white-space: nowrap; 
 }
