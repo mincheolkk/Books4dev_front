@@ -26,14 +26,26 @@
           </div>
         </div>
         <div class="plus-button" v-if="listView">
+          <comment-dialog v-bind:key="result.isbn" :commentCount="result.commentCount" :bookId="result.id" :bookTitle="result.title" />
           <v-spacer></v-spacer>
           <add-wish v-bind:key="result.isbn" :isbn="result.isbn" class="wish-button shadow"/>
           <add-read-book v-bind:key="result.isbn" :isbn="result.isbn" class="add-button"/>
         </div>
     </v-card>
     <book-tile :resultList=getResultList v-if="tileView" />
+      <v-pagination
+      :length="getPageCount"
+      :total-visible="6"
+      :disabled="false"
+      :prev-text="false"
+      :next-text="false"
+      v-model="currentPage"
+      @input="changePage"
+      class="pagination"
+      :active-class="'active'"
+      :disabled-class="'disabled'"
+    />
     </div>
-
 </template>
 
 <script>
@@ -46,22 +58,25 @@ import ListChart from './ListChart.vue'
 import AllBookFilter from './AllBookFilter.vue'
 import BookTile from './BookTile.vue'
 
+import CommentDialog from '../comment/CommentDialog.vue';
+
+
 Chart.register(...registerables)
 
 
 export default {   
  
   components:{
-      ListChart,
-      AddReadBook,
-      AddWish,
-      AllBookFilter,
-      BookTile,
+    ListChart,
+    AddReadBook,
+    AddWish,
+    AllBookFilter,
+    BookTile,
+    CommentDialog,
   },
 
   data() {
     return {
-      books: [],
       request: {
           title:"",
           isbn:"",
@@ -69,17 +84,19 @@ export default {
       },
       listView: true,
       tileView: false,
-  }},
+      currentPage: 1,
+      }
+  },
     
   computed: {
     ...mapGetters([
-        "getResultList"
-    ])
+        "getResultList","getPageCount","getSearchCondition","getTotalCount"
+    ]),
   },
   async created() {
-    await this.$store.dispatch("fetchAllBooks")
+    await this.$store.dispatch("filterAllBooks", `?offset=${this.currentPage}`);
   },
-  
+
   methods: {
     switchTileView() {
       this.listView = false;
@@ -88,8 +105,20 @@ export default {
     switchListView() {
       this.listView = true;
       this.tileView = false;
+    },
+    async changePage() {
+      window.scrollTo(0,0);
+
+      if (this.getSearchCondition !== null) {
+          await this.$store.dispatch("filterAllBooks", `${this.getSearchCondition}&totalCount=${this.getTotalCount}&offset=${this.currentPage}`);
+          return;
+      }
+      
+      await this.$store.dispatch("filterAllBooks", `?offset=${this.currentPage}&totalCount=${this.getTotalCount}`);
     }
-  }
+  },
+
+  
 }
 </script>
 
@@ -156,7 +185,7 @@ export default {
     color: #141414;
     min-width: 0px;
     justify-content: left;
-    margin: 0 20px 20px 20px;
+    margin: 5px 20px 20px 20px;
     text-align: left;
 }
 
@@ -188,9 +217,21 @@ export default {
   padding-right: 20px;
 }
 
+
 @media screen and (min-width: 768px) {
 .switch-view {
   margin-right: 5px !important;
+}
+.first-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.01em;
+    color: #141414;
+    min-width: 0px;
+    justify-content: left;
+    margin: -5px 20px 20px 20px;
+    text-align: left;
 }
 }
 
