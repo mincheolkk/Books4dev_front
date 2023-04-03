@@ -11,6 +11,11 @@ export default {
         detailBook: {},
         searchKeyword: "",
         popularKeyword: [],
+        commentList: [],
+        pageCount:"",
+        totalCount:"",
+        searchCondition:null,
+        inputText:"",
     },
 
     getters: {
@@ -38,6 +43,21 @@ export default {
         getPopularKeyword: (state) => {
             return state.popularKeyword;
         },
+        getCommentList: (state) => {
+            return state.commentList;
+        },
+        getPageCount: (state) => {
+            return state.pageCount;
+        },
+        getSearchCondition: (state) => {
+            return state.searchCondition;
+        },
+        getTotalCount: (state) => {
+            return state.totalCount;
+        },
+        getInputText: (state) => {
+            return state.inputText;
+        }
     },
 
     mutations: {
@@ -65,21 +85,35 @@ export default {
         setPopularKeyword(state, res) {
             state.popularKeyword = res;
         },
-        
+        setCommentList(state, res) {
+            state.commentList = res;
+        },
+        setCurrentPage(state, res) {
+            state.currentPage = res;
+        },
+        setTotalCount(state, res) {
+            state.totalCount = res;
+        },
+        setSearchCondition(state, res) {
+            state.searchCondition = res;
+        },
+        setInputText(state, res) {
+            state.inputText = res;
+        }
     },
 
-    actions: {
-        async fetchAllBooks({commit}){
-            const res = await ApiService.get(`http://localhost:8084/book/all`);
-            const resultBook = res.data.body;
-            commit("setResultList", resultBook);
-            commit("setFilterCount")
-            return resultBook;
+    actions: {        
+        async filterAllBooks({commit}, param) {
+            
+            const res = await ApiService.get(`https://apiis.books4dev.me/book/all${param}`);
+            commit("setResultList", res.data.content);
+            commit("setPageCount", res.data.totalPages);
+            commit("setTotalCount", res.data.totalElements);
         },
-        
+
         async searchBook ({commit}, param) {
-            // 등록된 책 가져오기
-            const resSec  = await ApiService.get(`http://localhost:8084/book/search/readbook?query=${param}`);
+            // 내 서비스에 등록된 책 가져오기
+            const resSec  = await ApiService.get(`https://apiis.books4dev.me/book/search/readbook?query=${param}`);
             const registeredList = resSec.data;
             commit("setRegistedList", registeredList);
             
@@ -88,8 +122,8 @@ export default {
                 isbnList.push(registeredList[i].isbn);
             }
       
-            // 책 검색 가져오기
-            const res = await ApiService.get(`http://localhost:8084/kakao/search?query=${param}`);
+            // 카카오 책 검색 가져오기
+            const res = await ApiService.get(`https://apiis.books4dev.me/kakao/search?query=${param}`);
             const searchBook = res.data.documents;
       
             // 중복 제거
@@ -98,38 +132,32 @@ export default {
                     searchBook.splice(i,1);
                 }
             }
-            commit("setSearchList",searchBook);            
+            commit("setSearchList",searchBook);    
         },
 
-        async filterAllBooks({commit}, param) {
-            const res = await ApiService.get(`http://localhost:8084/book/all${param}`);
-            const resultBook = res.data.body;
-            commit("setResultList", resultBook)
-            
-            return resultBook;
-        },
-        async fetchReadBook({ commit }) {
-            const fetchData = await ApiService.getWithToken(`http://localhost:8084/member/readBook`);
+        async fetchMemberReadBook({ commit }, id){
+            const fetchData = await ApiService.get(`https://apiis.books4dev.me/member/${id}/readBook/`);
             commit("setReadBook", fetchData.data);
         },
       
-        async fetchWishBook({ commit }) {
-            const fetchData = await ApiService.getWithToken(`http://localhost:8084/member/wish`);
+        async fetchMemberWishBook({ commit }, id){
+            const fetchData = await ApiService.get(`https://apiis.books4dev.me/member/${id}/wishBook`);
             commit("setWishBook", fetchData.data);
         },
 
         async fetchDetailBook({ commit }, id) {
-            const fetchData = await ApiService.get(`http://localhost:8084/book/${id}`)
+            const fetchData = await ApiService.get(`https://apiis.books4dev.me/book/${id}`)
             commit("setDetailBook", fetchData.data);
-
-            return fetchData.data;
-
         },
 
         async fetchPopularKeyword({ commit }) {
-            const fetchData = await ApiService.get(`http://localhost:8084/book/popular`);
+            const fetchData = await ApiService.get(`https://apiis.books4dev.me/book/popular`);
             commit("setPopularKeyword", fetchData.data);
         },
-
+        
+        async fetchComment({ commit }, id) {
+            const fetchData = await ApiService.get(`https://apiis.books4dev.me/book/${id}/comments`)
+            commit("setCommentList", fetchData.data);
+        },
     } 
 }
