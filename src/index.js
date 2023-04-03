@@ -21,7 +21,7 @@ const ApiService = {
 
     return axios.get(`${url}`, {
       headers: {
-        Authorization: accessToken
+        'Authorization': accessToken
       }
     });
   },
@@ -31,17 +31,26 @@ const ApiService = {
     this.validToken();
     return axios.post(`${url}`, params, {
       headers: {
-        contentType: 'application/json',
-        Authorization: accessToken
+        'Content-Type': 'application/json',
+        'Authorization': accessToken
       }
     });
   },
 
-  putWithToken(url, request) {
+  patchWithToken(url, request) {
+    const accessToken = this.getToken();
+    return axios.patch(`${url}`, request, {
+      headers: {
+        'Authorization': accessToken
+      }
+    });
+  },
+
+   putWithToken(url, request) {
     const accessToken = this.getToken();
     return axios.put(`${url}`, request, {
       headers: {
-        Authorization: accessToken
+        'Authorization': accessToken
       }
     });
   },
@@ -50,7 +59,7 @@ const ApiService = {
     const accessToken = this.getToken();
     return axios.delete(`${url}`, {
       headers: {
-        Authorization: accessToken
+        'Authorization': accessToken
       }
     });
   },
@@ -61,42 +70,16 @@ const ApiService = {
     const Token = JSON.parse(stirngToken);
     const expireTime = Date.now();
     
-    if (Token.expire - expireTime > 0) {
-      if (Token.expire - expireTime < 110 * 1000) {
-        this.updateToken();
-      }
-    } else {
+
+    if (Token.expire - expireTime < 10*1000) {
       this.removeToken();
       
-      if (window.location.href === "http://localhost:8081/") {
-        router.go(this.$router.currentroute);
-      } else {
-        router.push('/');
-    }  
+        if (window.location.href === "https://books4dev.me/") {
+          router.go(this.$router.currentroute);
+        } else {
+          router.push('/');
+      }  
     }
-  },
-
-  async updateToken() {
-    const refresh = `${localStorage.getItem("refreshToken")}`;
-    const request = {
-      refreshToken : refresh
-    };
-    
-    const newData = await this.postWithToken("http://localhost:8084/auth/update/token",request);
-
-    if (newData.status === 500) {
-      this.removeToken();
-      router.push('/');
-      return;
-    }
-
-    const newAccessToken = newData.data
-    const obj = {
-      "accessToken":newAccessToken,
-      expire:Date.now() + 1000 * 60 * 60
-    }
-
-    localStorage.setItem("accessToken",JSON.stringify(obj));
   },
 
   getToken() {
