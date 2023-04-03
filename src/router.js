@@ -2,13 +2,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import BookList from "./components/book/BookList";
 import SearchList from './components/book/SearchList';
-import SelectPosition from './components/mypage/SelectPosition'
 import GetRefreshToken from './components/login/GetRefreshToken'
-import MyWishBook from './components/mypage/MyWishBook'
-import MyReadBook from './components/mypage/MyReadBook'
 import ChangePosition from './components/mypage/ChangePosition'
 import LoginPage from './components/login/LoginPage'
 import DetailBook from './components/book/DetailBook'
+import ChangeNickname from './components/mypage/ChangeNickname'
+import MemberReadBook from './components/mypage/MemberReadBook'
+import MemberWishBook from './components/mypage/MemberWishBook'
+
+
 
 Vue.use(VueRouter);
 
@@ -18,18 +20,25 @@ export const router = new VueRouter({
     routes:[
         { path: '/', component: BookList},
         { path: "/search", component: SearchList},
-        { path: "/member/selectPosition", component: SelectPosition},
+        { path: "/member/selectPosition", component: ChangePosition},
         { path: "/init", component:GetRefreshToken},
-
-        { path: "/mypage", component:MyReadBook,},
-        { path: "/mywish", component:MyWishBook},
         { path: "/member/changePosition", component: ChangePosition},
         { path: "/login", component: LoginPage},
-        { path: "/book/:id", component: DetailBook},
+        { path: "/book/:bookId", component: DetailBook},
+        { path: "/member/changeNickname", component: ChangeNickname},
+        { path: "/member/:id", component: MemberReadBook},
+        { path: "/member/wishBook/:id", component: MemberWishBook},
+
     ],
-    scrollBehavior() {
-      return { top: 0}
-    },
+    scrollBehavior(to) {
+
+        if (to.hash) {
+          return { selector: to.hash };
+        }
+        
+        return { x: 0, y: 0 };
+    }
+    
 
 })
 
