@@ -24,15 +24,14 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "snackBar",
   computed: {
     ...mapGetters(["fetchedSnackBarState", "fetchedSnackBarText"])
   },
   methods: {
-    closeSnackBar: function() {
+    closeSnackBar() {
       this.$store.dispatch("updateSnackbarState", false);
     }
-  },
+  }
 };
 </script>
 

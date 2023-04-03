@@ -11,7 +11,7 @@
   name: "LoginPage",
   methods: {
     kakaoLogin() {
-      window.location.href = "http://localhost:8084/oauth2/authorization/kakao";
+      window.location.href = "https://oauth.books4dev.me/oauth2/authorization/kakao";
     },
   },
 };

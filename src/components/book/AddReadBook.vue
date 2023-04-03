@@ -1,9 +1,10 @@
 <template>
     <v-form ref="dialogForm" >
-    <v-dialog
+    <v-dialog 
       v-model="dialog"
       persistent
       max-width="350px"
+      @keydown.esc="cancel()"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -41,7 +42,7 @@
                 sm="12"
               >
                 <v-select
-                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
+                  :items="['개발자 취업 전', '0-2년차', '3-5년차', '6년차 이상']"
                   label="읽었거나 읽고 있는 시기를 알려주세요"
                   v-model="request.readTime"
                   required
@@ -53,7 +54,7 @@
                 sm="12"
               >
                 <v-select
-                  :items="['개발자 취업 전', '개발자 취업 후 ~ 2년', '2년 ~ 5년', '5년 ~ 10년','10년 ~']"
+                  :items="['개발자 취업 전', '0-2년차', '3-5년차', '6년차 이상','언제든 좋음']"
                   label="읽기에 좋은 시기를 추천해주세요"
                   v-model="request.recommendTime"
                   required
@@ -62,7 +63,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*주절주절</small>
+          <small></small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -93,7 +94,7 @@ import { timeConverter } from '../../utils/bookUtil'
 import { mapGetters } from 'vuex'
 
   export default {
-    props: ['bookData','isbn'],
+    props: ['info','isbn'],
 
     computed: {
       ...mapGetters([
@@ -117,6 +118,10 @@ import { mapGetters } from 'vuex'
     },
 
     methods:{
+        cancel() {
+          this.dialog = false;
+        },
+
         async checkLogin() {
             if (!this.isLoggedIn) {
               await this.$store.dispatch(
@@ -134,7 +139,7 @@ import { mapGetters } from 'vuex'
         },
 
         convertReviewData() {
-          if (window.location.href === "http://localhost:8081/search") {
+          if (window.location.href === "https://books4dev.me/search") {
             console.log(this.getSearchKeyword);
             return {
               readTime: timeConverter(this.request.readTime),
@@ -160,10 +165,10 @@ import { mapGetters } from 'vuex'
             let review;
             review = {review :  this.convertReviewData()};
 
-            let min;
-            min = Object.assign(this.bookData, review);
+            let dto;
+            dto = Object.assign(this.info, review);
 
-            ApiService.postWithToken("http://localhost:8084/book/fromSearch",min)
+            ApiService.postWithToken("https://apiis.books4dev.me/book/fromSearch",dto)
             
             await this.$store.dispatch(
                 "updateSnackbarText",
@@ -180,7 +185,7 @@ import { mapGetters } from 'vuex'
             review = {review :  this.convertReviewData()};
             review.isbn = this.isbn;
 
-            ApiService.postWithToken("http://localhost:8084/book/fromList",review)
+            ApiService.postWithToken("https://apiis.books4dev.me/book/fromList",review)
           }
           
           this.dialog = false;
