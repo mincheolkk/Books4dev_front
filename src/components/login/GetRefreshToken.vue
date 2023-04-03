@@ -13,11 +13,11 @@ export default {
         const token = this.$route.query.token;
         const obj = {
             "accessToken":token,
-            expire:Date.now() + 1000 * 60 * 60
+            expire:Date.now() + 1000 * 60 * 60 * 36
         }
         localStorage.setItem("accessToken",JSON.stringify(obj));
         
-        const refresh = await ApiService.getWithToken("http://localhost:8084/auth/refreshtoken");
+        const refresh = await ApiService.getWithToken("https://apiis.books4dev.me/auth/refreshtoken");
         localStorage.setItem("refreshToken", refresh.data);
 
         this.$router.push('/member/selectPosition');
