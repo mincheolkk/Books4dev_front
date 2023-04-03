@@ -12,7 +12,22 @@
 
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
+    
+    computed: {
+        ...mapGetters(
+            ["getInputText"]
+        )
+    },
+    watch: {
+        getInputText(newValue) {
+            if (newValue.length > 1) {
+                this.searchTitle = newValue
+            }
+        }
+    },
     data() {
         return {
             searchTitle: "",
@@ -92,6 +107,18 @@ input:focus {
 .short-size {
     display: flex;
 }
+@media (max-width: 375px) {
+
+.input-label {
+    width: 155px;
+}
+}
+@media (min-width: 404px) and (max-width: 425px) {
+.input-label {
+    width: 190px;
+}
+}
+
 
 @media screen and (min-width:768px) {
     .icon-search {
@@ -118,4 +145,6 @@ input:focus {
     width:280px;
 }
 }
+
+
 </style>
