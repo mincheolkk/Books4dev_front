@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-card class="v-card"> 
-            <v-img class="icon-search" :src="require(`@/assets/back3.png`)" @click="$router.go(-1)"></v-img>
+            <v-img class="icon-search" :src="require(`@/assets/back.png`)" @click="$router.go(-1)"></v-img>
             <img :src="getDetailBook.thumbnail" alt="image" class="book-img shadow"/>
                         <h2> {{this.getDetailBook.title}} </h2>
 
@@ -31,6 +31,7 @@
                 <p v-if="getDetailBook.count.wishCount !== 0"> 관심 있는 사람 : {{getDetailBook.count.wishCount}}명 </p>
                 <p class="text-bottom"> 리뷰 평점 ★ {{getDetailBook.star.avgStar}} ({{getDetailBook.count.readCount}}명) </p>
               </div>
+                <h2 class="h2-line" style="margin-bottom: 10px;"> 연관 검색어 </h2>
               </div>
 
             <div>
@@ -42,18 +43,22 @@
             </div>
             <div >
                 <div v-if="getDetailBook.count.readCount > 0" class="chart">
-                  <list-chart v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.title" :time="getDetailBook.recommendTime" :read="1"/>
-                  <canvas :id="getDetailBook.title" height="35"/>
-                  <list-chart v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.isbn" :time="getDetailBook.readTime" />
+                  <list-chart v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.isbn" :time="getDetailBook.recommendTime" />
                   <canvas :id="getDetailBook.isbn" height="35"/>
                 </div>
               <div class="plus-button">
+                <div>
+                  <v-img class="comment-button" :src="require(`@/assets/red-comment.svg`)" style="margin-top: 5px;"></v-img>
+                </div>
+                <p style="margin-left : 7px; margin-top: 7px;">{{getDetailBook.count.commentCount}}</p>
                 <v-spacer></v-spacer>
                 <add-wish v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.isbn" class="wish-button shadow"/>
                 <add-read-book v-bind:key="getDetailBook.isbn" :isbn="getDetailBook.isbn" class="add-button"/>
               </div>
             </div>
         </v-card>
+        <add-comment :bookId="getDetailBook.id" />
+        <comment-list :bookId="getDetailBook.id" />
     </div>
 
 </template>
@@ -65,6 +70,8 @@ import ListChart from './ListChart.vue'
 import { Chart, registerables } from 'chart.js'
 import AddReadBook from './AddReadBook.vue'
 import AddWish from './AddWish.vue'
+import CommentList from '../comment/CommentList.vue'
+import AddComment from '../comment/AddComment.vue';
 
 
 Chart.register(...registerables)
@@ -76,28 +83,28 @@ export default {
       ListChart,
       AddReadBook,
       AddWish,
+      CommentList,
+      AddComment,
     },
 
     computed: {
         ...mapGetters([
-            "getDetailBook",
+            "getDetailBook", "getCommentList"
         ])
     },
-
-    async created() {
-        await this.$store.dispatch("fetchDetailBook",this.$route.params.id);
+    async beforeCreate(){
+      await this.$store.dispatch("fetchDetailBook", this.$route.params.bookId);
     },
 
     methods:{
       async vuexSearch(keyword) {
             window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+            this.$store.commit("setInputText",keyword);        
             this.$store.commit('setSearchKeyword', keyword);
-
             this.$router.push('/search');
             await this.$store.dispatch("searchBook", keyword);
-            
         },
-    }
+    },
 }
 </script>
 
@@ -164,6 +171,10 @@ export default {
   padding: 0;
   min-width:97%
 }
+.book-img {
+  border: 1px solid #e6e6e4;
+  border-radius: 5px;
+}
 
 .text-bottom {
   
@@ -210,6 +221,11 @@ export default {
 .my-text{
   text-align: left;
   margin-right: 10px;
+}
+.comment-button{
+  margin-left: 20px;
+  display: block;
+  max-width: 23px;
 }
 
 </style>
