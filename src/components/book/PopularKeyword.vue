@@ -26,6 +26,7 @@ export default {
       async vuexSearch(keyword) {
             await this.$store.dispatch("searchBook", keyword);
             this.$store.commit('setSearchKeyword', keyword);
+            this.$store.commit("setInputText",keyword);        
             this.$router.push('/search');
         },
     }
