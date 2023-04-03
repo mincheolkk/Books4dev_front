@@ -1,3 +1,4 @@
+
 <template>
     <v-row justify="center">
     <v-form ref="dialogForm" >
@@ -5,6 +6,7 @@
       v-model="dialog"
       persistent
       max-width="280px"
+      @keydown.esc="closeModal()"
     >
       <v-card>
         <v-card-title>
@@ -15,10 +17,10 @@
             <v-row>
               <v-col
                 cols="12"
-                sm="8"
+                sm="12"
               >
                 <v-select
-                  :items="['백엔드', '프론트엔드', '안드로이드', 'iOS', '인공지능/머신러닝', '데이터 엔지니어/사이언티스트', '블록체인', 'DevOps', '기타 혹은 미정']"
+                  :items="['백엔드', '프론트엔드', 'DevOps', '인공지능/머신러닝', '기타 혹은 미정']"
                   label="개발자 직군"
                   v-model="positionData"
                   required
@@ -55,6 +57,7 @@
 import ApiService from '../../index.js'
 import validator from '../../utils/validator';
 import { positionConverter } from '../../utils/memberUtil'
+import { mapGetters } from 'vuex'
 
 
 export default {
@@ -64,12 +67,17 @@ export default {
             dialog: true,
             positionData: "",
             temp:{},
-            memberType:""
+            firstLogin:true
        }
     },
 
-    methods:{
+    computed: {
+        ...mapGetters([
+            "getLoginMember", 
+      ]),
+    },
 
+    methods:{
         convertPositionData() {
             return positionConverter(this.positionData)
         },
@@ -82,16 +90,51 @@ export default {
                 position: this.convertPositionData()
             }
 
-            await ApiService.postWithToken("http://localhost:8084/member/selectPosition", this.temp)
-            this.dialog = false;
-            this.$router.push('/mypage');
+            await ApiService.postWithToken("https://apiis.books4dev.me/member/selectPosition", this.temp)
+            if (window.location.href === "https://books4dev.me/member/selectPosition"){
+              this.$router.push(`/`);
+                return;
+            }
+            this.$router.push(`/member/${this.getLoginMember.oauth}`);
         },
         async closeModal() {
-            this.dialog = false;
-            this.$router.push('/mypage');
+            if (window.location.href === "https://books4dev.me/member/selectPosition"){
+                this.temp = {position: 'ETC'}
+                await ApiService.postWithToken("https://apiis.books4dev.me/member/selectPosition", this.temp);
+                this.dialog = false;
+                this.$router.push('/');
+                return;
+            }
+
+            if (this.getLoginMember.memberType.length > 1){
+                  this.dialog = false;
+                  this.$router.push(`/member/${this.getLoginMember.oauth}`)
+                  return;
+            }
         }
     },
-  
+
+    async beforeCreate() {
+       if (window.location.href === "https://books4dev.me/member/selectPosition"){
+         const res = await ApiService.getWithToken("https://apiis.books4dev.me/member/checkPosition");
+          if (res.status === 200) {
+              this.dialog = false;
+              this.firstLogin = true;
+              this.$router.push('/'); 
+          }
+          else {
+            this.firstLogin = false;
+          }
+       }
+    },
+
+    async beforeDestroy(){
+      if (!this.firstLogin){
+        this.$router.push('/member/changeNickname');
+      }
+      await this.$store.dispatch("fetchLoginMember");
+    }
+
 }    
   
 </script>
