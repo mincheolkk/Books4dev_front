@@ -76,27 +76,27 @@ export default {
                             {
                                 label:"취업 전",
                                 data:[timeData["beforeCount"]],
-                                backgroundColor:"#D40C00"
+                                backgroundColor:"#d0ecea"
                             },
                             {
                                 label:"0-2년차",
                                 data:[timeData["afterCount"]],
-                                backgroundColor:"#FF5500"
+                                backgroundColor:"#6ec6cc"
                             },
                             {
                                 label:'3-5년차',
                                 data:[timeData["threeYearCount"]],
-                                backgroundColor:"#FFCD00"
+                                backgroundColor:"#4a90e2"
                             },
                             {
                                 label:'6년차 이상',
                                 data:[timeData["sixYearCount"]],
-                                backgroundColor:"#32C12C"
+                                backgroundColor:"#4061ce"
                             },
                             {
                                 label:'언제든 좋음',
                                 data:[timeData["anyTimeCount"]],
-                                backgroundColor:"#1877F2"
+                                backgroundColor:"#742ddd"
                             },
                         ]
                     };
