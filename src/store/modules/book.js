@@ -88,8 +88,8 @@ export default {
         setCommentList(state, res) {
             state.commentList = res;
         },
-        setCurrentPage(state, res) {
-            state.currentPage = res;
+        setPageCount(state, res) {
+            state.pageCount = res;
         },
         setTotalCount(state, res) {
             state.totalCount = res;
